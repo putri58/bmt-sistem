@@ -99,16 +99,16 @@ export default function Home() {
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
               <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-400">
-                ✦ Terpercaya Sejak 2001
+                ✦ Terpercaya Sejak 2000
               </span>
               <h1 className="text-4xl font-bold leading-tight md:text-5xl">
-                Koperasi Syariah untuk{" "}
+                Koperasi Simpan Pinjam Pembiayaan{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-                  Kesejahteraan Bersama
+                  Syariah BMT Al-Ittihad
                 </span>
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-slate-300">
-                KSPPS BMT Al Ittihad hadir untuk membantu Anda mengelola simpanan dan mendapatkan pembiayaan yang halal, amanah, dan menguntungkan.
+                “Menjadi Pusat Kegiatan Islam Terpadu Untuk Mewujudkan Masyarakat Madani Yang Makmur Lahir & Bathin Serta Sejahtera Dunia & Akhirat”
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link to="/daftar"
@@ -150,7 +150,7 @@ export default function Home() {
                     </div>
                     <p className="text-xl font-bold text-white">KSPPS BMT</p>
                     <p className="text-lg font-bold text-emerald-400">Al Ittihad</p>
-                    <p className="mt-2 text-xs text-slate-400">Berdiri sejak 2001</p>
+                    <p className="mt-2 text-xs text-slate-400">Berdiri sejak 2000</p>
                   </div>
                 </div>
               </div>
@@ -169,19 +169,19 @@ export default function Home() {
                 Melayani dengan Amanah, Tumbuh Bersama Anggota
               </h2>
               <p className="mt-4 leading-relaxed text-slate-500">
-                KSPPS BMT Al Ittihad adalah lembaga keuangan mikro syariah yang berdiri sejak tahun 2001 di Pekanbaru, Riau. Kami hadir untuk memberikan solusi keuangan yang halal, terjangkau, dan berkelanjutan bagi seluruh lapisan masyarakat.
+               BMT Al-Ittihad adalah lembaga keuangan mikro syariah (koperasi syariah) milik Yayasan Kesatuan Pendidikan Islam (YKPI) Al-Ittihad Rumbai, Pekanbaru. Lembaga ini beroperasi berdasarkan prinsip syariah dengan sistem bagi hasil untuk menggantikan bunga, serta tunduk pada UU No. 25 Tahun 1992 tentang Perkoperasian.
               </p>
               <p className="mt-4 leading-relaxed text-slate-500">
-                Dengan lebih dari 12.000 anggota aktif dan aset yang terus tumbuh, kami berkomitmen untuk terus berinovasi dalam pelayanan dan memperkuat ekonomi ummat melalui prinsip-prinsip koperasi yang demokratis.
+                BMT Al-Ittihad mengantongi Sertifikat Operasional PINBUK No. 034/PINBUK/RIAU/XI/2000 dan resminya berbadan hukum No. 22/BH/DISKOP & UKM/3/X/2001 pada 31 Oktober 2001. Lembaga ini bertujuan memberdayakan ekonomi umat melalui kegiatan simpanan dan pembiayaan secara adil, aman, dan berkelanjutan bagi anggota serta mitra binaan.
               </p>
-              <div className="mt-6 space-y-3">
+              {/* <div className="mt-6 space-y-3">
                 {["Terdaftar dan diawasi OJK", "Legalitas Badan Hukum lengkap", "Sertifikasi DSN-MUI untuk seluruh produk", "Penghargaan Koperasi Terbaik 2023"].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <CheckCircle2 size={18} className="shrink-0 text-emerald-500" />
                     <span className="text-sm text-slate-600">{item}</span>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

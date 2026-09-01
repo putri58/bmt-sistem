@@ -24,13 +24,15 @@ export default function GuestLayout() {
 
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 shadow-md">
-              <Landmark size={20} className="text-white" />
-            </div>
-            <div>
+            <img
+              src="https://ykpialittihad.or.id/wp-content/uploads/2025/01/logo-web-ykpi-al-ittihad.png"
+              alt="Logo KSPPS BMT Al Ittihad"
+              className="h-12 w-70 rounded-xl object-cover"
+            />
+            {/* <div>
               <p className="text-sm font-bold leading-tight text-slate-800">KSPPS BMT</p>
               <p className="text-xs font-semibold leading-tight text-emerald-600">Al Ittihad</p>
-            </div>
+            </div> */}
           </Link>
 
           {/* DESKTOP LINKS */}
