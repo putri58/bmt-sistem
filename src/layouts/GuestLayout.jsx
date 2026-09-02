@@ -181,15 +181,15 @@ export default function GuestLayout() {
               <ul className="space-y-3 text-sm">
                 <li className="flex gap-3">
                   <MapPin size={15} className="mt-0.5 shrink-0 text-emerald-400" />
-                  <span>Jl. Raya Al Ittihad No. 1, Pekanbaru, Riau 28111</span>
+                  <span>-</span>
                 </li>
                 <li className="flex gap-3">
                   <Phone size={15} className="shrink-0 text-emerald-400" />
-                  <span>(0761) 123-4567</span>
+                  <span>-</span>
                 </li>
                 <li className="flex gap-3">
                   <Mail size={15} className="shrink-0 text-emerald-400" />
-                  <span>info@bmtalittihad.id</span>
+                  <span>-</span>
                 </li>
               </ul>
               <div className="mt-4 rounded-lg bg-white/5 px-4 py-3 text-xs">
@@ -203,7 +203,7 @@ export default function GuestLayout() {
         </div>
         <div className="border-t border-white/10 px-6 py-5">
           <p className="text-center text-xs text-slate-500">
-            © 2026 KSPPS BMT Al Ittihad. Seluruh hak cipta dilindungi undang-undang.
+            © copyright 2026 KSPPS BMT Al Ittihad.
           </p>
         </div>
       </footer>
