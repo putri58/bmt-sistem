@@ -146,6 +146,10 @@ const emptyForm = {
   email: "",
   // 14
   noTelp: "",
+  // akun
+  username: "",
+  password: "",
+  konfirmasiPassword: "",
   // 15
   fotoIdentitas: null,
   // 16
@@ -169,16 +173,24 @@ function validate(form) {
   if (!form.email.trim())           e.email          = "Email wajib diisi";
   else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Format email tidak valid";
   if (!form.noTelp.trim())          e.noTelp         = "Nomor telepon wajib diisi";
+  if (!form.username.trim())        e.username       = "Username wajib diisi";
+  else if (form.username.length < 4) e.username      = "Username minimal 4 karakter";
+  else if (/\s/.test(form.username)) e.username      = "Username tidak boleh mengandung spasi";
+  if (!form.password)               e.password       = "Password wajib diisi";
+  else if (form.password.length < 8) e.password      = "Password minimal 8 karakter";
+  if (form.password !== form.konfirmasiPassword) e.konfirmasiPassword = "Password tidak cocok";
   if (!form.fotoIdentitas)          e.fotoIdentitas  = "Unggah foto KTP / SIM";
   return e;
 }
 
 export default function Daftar() {
   const { tambahPendaftar } = useAnggota();
-  const [form, setForm]       = useState(emptyForm);
-  const [errors, setErrors]   = useState({});
+  const [form, setForm]           = useState(emptyForm);
+  const [errors, setErrors]       = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [agreed, setAgreed]   = useState(false);
+  const [agreed, setAgreed]       = useState(false);
+  const [showPass, setShowPass]   = useState(false);
+  const [showKonfirm, setShowKonfirm] = useState(false);
 
   const set = (key) => (e) =>
     setForm((prev) => ({ ...prev, [key]: e.target.value }));
@@ -212,6 +224,7 @@ export default function Daftar() {
         kodePos:        form.kodePos,
         email:          form.email,
         noTelp:         form.noTelp,
+        username:       form.username,
         fotoIdentitas:  form.fotoIdentitas,   // File object langsung
         fotoNPWP:       form.fotoNPWP,        // File object langsung (null jika tidak diisi)
       });
@@ -436,51 +449,84 @@ export default function Daftar() {
 
               {/* 11. Kota */}
               <Field label="11. Kota" required error={errors.kota}>
-                <input
-                  type="text"
-                  value={form.kota}
-                  onChange={set("kota")}
-                  placeholder="Contoh: Pekanbaru"
-                  className={inputCls}
-                />
+                <input type="text" value={form.kota} onChange={set("kota")} placeholder="Contoh: Pekanbaru" className={inputCls} />
               </Field>
 
               {/* 12. Kode Pos */}
               <Field label="12. Kode Pos" required error={errors.kodePos}>
-                <input
-                  type="text"
-                  value={form.kodePos}
-                  onChange={set("kodePos")}
-                  placeholder="Contoh: 28111"
-                  maxLength={5}
-                  className={inputCls}
-                />
+                <input type="text" value={form.kodePos} onChange={set("kodePos")} placeholder="Contoh: 28111" maxLength={5} className={inputCls} />
               </Field>
 
               {/* 13. Email */}
               <Field label="13. Email" required error={errors.email}>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={set("email")}
-                  placeholder="contoh@email.com"
-                  className={inputCls}
-                />
+                <input type="email" value={form.email} onChange={set("email")} placeholder="contoh@email.com" className={inputCls} />
               </Field>
 
               {/* 14. No Telp / HP */}
               <Field label="14. No. Telp / HP" required error={errors.noTelp}>
-                <div className="flex overflow-hidden rounded-xl border border-slate-200 bg-slate-50 focus-within:border-emerald-400 focus-within:bg-white transition">
-                  <span className="flex items-center border-r border-slate-200 bg-slate-100 px-3 text-sm font-medium text-slate-500">
-                    +62
-                  </span>
+                <div className="flex overflow-hidden rounded-xl border border-slate-200 bg-slate-50 focus-within:border-[#1E5E3F] focus-within:bg-white transition">
+                  <span className="flex items-center border-r border-slate-200 bg-slate-100 px-3 text-sm font-medium text-slate-500">+62</span>
+                  <input type="tel" value={form.noTelp} onChange={set("noTelp")} placeholder="8123456789"
+                    className="w-full bg-transparent px-4 py-2.5 text-sm text-slate-800 outline-none" />
+                </div>
+              </Field>
+
+            </div>
+
+            {/* ── SEKSI AKUN ── */}
+            <div className="border-b border-t border-slate-100 bg-slate-50/50 px-8 py-5">
+              <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
+                <User size={15} />
+                Data Akun
+              </h2>
+            </div>
+            <div className="grid gap-5 px-8 py-7 md:grid-cols-2">
+
+              {/* USERNAME */}
+              <div className="md:col-span-2">
+                <Field label="Username" required hint="Digunakan untuk login. Minimal 4 karakter, tanpa spasi." error={errors.username}>
                   <input
-                    type="tel"
-                    value={form.noTelp}
-                    onChange={set("noTelp")}
-                    placeholder="8123456789"
-                    className="w-full bg-transparent px-4 py-2.5 text-sm text-slate-800 outline-none"
+                    type="text"
+                    value={form.username}
+                    onChange={set("username")}
+                    placeholder="Contoh: budi_santoso"
+                    autoComplete="off"
+                    className={inputCls}
                   />
+                </Field>
+              </div>
+
+              {/* PASSWORD */}
+              <Field label="Password" required hint="Minimal 8 karakter." error={errors.password}>
+                <div className="relative">
+                  <input
+                    type={showPass ? "text" : "password"}
+                    value={form.password}
+                    onChange={set("password")}
+                    placeholder="Buat password"
+                    className={`${inputCls} pr-11`}
+                  />
+                  <button type="button" onClick={() => setShowPass(!showPass)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                    {showPass ? <EyeOff size={17} /> : <Eye size={17} />}
+                  </button>
+                </div>
+              </Field>
+
+              {/* KONFIRMASI PASSWORD */}
+              <Field label="Konfirmasi Password" required error={errors.konfirmasiPassword}>
+                <div className="relative">
+                  <input
+                    type={showKonfirm ? "text" : "password"}
+                    value={form.konfirmasiPassword}
+                    onChange={set("konfirmasiPassword")}
+                    placeholder="Ulangi password"
+                    className={`${inputCls} pr-11`}
+                  />
+                  <button type="button" onClick={() => setShowKonfirm(!showKonfirm)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                    {showKonfirm ? <EyeOff size={17} /> : <Eye size={17} />}
+                  </button>
                 </div>
               </Field>
 

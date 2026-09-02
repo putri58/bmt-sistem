@@ -1,19 +1,31 @@
 import { useState } from "react";
-import { Outlet, Link, useLocation } from "react-router-dom";
-import { Landmark, Menu, X, Phone, Mail, MapPin, Globe, MessageCircle, Tv2 } from "lucide-react";
+import { Outlet, Link, NavLink, useNavigate } from "react-router-dom";
+import { Landmark, Menu, X, Phone, Mail, MapPin, Globe, MessageCircle, Tv2, LogOut } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
-  { label: "Beranda", to: "/" },
-  { label: "Tentang Kami", to: "/#tentang" },
-  { label: "Produk & Layanan", to: "/#produk" },
-  { label: "Informasi", to: "/#informasi" },
-  { label: "Kontak", to: "/#kontak" },
+  { label: "Beranda",   to: "/" },
+  { label: "Tentang",   to: "/tentang" },
+  { label: "Informasi", to: "/informasi" },
+  { label: "Kontak",    to: "/kontak" },
 ];
+
+const linkCls = ({ isActive }) =>
+  `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+    isActive
+      ? "bg-[#1E5E3F]/10 text-[#1E5E3F] font-semibold"
+      : "text-slate-600 hover:bg-[#1E5E3F]/5 hover:text-[#1E5E3F]"
+  }`;
 
 export default function GuestLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
-  const isDaftar = location.pathname === "/daftar";
+  const { currentUser, isAnggota, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -29,32 +41,42 @@ export default function GuestLayout() {
               alt="Logo KSPPS BMT Al Ittihad"
               className="h-12 w-70 rounded-xl object-cover"
             />
-            {/* <div>
-              <p className="text-sm font-bold leading-tight text-slate-800">KSPPS BMT</p>
-              <p className="text-xs font-semibold leading-tight text-emerald-600">Al Ittihad</p>
-            </div> */}
           </Link>
 
           {/* DESKTOP LINKS */}
           <div className="hidden items-center gap-1 md:flex">
             {navLinks.map((l) => (
-              <a key={l.label} href={l.to}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700">
+              <NavLink key={l.label} to={l.to} className={linkCls}>
                 {l.label}
-              </a>
+              </NavLink>
             ))}
           </div>
 
           {/* CTA */}
           <div className="hidden items-center gap-3 md:flex">
-            <Link to="/admin/dashboard"
-              className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100">
-              Login Admin
-            </Link>
-            <Link to="/daftar"
-              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700">
-              Daftar Anggota
-            </Link>
+            {isAnggota ? (
+              <>
+                <Link to="/member/dashboard"
+                  className="rounded-lg px-4 py-2 text-sm font-medium text-[#1E5E3F] transition-colors hover:bg-[#1E5E3F]/10">
+                  Dashboard Saya
+                </Link>
+                <button onClick={handleLogout}
+                  className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100">
+                  <LogOut size={14} /> Keluar
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login"
+                  className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100">
+                  Masuk
+                </Link>
+                <Link to="/daftar"
+                  className="rounded-lg bg-[#1E5E3F] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#174d33]">
+                  Daftar Sebgai Anggota
+                </Link>
+              </>
+            )}
           </div>
 
           {/* MOBILE MENU BUTTON */}
@@ -67,21 +89,34 @@ export default function GuestLayout() {
         {menuOpen && (
           <div className="border-t border-slate-100 bg-white px-6 pb-4 md:hidden">
             {navLinks.map((l) => (
-              <a key={l.label} href={l.to} onClick={() => setMenuOpen(false)}
-                className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-emerald-50 hover:text-emerald-700">
+              <NavLink key={l.label} to={l.to} onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block rounded-lg px-3 py-2.5 text-sm font-medium ${
+                    isActive ? "text-[#1E5E3F] font-semibold" : "text-slate-600 hover:bg-[#1E5E3F]/5 hover:text-[#1E5E3F]"
+                  }`
+                }>
                 {l.label}
-              </a>
+              </NavLink>
             ))}
             <hr className="my-3 border-slate-100" />
             <div className="flex gap-3">
-              <Link to="/admin/dashboard" onClick={() => setMenuOpen(false)}
-                className="flex-1 rounded-lg border border-slate-200 py-2 text-center text-sm font-medium text-slate-600">
-                Login Admin
-              </Link>
-              <Link to="/daftar" onClick={() => setMenuOpen(false)}
-                className="flex-1 rounded-lg bg-emerald-600 py-2 text-center text-sm font-semibold text-white">
-                Daftar Anggota
-              </Link>
+              {isAnggota ? (
+                <Link to="/member/dashboard" onClick={() => setMenuOpen(false)}
+                  className="flex-1 rounded-lg bg-[#1E5E3F] py-2 text-center text-sm font-semibold text-white">
+                  Dashboard Saya
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setMenuOpen(false)}
+                    className="flex-1 rounded-lg border border-slate-200 py-2 text-center text-sm font-medium text-slate-600">
+                    Masuk
+                  </Link>
+                  <Link to="/daftar" onClick={() => setMenuOpen(false)}
+                    className="flex-1 rounded-lg bg-[#1E5E3F] py-2 text-center text-sm font-semibold text-white">
+                    Daftar
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

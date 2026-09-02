@@ -17,10 +17,10 @@ import { useState } from "react";
 
 /* ─── DATA ─── */
 const stats = [
-  { value: "12.000+", label: "Anggota Aktif" },
-  { value: "Rp 28 M+", label: "Total Simpanan" },
-  { value: "Rp 16 M+", label: "Pembiayaan Aktif" },
-  { value: "25+", label: "Tahun Berpengalaman" },
+  { value: "+++", label: "Anggota Aktif" },
+  { value: "+++", label: "Total Simpanan" },
+  { value: "+++", label: "Pembiayaan Aktif" },
+  { value: "+++", label: "Tahun Berpengalaman" },
 ];
 
 const produk = [
@@ -150,13 +150,13 @@ export default function Home() {
                     </div>
                     <p className="text-xl font-bold text-white">KSPPS BMT</p>
                     <p className="text-lg font-bold text-emerald-400">Al Ittihad</p>
-                    <p className="mt-2 text-xs text-slate-400">Berdiri sejak 2000</p>
+                    <p className="mt-2 text-xs text-slate-400">Berdiri sejak 2001</p>
                   </div>
                 </div>
               </div>
               {/* floating badge */}
               <div className="absolute -bottom-4 -right-4 rounded-2xl bg-emerald-600 px-5 py-3 text-center shadow-xl">
-                <p className="text-xl font-bold text-white">25+</p>
+                <p className="text-xl font-bold text-white">++++</p>
                 <p className="text-xs text-emerald-200">Tahun Berpengalaman</p>
               </div>
             </div>
