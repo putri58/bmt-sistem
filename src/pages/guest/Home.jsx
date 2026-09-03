@@ -20,7 +20,7 @@ const stats = [
   { value: "+++", label: "Anggota Aktif" },
   { value: "+++", label: "Total Simpanan" },
   { value: "+++", label: "Pembiayaan Aktif" },
-  { value: "+++", label: "Tahun Berpengalaman" },
+  { value: "25+", label: "Tahun Berpengalaman" },
 ];
 
 const produk = [
@@ -73,7 +73,7 @@ const produk = [
 const keunggulan = [
   {
     icon: ShieldCheck,
-    title: "Terpercaya & Terdaftar",
+    title: "Terpercaya & terdaftar",
     desc: "Terdaftar dan diawasi oleh OJK serta Dinas Koperasi. Legalitas lengkap sejak 2001.",
   },
   {
@@ -89,7 +89,7 @@ const keunggulan = [
   {
     icon: ShieldCheck,
     title: "100% Prinsip Syariah",
-    desc: "Seluruh produk dijalankan berdasarkan fatwa DSN-MUI dan prinsip syariah Islam.",
+    desc: "Seluruh produk dijalankan berdsarkan fatwa DSN-MUI dan prinsip syariah Islam.",
   },
 ];
 
@@ -183,9 +183,9 @@ export default function Home() {
                 ✦ Terpercaya Sejak 2000
               </span>
               <h1 className="text-4xl font-bold leading-tight md:text-5xl">
-                Koperasi Simpan Pinjam Pembiayaan{" "}
+                Koperasi Simpan Pinjam Pembiayaan Syariah{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-                  Syariah BMT Al-Ittihad
+                   BMT Al-Ittihad
                 </span>
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-slate-300">
@@ -198,7 +198,7 @@ export default function Home() {
                   to="/daftar"
                   className="flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400"
                 >
-                  Daftar Sekarang
+                  Daftar Sekaranng !
                   <ArrowRight size={18} />
                 </Link>
                 <a
@@ -383,26 +383,26 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-emerald-400">
-              Cara Bergabung
+              Cara Bergabung menjadi
             </span>
-            <h2 className="text-3xl font-bold">Jadi Anggota dalam 3 Langkah</h2>
+            <h2 className="text-3xl font-bold">Anggota dalam 3 Langkah</h2>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             {[
               {
                 no: "01",
                 title: "Isi Formulir",
-                desc: "Lengkapi formulir pendaftaran online dengan data diri dan unggah dokumen yang diperlukan.",
+                desc: "Lengkapi data diri dan unggah dokumen yang diperlukan sesuai petunjuk formulir.",
               },
               {
                 no: "02",
                 title: "Verifikasi",
-                desc: "Tim kami akan memverifikasi data Anda dalam 1–2 hari kerja dan menghubungi Anda.",
+                desc: "Tim kami akan memverifikasi data Anda dalam 1–2 hari kerja dan menghubungi Anda, Silahkan tunggu konfirmasi dari tim kami",
               },
               {
                 no: "03",
                 title: "Aktif sebagai Anggota",
-                desc: "Setelah disetujui, bayar simpanan pokok dan Anda resmi menjadi anggota aktif.",
+                desc: "Setelah disetujui oleh tim kami, bayar simpanan pokok dan Anda resmi menjadi anggota aktif.",
               },
             ].map((step) => (
               <div

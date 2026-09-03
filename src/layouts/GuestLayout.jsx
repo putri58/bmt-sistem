@@ -73,7 +73,7 @@ export default function GuestLayout() {
                 </Link>
                 <Link to="/daftar"
                   className="rounded-lg bg-[#1E5E3F] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#174d33]">
-                  Daftar Sebgai Anggota
+                  Buat Akun
                 </Link>
               </>
             )}
@@ -203,7 +203,7 @@ export default function GuestLayout() {
         </div>
         <div className="border-t border-white/10 px-6 py-5">
           <p className="text-center text-xs text-slate-500">
-            © copyright 2026 KSPPS BMT Al Ittihad.
+            ©copyright 2026 KSPPS BMT Al Ittihad.
           </p>
         </div>
       </footer>

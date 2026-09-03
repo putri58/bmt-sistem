@@ -26,7 +26,7 @@ export default function Profil() {
     : "AG";
 
   const set = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
-
+ 
   return (
     <div>
       <div className="mb-8">

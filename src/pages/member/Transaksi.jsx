@@ -47,14 +47,14 @@ export default function Transaksi() {
         <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-5">
           <div className="flex items-center gap-2 mb-1">
             <ArrowDownLeft size={14} className="text-emerald-600" />
-            <p className="text-xs font-semibold text-emerald-700">Total Masuk</p>
+            <p className="text-xs font-semibold text-emerald-700">Total Uang Masuk</p>
           </div>
           <p className="text-lg font-bold text-emerald-700">Rp {formatRp(totalMasuk)}</p>
         </div>
         <div className="rounded-2xl border border-red-100 bg-red-50 p-5">
           <div className="flex items-center gap-2 mb-1">
             <ArrowUpRight size={14} className="text-red-600" />
-            <p className="text-xs font-semibold text-red-700">Total Keluar</p>
+            <p className="text-xs font-semibold text-red-700">Total Uang Keluar</p>
           </div>
           <p className="text-lg font-bold text-red-700">Rp {formatRp(totalKeluar)}</p>
         </div>
