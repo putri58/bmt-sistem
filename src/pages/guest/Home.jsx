@@ -7,6 +7,7 @@ import {
   Wallet,
   CreditCard,
   Star,
+  Quote,
   ArrowRight,
   CheckCircle2,
   Phone,
@@ -180,12 +181,12 @@ export default function Home() {
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
               <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-400">
-                ✦ Terpercaya Sejak 2000
+                ✦ Terpercaya Sejak Tahun 2000
               </span>
               <h1 className="text-4xl font-bold leading-tight md:text-5xl">
                 Koperasi Simpan Pinjam Pembiayaan Syariah{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-                   BMT Al-Ittihad
+                  BMT Al-Ittihad
                 </span>
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-slate-300">
@@ -205,7 +206,7 @@ export default function Home() {
                   href="#produk"
                   className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 font-semibold text-white backdrop-blur transition hover:bg-white/20"
                 >
-                  Lihat Produk
+                  Lihat Produk & Layanan
                 </a>
               </div>
             </div>
@@ -233,17 +234,17 @@ export default function Home() {
             {/* IMAGE PLACEHOLDER */}
             <div className="relative">
               <div className="relative h-80 overflow-hidden rounded-3xl">
-  <img
-    src="https://ykpialittihad.or.id/wp-content/uploads/2025/02/bmt.png"
-    alt="Kantor KSPPS BMT Al Ittihad"
-    className="h-full w-full object-cover"
-  />
+                <img
+                  src="https://ykpialittihad.or.id/wp-content/uploads/2025/02/bmt.png"
+                  alt="Kantor KSPPS BMT Al Ittihad"
+                  className="h-full w-full object-cover"
+                />
 
-  <div className="absolute inset-0 bg-gradient-to-t from-[#0a2e1a]/90 via-[#1E5E3F]/45 to-transparent"></div>
-</div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a2e1a]/90 via-[#1E5E3F]/45 to-transparent"></div>
+              </div>
               {/* floating badge */}
               <div className="absolute -bottom-4 -right-4 rounded-2xl bg-emerald-600 px-5 py-3 text-center shadow-xl">
-                <p className="text-xl font-bold text-white">++++</p>
+                <p className="text-xl font-bold text-white">25+</p>
                 <p className="text-xs text-emerald-200">Tahun Berpengalaman</p>
               </div>
             </div>
@@ -336,7 +337,7 @@ export default function Home() {
                     to="/daftar"
                     className={`mt-5 block rounded-lg ${c.badge} py-2 text-center text-xs font-semibold text-white transition hover:opacity-90`}
                   >
-                    Selengkapnya →
+                    Lihat Selengkapnya →
                   </Link>
                 </div>
               );
@@ -350,7 +351,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-emerald-600">
-              Mengapa Kami
+              Mengapa Kami (?)
             </span>
             <h2 className="text-3xl font-bold text-slate-800">
               Keunggulan BMT Al Ittihad
@@ -434,48 +435,84 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONI ── */}
-      <section className="bg-slate-50 py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden bg-slate-50 py-20">
+        {/* Dekorasi background */}
+        <div className="pointer-events-none absolute -left-20 top-20 h-40 w-40 animate-pulse rounded-full bg-emerald-100/60 blur-3xl" />
+        <div
+          className="pointer-events-none absolute -right-20 bottom-10 h-52 w-52 animate-pulse rounded-full bg-emerald-100/50 blur-3xl"
+          style={{ animationDelay: "1.5s" }}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-6">
+          {/* Header */}
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-emerald-600">
               Testimoni
             </span>
+
             <h2 className="text-3xl font-bold text-slate-800">
               Kata Anggota Kami
             </h2>
+
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-500">
+              Pengalaman dan kepercayaan anggota menjadi bagian penting dalam
+              perjalanan koperasi kami.
+            </p>
           </div>
+
+          {/* Testimonial Cards */}
           <div className="grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
+            {testimonials.map((t, index) => (
               <div
                 key={t.nama}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                className="group relative animate-[fadeInUp_0.7s_ease-out_both]"
+                style={{
+                  animationDelay: `${index * 150}ms`,
+                }}
               >
-                <div className="mb-3 flex gap-1">
-                  {Array.from({ length: t.bintang }).map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      className="fill-amber-400 text-amber-400"
-                    />
-                  ))}
-                </div>
-                <p className="text-sm leading-relaxed text-slate-600">
-                  "{t.text}"
-                </p>
-                <div className="mt-5 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-600">
-                    {t.nama
-                      .split(" ")
-                      .map((w) => w[0])
-                      .slice(0, 2)
-                      .join("")}
+                <div className="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                  {/* Quote Icon */}
+                  <div className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-500 transition duration-300 group-hover:rotate-6 group-hover:scale-110">
+                    <Quote size={17} />
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-800">
-                      {t.nama}
-                    </p>
-                    <p className="text-xs text-slate-400">{t.peran}</p>
+
+                  {/* Stars */}
+                  <div className="mb-4 flex gap-1">
+                    {Array.from({ length: t.bintang }).map((_, i) => (
+                      <Star
+                        key={i}
+                        size={16}
+                        className="fill-amber-400 text-amber-400 transition-transform duration-200 hover:scale-125"
+                      />
+                    ))}
                   </div>
+
+                  {/* Testimonial */}
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    "{t.text}"
+                  </p>
+
+                  {/* User */}
+                  <div className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-5">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-600 transition-transform duration-300 group-hover:scale-105">
+                      {t.nama
+                        .split(" ")
+                        .map((w) => w[0])
+                        .slice(0, 2)
+                        .join("")}
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">
+                        {t.nama}
+                      </p>
+
+                      <p className="text-xs text-slate-400">{t.peran}</p>
+                    </div>
+                  </div>
+
+                  {/* Hover Accent */}
+                  <div className="absolute bottom-0 left-1/2 h-1 w-0 -translate-x-1/2 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-20" />
                 </div>
               </div>
             ))}

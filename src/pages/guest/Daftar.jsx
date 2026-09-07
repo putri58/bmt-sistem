@@ -158,18 +158,18 @@ const emptyForm = {
 
 function validate(form) {
   const e = {};
-  if (!form.namaAnggota.trim())     e.namaAnggota    = "Nama wajib diisi";
-  if (!form.noIdentitas.trim())     e.noIdentitas    = "Nomor identitas wajib diisi";
-  if (!form.jenisIdentitas)         e.jenisIdentitas = "Pilih jenis identitas";
-  if (!form.tempatLahir.trim())     e.tempatLahir    = "Tempat lahir wajib diisi";
-  if (!form.tanggalLahir)           e.tanggalLahir   = "Tanggal lahir wajib diisi";
-  if (!form.kewarganegaraan)        e.kewarganegaraan = "Kewarganegaraan wajib diisi";
-  if (!form.status)                 e.status         = "Pilih status";
-  if (!form.jenisKelamin)           e.jenisKelamin   = "Pilih jenis kelamin";
-  if (!form.namaIbuKandung.trim())  e.namaIbuKandung = "Nama ibu kandung wajib diisi";
-  if (!form.alamatRumah.trim())     e.alamatRumah    = "Alamat wajib diisi";
-  if (!form.kota.trim())            e.kota           = "Kota wajib diisi";
-  if (!form.kodePos.trim())         e.kodePos        = "Kode pos wajib diisi";
+  if (!form.namaAnggota.trim())     e.namaAnggota    = "Nama Wajib diisi!";
+  if (!form.noIdentitas.trim())     e.noIdentitas    = "Nomor Identitas wajib diisi!";
+  if (!form.jenisIdentitas)         e.jenisIdentitas = "Jenis Identitas wajib diisi!";
+  if (!form.tempatLahir.trim())     e.tempatLahir    = "Tempat Lahir wajib diisi!";
+  if (!form.tanggalLahir)           e.tanggalLahir   = "Tanggal Lahir wajib diisi!";
+  if (!form.kewarganegaraan)        e.kewarganegaraan = "Kewarganegaraan wajib diisi!";
+  if (!form.status)                 e.status         = "Status wajib diisi!";
+  if (!form.jenisKelamin)           e.jenisKelamin   = "Jenis Kelamin wajib diisi!";
+  if (!form.namaIbuKandung.trim())  e.namaIbuKandung = "Nama Ibu Kandung wajib diisi!";
+  if (!form.alamatRumah.trim())     e.alamatRumah    = "Alamat Rumah wajib diisi!";
+  if (!form.kota.trim())            e.kota           = "Kota wajib diisi!";
+  if (!form.kodePos.trim())         e.kodePos        = "Kode Pos wajib diisi!";
   if (!form.email.trim())           e.email          = "Email wajib diisi";
   else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Format email tidak valid";
   if (!form.noTelp.trim())          e.noTelp         = "Nomor telepon wajib diisi";
@@ -241,7 +241,7 @@ export default function Daftar() {
           <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100">
             <CheckCircle2 size={42} className="text-emerald-600" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-800">Pendaftaran Terkirim!</h2>
+          <h2 className="text-2xl font-bold text-slate-800">Pendaftaran Anda Telah dikirim!</h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-500">
             Terima kasih, <strong className="text-slate-700">{form.namaAnggota}</strong>.
             Formulir Anda telah kami terima. Tim kami akan menghubungi Anda melalui{" "}
@@ -252,7 +252,7 @@ export default function Daftar() {
             <p className="text-xs font-semibold text-emerald-700">Langkah Selanjutnya:</p>
             <ul className="mt-2 space-y-1.5 text-xs text-slate-600">
               {[
-                "Tunggu konfirmasi verifikasi dari petugas kami",
+                "Silahkan Tunggu konfirmasi verifikasi dari petugas kami",
                 "Siapkan dokumen asli untuk verifikasi lanjutan",
                 "Lakukan pembayaran simpanan pokok setelah disetujui",
               ].map((item) => (
@@ -299,7 +299,7 @@ export default function Daftar() {
             <div className="border-b border-slate-100 px-8 py-5">
               <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-emerald-600">
                 <User size={15} />
-                Data Diri
+                Data diri
               </h2>
             </div>
             <div className="grid gap-5 px-8 py-7 md:grid-cols-2">
