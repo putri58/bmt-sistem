@@ -571,7 +571,7 @@ export default function Daftar() {
                   <li>• Dokumen yang diunggah harus asli, valid, dan tidak kedaluwarsa</li>
                   <li>• Foto harus dalam kondisi terang, fokus, dan tidak terpotong</li>
                   <li>• Format yang diterima: PNG, JPG, JPEG, atau PDF — maksimal 5 MB</li>
-                  <li>• Data Anda dijaga kerahasiaannya sesuai kebijakan privasi kami</li>
+                  <li>• Data Anda dijaga kerahasiaanya sesuai kebijakan privasi kami</li>
                 </ul>
               </div>
 

@@ -119,79 +119,79 @@ export default function Kontak() {
           </div>
 
           {/* FORM PESAN */}
-          <div className="mt-10">
-            <h2 className="mb-6 text-center text-2xl font-bold text-slate-800">Kirim Pesan</h2>
+            {/* <div className="mt-10">
+              <h2 className="mb-6 text-center text-2xl font-bold text-slate-800">Kirim Pesan</h2>
 
-            {sent ? (
-              <div className="flex flex-col items-center justify-center rounded-3xl border border-green-200 bg-green-50 p-10 text-center">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-                  <CheckCircle2 size={36} className="text-[#1E5E3F]" />
+              {sent ? (
+                <div className="flex flex-col items-center justify-center rounded-3xl border border-green-200 bg-green-50 p-10 text-center">
+                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                    <CheckCircle2 size={36} className="text-[#1E5E3F]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-800">Pesan Terkirim!</h3>
+                  <p className="mt-2 text-sm text-slate-500">
+                    Terima kasih, <strong>{form.nama}</strong>. Kami akan membalas secepatnya melalui{" "}
+                    <strong>{form.email}</strong>.
+                  </p>
+                  <button
+                    onClick={() => { setForm({ nama: "", email: "", noHp: "", pesan: "" }); setSent(false); }}
+                    className="mt-5 rounded-xl bg-[#1E5E3F] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#174d33] transition"
+                  >
+                    Kirim Pesan Lain
+                  </button>
                 </div>
-                <h3 className="text-lg font-bold text-slate-800">Pesan Terkirim!</h3>
-                <p className="mt-2 text-sm text-slate-500">
-                  Terima kasih, <strong>{form.nama}</strong>. Kami akan membalas secepatnya melalui{" "}
-                  <strong>{form.email}</strong>.
-                </p>
-                <button
-                  onClick={() => { setForm({ nama: "", email: "", noHp: "", pesan: "" }); setSent(false); }}
-                  className="mt-5 rounded-xl bg-[#1E5E3F] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#174d33] transition"
-                >
-                  Kirim Pesan Lain
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm space-y-4">
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                    Nama Lengkap <span className="text-red-500">*</span>
-                  </label>
-                  <input type="text" value={form.nama} onChange={set("nama")} placeholder="Nama Anda" required className={inputCls} />
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
+              ) : (
+                <form onSubmit={handleSubmit} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm space-y-4">
                   <div>
                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                      Email <span className="text-red-500">*</span>
+                      Nama Lengkap <span className="text-red-500">*</span>
                     </label>
-                    <input type="email" value={form.email} onChange={set("email")} placeholder="email@domain.com" required className={inputCls} />
+                    <input type="text" value={form.nama} onChange={set("nama")} placeholder="Nama Anda" required className={inputCls} />
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                        Email <span className="text-red-500">*</span>
+                      </label>
+                      <input type="email" value={form.email} onChange={set("email")} placeholder="email@domain.com" required className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="mb-1.5 block text-sm font-semibold text-slate-700">No. HP</label>
+                      <input type="tel" value={form.noHp} onChange={set("noHp")} placeholder="08xxxxxxxxxx" className={inputCls} />
+                    </div>
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">No. HP</label>
-                    <input type="tel" value={form.noHp} onChange={set("noHp")} placeholder="08xxxxxxxxxx" className={inputCls} />
+                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                      Pesan <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      value={form.pesan}
+                      onChange={set("pesan")}
+                      rows={5}
+                      placeholder="Tuliskan pesan, pertanyaan, atau saran Anda..."
+                      required
+                      className={`${inputCls} resize-none`}
+                    />
                   </div>
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                    Pesan <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    value={form.pesan}
-                    onChange={set("pesan")}
-                    rows={5}
-                    placeholder="Tuliskan pesan, pertanyaan, atau saran Anda..."
-                    required
-                    className={`${inputCls} resize-none`}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#174d33] disabled:opacity-60"
-                >
-                  {loading ? (
-                    <>
-                      <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                      </svg>
-                      Mengirim...
-                    </>
-                  ) : (
-                    <><Send size={15} /> Kirim Pesan</>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#174d33] disabled:opacity-60"
+                  >
+                    {loading ? (
+                      <>
+                        <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                        </svg>
+                        Mengirim...
+                      </>
+                    ) : (
+                      <><Send size={15} /> Kirim Pesan</>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div> */}
 
         </div>
       </section>

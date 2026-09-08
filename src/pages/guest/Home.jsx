@@ -199,7 +199,7 @@ export default function Home() {
                   to="/daftar"
                   className="flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400"
                 >
-                  Daftar Sekaranng !
+                  Daftar Sekaranng
                   <ArrowRight size={18} />
                 </Link>
                 <a
@@ -380,60 +380,101 @@ export default function Home() {
       </section>
 
       {/* ── LANGKAH DAFTAR ── */}
-      <section className="bg-gradient-to-br from-[#0a1f3c] to-[#0a3d2e] py-20 text-white">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-12 text-center">
-            <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-emerald-400">
-              Cara Bergabung menjadi
-            </span>
-            <h2 className="text-3xl font-bold">Anggota dalam 3 Langkah</h2>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              {
-                no: "01",
-                title: "Isi Formulir",
-                desc: "Lengkapi data diri dan unggah dokumen yang diperlukan sesuai petunjuk formulir.",
-              },
-              {
-                no: "02",
-                title: "Verifikasi",
-                desc: "Tim kami akan memverifikasi data Anda dalam 1–2 hari kerja dan menghubungi Anda, Silahkan tunggu konfirmasi dari tim kami",
-              },
-              {
-                no: "03",
-                title: "Aktif sebagai Anggota",
-                desc: "Setelah disetujui oleh tim kami, bayar simpanan pokok dan Anda resmi menjadi anggota aktif.",
-              },
-            ].map((step) => (
-              <div
-                key={step.no}
-                className="relative rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur"
-              >
-                <span className="text-5xl font-black text-white/10">
-                  {step.no}
-                </span>
-                <h3 className="mt-2 text-lg font-semibold text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {step.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-12 text-center">
-            <Link
-              to="/daftar"
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400"
-            >
-              Daftar Sekarang
-              <ArrowRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1f3c] via-[#0a2940] to-[#0a3d2e] py-20 text-white">
+  {/* Decorative background */}
+  <div className="absolute -left-24 top-20 h-64 w-64 rounded-full bg-emerald-400/10 blur-3xl" />
+  <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
 
+  <div className="relative mx-auto max-w-6xl px-6">
+    {/* Heading */}
+    <div className="mb-16 text-center">
+      <span className="mb-3 inline-block rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+        Cara Bergabung
+      </span>
+
+      <h2 className="text-3xl font-bold md:text-4xl">
+        Menjadi Anggota dalam{" "}
+        <span className="text-emerald-400">3 Langkah</span>
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
+        Proses pendaftaran yang mudah dan praktis untuk menjadi bagian dari
+        keluarga besar BMT Al-Ittihad.
+      </p>
+    </div>
+
+    {/* Steps */}
+    <div className="relative">
+      {/* Connecting Line */}
+      <div className="absolute left-[16.66%] right-[16.66%] top-10 hidden h-px bg-gradient-to-r from-emerald-400/10 via-emerald-400/40 to-emerald-400/10 md:block" />
+
+      <div className="grid gap-10 md:grid-cols-3">
+        {[
+          {
+            no: "01",
+            title: "Isi Formulir",
+            desc: "Lengkapi data diri dan unggah dokumen yang diperlukan sesuai petunjuk formulir.",
+          },
+          {
+            no: "02",
+            title: "Verifikasi",
+            desc: "Tim kami akan memverifikasi data Anda dalam 1–2 hari kerja dan menghubungi Anda.",
+          },
+          {
+            no: "03",
+            title: "Aktif sebagai Anggota",
+            desc: "Setelah disetujui, bayar simpanan pokok dan Anda resmi menjadi anggota aktif.",
+          },
+        ].map((step, index) => (
+          <div
+            key={step.no}
+            className="group relative text-center"
+          >
+            {/* Number */}
+            <div className="relative z-10 mx-auto mb-7 flex h-20 w-20 items-center justify-center rounded-full border border-emerald-400/30 bg-[#0b2940] shadow-lg shadow-emerald-500/10 transition-all duration-500 group-hover:scale-110 group-hover:border-emerald-400 group-hover:shadow-emerald-500/30">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-lg font-black text-white shadow-inner">
+                {step.no}
+              </div>
+            </div>
+
+            {/* Card */}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-emerald-400/30 group-hover:bg-white/[0.08] group-hover:shadow-xl group-hover:shadow-emerald-950/30">
+              <h3 className="text-lg font-semibold text-white">
+                {step.title}
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-slate-400">
+                {step.desc}
+              </p>
+
+              {/* Small indicator */}
+              <div className="mx-auto mt-5 h-1 w-8 rounded-full bg-emerald-400/30 transition-all duration-500 group-hover:w-14 group-hover:bg-emerald-400" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* CTA */}
+    <div className="mt-16 text-center">
+      <p className="mb-4 text-sm text-slate-400">
+        Siap menjadi bagian dari BMT Al-Ittihad?
+      </p>
+
+      <Link
+        to="/daftar"
+        className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 px-8 py-4 font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/30"
+      >
+        Daftar Sekarang
+        <ArrowRight
+          size={18}
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        />
+      </Link>
+    </div>
+  </div>
+</section>
+      
       {/* ── TESTIMONI ── */}
       <section className="relative overflow-hidden bg-slate-50 py-20">
         {/* Dekorasi background */}
