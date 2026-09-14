@@ -285,7 +285,7 @@ export default function Daftar() {
             <Landmark size={26} className="text-white" />
           </div>
           <h1 className="text-2xl font-bold text-slate-800">
-            Formulir Pendaftaran Anggota
+            Formulir Pendaftaran  
           </h1>
           <p className="mt-1 text-sm text-slate-500">
             KSPPS BMT Al Ittihad — Lengkapi semua data di bawah ini dengan benar dan jelas
@@ -477,7 +477,7 @@ export default function Daftar() {
             <div className="border-b border-t border-slate-100 bg-slate-50/50 px-8 py-5">
               <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
                 <User size={15} />
-                Data Akun
+                Data Akun 
               </h2>
             </div>
             <div className="grid gap-5 px-8 py-7 md:grid-cols-2">
@@ -609,16 +609,16 @@ export default function Daftar() {
                 type="submit"
                 className="mt-6 w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[.98]"
               >
-                Kirim Formulir Pendaftaran
+                KIRIM 
               </button>
 
               <p className="mt-4 text-center text-xs text-slate-400">
-                Sudah pernah mendaftar?{" "}
+                Sudah mendaftar?{" "}
                 <Link
                   to="/admin/dashboard"
                   className="font-medium text-emerald-600 hover:underline"
                 >
-                  Login ke akun Anda
+                  Login ke akun Anda 
                 </Link>
               </p>
             </div>

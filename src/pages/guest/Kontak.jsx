@@ -105,7 +105,7 @@ export default function Kontak() {
             <div className="space-y-2 text-sm">
               {[
                 { hari: "Senin – Jumat", jam: "08.00 – 16.00 WIB" },
-                { hari: "Sabtu",         jam: "08.00 – 12.00 WIB" },
+                { hari: "Sabtu",         jam: "09.00 – 12.00 WIB" },
                 { hari: "Minggu & Libur", jam: "Tutup" },
               ].map((j) => (
                 <div key={j.hari} className="flex items-center justify-between">
@@ -136,7 +136,7 @@ export default function Kontak() {
                     onClick={() => { setForm({ nama: "", email: "", noHp: "", pesan: "" }); setSent(false); }}
                     className="mt-5 rounded-xl bg-[#1E5E3F] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#174d33] transition"
                   >
-                    Kirim Pesan Lain
+                    Kirim Pesan lain 
                   </button>
                 </div>
               ) : (
