@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Send,
+  CheckCircle2,
+  ChevronRight,
+  Info,
+} from "lucide-react";
 
 export default function Kontak() {
   const [form, setForm] = useState({
@@ -49,150 +58,213 @@ export default function Kontak() {
           </p>
         </div>
       </section>
+      <section className="bg-slate-50 py-16">
+        <div className="mx-auto max-x-5xl px-6">
+          {/* HEADER */}
+          <div className="mb-10 text-center animate-[fadeIn_0.6s_ease-out]">
+            <span className="mb-2 inline-block text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
+              HUBUNGI KAMI
+            </span>
+            <h2 className="text-3xl font-bold text-slate-800">
+              INFORMASI KONTAK
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-500">
+              Silahkan hubungi kami melalui kontak yang tersedia untuk
+              mendapatkan informasi lebih lanjut mengenai layanan BMT
+              AL-ITTIHAD.
+            </p>
+          </div>
+          {/* Content */}
+          <div className="flex w-full justify-center">
+            {/* Kontak */}
+            <div className="space-y-4">
+              {[
+                {
+                  icon: Mail,
+                  title: "Kantor Pusat",
+                  lines: ["bmt@al-ittihad.org"],
+                },
+                {
+                  icon: Mail,
+                  title: "Kantor Cabang Duri",
+                  lines: ["bmtalittihadduri@yahoo.com"],
+                },
+                {
+                  icon: Mail,
+                  title: "Kantor Cabang Rumbai",
+                  lines: ["bmtalittihadrbi@yahoo.com"],
+                },
+                {
+                  icon: Mail,
+                  title: "Kantor Cabang Cibubur",
+                  lines: ["bmtalittihadcibb@gmail.com"],
+                },
+                {
+                  icon: Mail,
+                  title: "Kantor Cabang Panam",
+                  lines: ["bmtalittihadpanam@yahoo.com"],
+                },
+              ].map((c, index) => {
+                const Icon = c.icon;
 
-      <section className="bg-slate-50 py-14">
-        <div className="mx-auto max-w-2xl px-6">
+                return (
+                  <div
+                    key={c.title}
+                    className="group flex cursor-pointer gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#1E5E3F]/30 hover:shadow-lg"
+                    style={{
+                      animation: `fadeUp 0.5s ease-out ${index * 0.1}s both`,
+                    }}
+                  >
+                    {/* ICON */}
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#1E5E3F] group-hover:text-white">
+                      <Icon
+                        size={21}
+                        className="transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
 
-          {/* INFO KONTAK */}
-          <h2 className="mb-8 text-center text-2xl font-bold text-slate-800">
-            Informasi Kontak
-          </h2>
+                    {/* TEXT */}
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-slate-800 transition-colors duration-300 group-hover:text-[#1E5E3F]">
+                        {c.title}
+                      </p>
 
-          <div className="space-y-4">
-            {[
-              {
-                icon: MapPin,
-                title: "Kantor Pusat",
-                lines: ["Jl. Raya Al Ittihad No. 1", "Pekanbaru, Riau 28111"],
-              },
-              {
-                icon: Phone,
-                title: "Telepon",
-                lines: ["(0761) 123-4567", "WhatsApp: 0812-3456-7890"],
-              },
-              {
-                icon: Mail,
-                title: "Email",
-                lines: ["info@bmtalittihad.id", "admin@bmtalittihad.id"],
-              },
-            ].map((c) => {
-              const Icon = c.icon;
-              return (
-                <div
-                  key={c.title}
-                  className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-                >
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F]">
-                    <Icon size={20} />
+                      {c.lines.map((l, i) => (
+                        <p key={l} className="mt-1 text-sm text-slate-500">
+                          {l}
+
+                          {/* BADGE WHATSAPP */}
+                          {c.title === "Telepon" && i === 1 && (
+                            <span className="ml-2 inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">
+                              WhatsApp
+                            </span>
+                          )}
+                        </p>
+                      ))}
+                    </div>
+
+                    {/* ARROW */}
+                    <div className="flex items-center text-slate-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#1E5E3F]">
+                      <ChevronRight size={20} />
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-slate-800">{c.title}</p>
-                    {c.lines.map((l) => (
-                      <p key={l} className="mt-0.5 text-sm text-slate-500">{l}</p>
+                );
+              })}
+              {/* Jam operasional */}
+              <div
+                className="relative overflow-hidden rounded-2xl border border-[#1E5E3F]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                style={{
+                  animation: "fadeUp 0.6s ease-out 0.3s both",
+                }}
+              >
+                {/*Dekorasi*/}
+                <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#1E5E3F]/5" />
+                <div className="relative">
+                  {/*Title*/}
+                  <div className="mb-6 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F]">
+                        <Clock size={20} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-800">
+                          Jam Operasional
+                        </h3>
+                        <p className="text-xs text-slate-400">
+                          Waktu Pelayanan Kantor
+                        </p>
+                      </div>
+                    </div>
+                    {/*Status*/}
+                    <span className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600">
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                      Aktif
+                    </span>
+                  </div>
+                  {/* Jadwal */}
+                  <div className="space-y-3">
+                    {[
+                      {
+                        hari: "Senin - Jumat",
+                        jam: "08.00 - 16.00 WIB",
+                        aktif: true,
+                      },
+                      {
+                        hari: "Sabtu",
+                        jam: "09.00 - 12.00 WIB",
+                        aktif: true,
+                      },
+                      {
+                        hari: "Minggu & Libur",
+                        jam: "Tutup",
+                        aktif: false,
+                      },
+                    ].map((j) => (
+                      <div
+                        key={j.hari}
+                        className="group flex items-center justify-between rounded-xl border border-slare-100 bg-slate-50 px-4 py-3 transition-all duration-300 hover:border-[#1E5E3F]/20 hover:bg-[#1E5E3F]/5"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={`h-2.5 w-2.5 rounded-full ${
+                              j.aktif ? "bg-emerald-500" : "bg-red-400"
+                            }`}
+                          />
+                          <span className="text-sm font-medium text-slate-600">
+                            {j.hari}
+                          </span>
+                        </div>
+                        <span
+                          className={`text-sm font-semibold ${
+                            j.aktif ? "text-[#1E5E3F]" : "text-red-500"
+                          }`} 
+                         >
+                          {j.jam}
+                        </span>
+                      </div>
                     ))}
                   </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* JAM OPERASIONAL */}
-          <div className="mt-6 rounded-2xl border border-[#1E5E3F]/20 bg-[#1E5E3F]/5 p-5">
-            <div className="mb-3 flex items-center gap-2">
-              <Clock size={18} className="text-[#1E5E3F]" />
-              <h3 className="font-bold text-slate-800">Jam Operasional</h3>
-            </div>
-            <div className="space-y-2 text-sm">
-              {[
-                { hari: "Senin – Jumat", jam: "08.00 – 16.00 WIB" },
-                { hari: "Sabtu",         jam: "09.00 – 12.00 WIB" },
-                { hari: "Minggu & Libur", jam: "Tutup" },
-              ].map((j) => (
-                <div key={j.hari} className="flex items-center justify-between">
-                  <span className="text-slate-600">{j.hari}</span>
-                  <span className={`font-semibold ${j.jam === "Tutup" ? "text-red-500" : "text-[#1E5E3F]"}`}>
-                    {j.jam}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* FORM PESAN */}
-            {/* <div className="mt-10">
-              <h2 className="mb-6 text-center text-2xl font-bold text-slate-800">Kirim Pesan</h2>
-
-              {sent ? (
-                <div className="flex flex-col items-center justify-center rounded-3xl border border-green-200 bg-green-50 p-10 text-center">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-                    <CheckCircle2 size={36} className="text-[#1E5E3F]" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800">Pesan Terkirim!</h3>
-                  <p className="mt-2 text-sm text-slate-500">
-                    Terima kasih, <strong>{form.nama}</strong>. Kami akan membalas secepatnya melalui{" "}
-                    <strong>{form.email}</strong>.
-                  </p>
-                  <button
-                    onClick={() => { setForm({ nama: "", email: "", noHp: "", pesan: "" }); setSent(false); }}
-                    className="mt-5 rounded-xl bg-[#1E5E3F] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#174d33] transition"
-                  >
-                    Kirim Pesan lain 
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm space-y-4">
-                  <div>
-                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                      Nama Lengkap <span className="text-red-500">*</span>
-                    </label>
-                    <input type="text" value={form.nama} onChange={set("nama")} placeholder="Nama Anda" required className={inputCls} />
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                        Email <span className="text-red-500">*</span>
-                      </label>
-                      <input type="email" value={form.email} onChange={set("email")} placeholder="email@domain.com" required className={inputCls} />
-                    </div>
-                    <div>
-                      <label className="mb-1.5 block text-sm font-semibold text-slate-700">No. HP</label>
-                      <input type="tel" value={form.noHp} onChange={set("noHp")} placeholder="08xxxxxxxxxx" className={inputCls} />
+                  {/* INFO BAWAH */}
+                  <div className="mt-6 rounded-xl bg-[#1E5E3F]/5 p-4">
+                    <div className="flex gap-3">
+                      <Info
+                        size={18}
+                        className="mt-0.5 shirk-0 text-[#1E5E3F]"
+                      />
+                      <p className="text-xs leading-relaxed text-slate-500">
+                        Untuk Mendapatkan pelayanan terbaik, disarankan datang
+                        sesuai dengan jam operasional yang telah di tentukan.
+                      </p>
                     </div>
                   </div>
-                  <div>
-                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                      Pesan <span className="text-red-500">*</span>
-                    </label>
-                    <textarea
-                      value={form.pesan}
-                      onChange={set("pesan")}
-                      rows={5}
-                      placeholder="Tuliskan pesan, pertanyaan, atau saran Anda..."
-                      required
-                      className={`${inputCls} resize-none`}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#174d33] disabled:opacity-60"
-                  >
-                    {loading ? (
-                      <>
-                        <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                        </svg>
-                        Mengirim...
-                      </>
-                    ) : (
-                      <><Send size={15} /> Kirim Pesan</>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Animasi */}
+          <style>
+            {`
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    `}
+          </style>
         </div>
       </section>
     </div>
