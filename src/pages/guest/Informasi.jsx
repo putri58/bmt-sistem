@@ -1,42 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Wallet, CreditCard, CheckCircle2, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
+import { Wallet, CreditCard, CheckCircle2, ChevronDown, ChevronUp, ArrowRight, Calculator } from "lucide-react";
 
 const simpanan = [
   {
-    nama: "Simpanan Pokok",
-    deskripsi: "Simpanan yang dibayarkan satu kali saat pertama kali menjadi anggota koperasi.",
-    ketentuan: ["Dibayar satu kali saat pendaftaran", "Tidak dapat ditarik selama menjadi anggota", "Bukti kepemilikan anggota"],
-    manfaat: ["Sebagai modal koperasi", "Hak suara dalam RAT", "Mendapat SHU tahunan"],
-    persyaratan: ["Telah terdaftar sebagai anggota", "Membayar simpanan pokok Rp 100.000"],
-    nominal: "Rp 100.000",
+    nama: "Tabungan Mudharabah",
+    deskripsi: "Simpanan dengan akad Mudharabah yang dikelola sesuai prinsip syariah dengan sistem bagi hasil berdasarkan nisbah yang telah disepakati",
+    ketentuan: ["Menggunakan akad Mudharabah", "Setoran dapat dilakukan sesuai ketentuan koperasi", "Mendapatkan bagi hasil sesuai nisbah", "Penarikan dana mengikuti ketentuan koperasi"],
+    manfaat: ["Mendapatkan bagi hasil", "Membantu mengembangkan dana", "Mudah digunakan untuk kebutuhan anggota", "Dikelola sesuai prinsip syariah"],
+    persyaratan: ["Telah terdaftar sebagai anggota", "Mengisi formulir pembukaan rekening", "Melengkapi dokumen yang dipersyaratkan"],
+    nominal: "xx", //perlu konfirmasi
     warna: "emerald",
   },
   {
-    nama: "Simpanan Wajib",
-    deskripsi: "Simpanan yang wajib dibayarkan setiap bulan oleh seluruh anggota koperasi.",
-    ketentuan: ["Dibayar rutin setiap bulan", "Minimal Rp 50.000 per bulan", "Dapat ditingkatkan sesuai kemampuan"],
-    manfaat: ["Akumulasi tabungan jangka panjang", "Meningkatkan SHU", "Jaminan pembiayaan"],
-    persyaratan: ["Anggota aktif koperasi", "Memiliki rekening tabungan"],
-    nominal: "Min. Rp 50.000/bulan",
+    nama: "Tabungan Pendidikan",
+    deskripsi: "Simpanan yang diperuntukkan bagi anggota untuk mempersiapkan kebutuhan biaya pendidikan secara terencana",
+    ketentuan: ["Setoran dilakukan secara rutin", "Jumlah setoran sesuai kemampuan anggota", "Penarikan mengikuti ketentuan tabungan pendidikan", "Diperuntukkan untuk kebutuhan pendidikan"],
+    manfaat: ["Membantu mempersiapkan biaya pendidikan", "Membentuk kebiasaan menabung secara rutin", "Membantu mengatur keuangan untuk kebutuhan pendidikan", "Dana dapat berkembang sesuai ketentuan"],
+    persyaratan: ["Merupakan anggota koperasi", "Mengisi formulir pembukaan rekening", "Melakukan setoran awal sesuai ketentuan"],
+    nominal: "xx", //perlu konfirmasi
     warna: "blue",
   },
   {
-    nama: "Simpanan Sukarela (Wadiah)",
-    deskripsi: "Tabungan bebas yang dapat disetor dan ditarik kapan saja tanpa ketentuan minimum.",
-    ketentuan: ["Bebas setor dan tarik kapan saja", "Tidak ada minimum saldo", "Akad Wadiah Yad Dhamanah"],
+    nama: "Tabungan Wadiah",
+    deskripsi: "Simpanan dengan akad Wadiah yang memberikan kemudahan bagi anggota untuk menyimpan dan menarik dana sesuai dengan ketentuan koperasi.",
+    ketentuan: ["Dana mudah disimpan dan digunakan", "Memberikan kemudahan dalam melakukan transaksi", "Dikelola sesuai prinsip syariah", "Berpotensi mendapatkan bonus sesuai kebijakan koperasi"],
     manfaat: ["Likuiditas tinggi", "Bebas biaya administrasi", "Bonus simpanan setiap bulan"],
-    persyaratan: ["Anggota koperasi", "Mengisi formulir pembukaan rekening"],
-    nominal: "Bebas",
+    persyaratan: ["Merupakan anggota koperasi", "Mengisi formulir pembukaan rekening", "Melengkapi dokumen yang dipersyaratkan"],
+    nominal: "xx", //perlu konfirmasi
     warna: "indigo",
   },
   {
-    nama: "Simpanan Berjangka (Mudharabah)",
-    deskripsi: "Investasi berjangka dengan sistem bagi hasil yang menarik dan menguntungkan.",
-    ketentuan: ["Tenor: 3, 6, atau 12 bulan", "Minimal Rp 1.000.000", "Akad Mudharabah Muthlaqah"],
-    manfaat: ["Bagi hasil hingga 8% p.a.", "Lebih menguntungkan dari tabungan biasa", "Dapat dijadikan jaminan pembiayaan"],
-    persyaratan: ["Anggota koperasi", "Setoran minimal Rp 1.000.000", "Memilih tenor yang diinginkan"],
-    nominal: "Min. Rp 1.000.000",
+    nama: "Simpanan Berjangka (SIMJAKA)",
+    deskripsi: "Simpanan dengan jangka waktu tertentu yang dikelola menggunakan prinsip syariah dengan sistem bagi hasil sesuai ketentuan yang berlaku.",
+    ketentuan: ["Tersedia pilihan jangka waktu sesuai ketentuan", "Setoran minimal sesuai ketentuan koperasi", "Menggunakan akad Mudharabah", "Pencairan dilakukan setelah jangka waktu berakhir"],
+    manfaat: ["Mendapatkan bagi hasil sesuai nisbah", "Membantu mengembangkan dana dalam jangka waktu tertentu", "Mendorong perencanaan keuangan jangka menengah dan panjang", "Dapat menjadi jaminan pembiayaan sesuai ketentuan"],
+    persyaratan: ["Merupakan anggota koperasi", "Memenuhi setoran minimal", "Memilih jangka waktu simpanan", "Melengkapi dokumen yang dipersyaratkan"],
+    nominal: "xx", //perlu konfirmasi
     warna: "orange",
   },
 ];
@@ -208,6 +208,7 @@ export default function Informasi() {
           {[
             { key: "simpanan", label: "Simpanan", icon: Wallet },
             { key: "pinjaman", label: "Pembiayaan / Pinjaman", icon: CreditCard },
+            { key: "simulasi", label: "Simulasi", icon: Calculator },
           ].map(({ key, label, icon: Icon }) => (
             <button
               key={key}
@@ -254,6 +255,195 @@ export default function Informasi() {
           )}
 
         </div>
+        {/* SIMULASI */}
+{activeTab === "simulasi" && (
+  <div>
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold text-slate-800">
+        Simulasi Keuangan
+      </h2>
+      <p className="mt-1 text-slate-500">
+        Hitung estimasi simpanan dan pembiayaan sesuai dengan kebutuhan Anda.
+      </p>
+    </div>
+
+    <div className="grid gap-6 md:grid-cols-2">
+
+      {/* SIMULASI SIMPANAN */}
+      <div className="rounded-2xl border border-emerald-200 bg-white p-6 shadow-sm">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
+            <Wallet className="h-6 w-6 text-emerald-600" />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-slate-800">
+              Simulasi Simpanan
+            </h3>
+            <p className="text-sm text-slate-500">
+              Perkirakan simpanan Anda
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Jenis Simpanan
+            </label>
+
+            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
+              <option>Tabungan Mudharabah</option>
+              <option>Tabungan Pendidikan</option>
+              <option>Tabungan Wadiah</option>
+              <option>Simpanan Berjangka (SIMJAKA)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Nominal Simpanan
+            </label>
+
+            <input
+              type="number"
+              placeholder="Masukkan nominal"
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Jangka Waktu
+            </label>
+
+            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
+              <option>3 Bulan</option>
+              <option>6 Bulan</option>
+              <option>12 Bulan</option>
+            </select>
+          </div>
+
+          <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] px-4 py-3 font-semibold text-white transition hover:bg-[#174b32]">
+            <Calculator className="h-5 w-5" />
+            Hitung Simulasi
+          </button>
+
+          <div className="rounded-xl bg-emerald-50 p-4">
+            <p className="text-sm font-medium text-emerald-700">
+              Hasil Simulasi
+            </p>
+
+            <p className="mt-1 text-xl font-bold text-emerald-800">
+              Estimasi Saldo
+            </p>
+
+            <p className="mt-1 text-2xl font-bold text-[#1E5E3F]">
+              Rp 0
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* SIMULASI PEMBIAYAAN */}
+      <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-sm">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
+            <CreditCard className="h-6 w-6 text-blue-600" />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-slate-800">
+              Simulasi Pembiayaan
+            </h3>
+            <p className="text-sm text-slate-500">
+              Perkirakan angsuran pembiayaan
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Jenis Pembiayaan
+            </label>
+
+            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+              <option>Pembiayaan Murabahah</option>
+              <option>Pembiayaan Mudharabah</option>
+              <option>Pembiayaan Ijarah</option>
+              <option>Pembiayaan Qardh</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Jumlah Pembiayaan
+            </label>
+
+            <input
+              type="number"
+              placeholder="Masukkan jumlah pembiayaan"
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Jangka Waktu
+            </label>
+
+            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+              <option>6 Bulan</option>
+              <option>12 Bulan</option>
+              <option>24 Bulan</option>
+              <option>36 Bulan</option>
+              <option>60 Bulan</option>
+            </select>
+          </div>
+
+          <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700">
+            <Calculator className="h-5 w-5" />
+            Hitung Simulasi
+          </button>
+
+          <div className="rounded-xl bg-blue-50 p-4">
+            <p className="text-sm font-medium text-blue-700">
+              Hasil Simulasi
+            </p>
+
+            <p className="mt-2 text-sm text-slate-600">
+              Total Pembayaran
+            </p>
+
+            <p className="text-2xl font-bold text-blue-700">
+              Rp 0
+            </p>
+
+            <div className="mt-3 border-t border-blue-100 pt-3">
+              <p className="text-sm text-slate-600">
+                Estimasi Angsuran / Bulan
+              </p>
+
+              <p className="text-lg font-bold text-slate-800">
+                Rp 0
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* CATATAN */}
+    <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
+      <p className="text-sm leading-relaxed text-amber-800">
+        <span className="font-semibold">Catatan:</span> Hasil simulasi
+        merupakan estimasi dan dapat berbeda dengan perhitungan sebenarnya
+        sesuai ketentuan koperasi yang berlaku.
+      </p>
+    </div>
+  </div>
+)}
       </section>
 
       {/* CTA */}

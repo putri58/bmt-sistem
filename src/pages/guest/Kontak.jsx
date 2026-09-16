@@ -195,7 +195,7 @@ export default function Kontak() {
                         aktif: true,
                       },
                       {
-                        hari: "Minggu & Libur",
+                        hari: "Minggu & Libur Nasional",
                         jam: "Tutup",
                         aktif: false,
                       },
