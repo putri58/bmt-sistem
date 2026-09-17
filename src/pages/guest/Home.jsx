@@ -262,7 +262,7 @@ export default function Home() {
                 Al-Ittihad Rumbai, Pekanbaru. Lembaga ini beroperasi berdasarkan
                 prinsip syariah dengan sistem bagi hasil untuk menggantikan
                 bunga, serta tunduk pada UU No. 25 Tahun 1992 tentang
-                Perkoperasian. 
+                Perkoperasian.
               </p>
               <p className="mt-4 leading-relaxed text-slate-500">
                 BMT Al-Ittihad mengantongi Sertifikat Operasional PINBUK No.
@@ -280,6 +280,7 @@ export default function Home() {
       {/* ── PRODUK ── */}
       <section id="produk" className="bg-slate-50 py-20">
         <div className="mx-auto max-w-6xl px-6">
+          {/* Header */}
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-emerald-600">
               Produk & Layanan
@@ -289,51 +290,166 @@ export default function Home() {
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-slate-500">
               Berbagai produk simpanan dan pembiayaan kami dirancang untuk
-              memenuhi kebutuhan finansial Anda secara syariah.
+              memenuhi kebutuhan finansial Anda secara Syariah.
             </p>
           </div>
-
+          {/* Produk */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {produk.map((p) => {
-              const c = colorMap[p.color];
-              const Icon = p.icon;
-              return (
-                <div
-                  key={p.nama}
-                  className={`group rounded-2xl border ${c.border} ${c.bg} p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
-                >
-                  <div
-                    className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${c.icon}`}
-                  >
-                    <Icon size={22} />
-                  </div>
-                  <h3 className="font-semibold text-slate-800">{p.nama}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                    {p.desc}
-                  </p>
-                  <ul className="mt-4 space-y-2">
-                    {p.fitur.map((f) => (
-                      <li
-                        key={f}
-                        className="flex items-center gap-2 text-xs text-slate-600"
-                      >
-                        <CheckCircle2
-                          size={13}
-                          className="shrink-0 text-emerald-500"
-                        />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    to="/daftar"
-                    className={`mt-5 block rounded-lg ${c.badge} py-2 text-center text-xs font-semibold text-white transition hover:opacity-90`}
-                  >
-                    Lihat Selengkapnya →
-                  </Link>
-                </div>
-              );
-            })}
+            {/* Tabungan Mudharabah */}
+            <div className="group rounded-2xl border border-emerald-100 bg-emerald-50 p-6 transition-all duration-400 hover:-translate-y-1">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600">
+                <Wallet size={22} />
+              </div>
+              <h3 className="font-semibold text-slate-500">
+                Tabungan Mudharabah
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Simpanan dengan akad Mudharabah yang dikelola secara syariah
+                dengan sistem bagi hasil sesuai ketentuan yang berlaku.
+              </p>
+              <ul className="mt-4 space-y-2">
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Akad Mudharabah
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shrink-0 text-emerald-500"
+                  />
+                  Sistem bagi hasil
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Dikelola sesuai prinsip syariah
+                </li>
+              </ul>
+              <Link
+                to="/daftar"
+                className="mt-5 block rounded-lg bg-emerald-600 py-2 text-center text-xs font-semibold text-white transition hover:bg-emerald-700"
+              >
+                Lihat Selengkapnya →
+              </Link>
+            </div>
+            {/* Tabungan Pendidikan */}
+            <div className="group rounded-2xl border border-blue-100 bg-blue-50 p-6 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+                <TrendingUp size={22} />
+              </div>
+              <h3 className="font-semibold text-slate-800">
+                Tabungan Pendidikan
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Simpanan yang dpat digunakan untuk membantu mempersiapkan
+                kebutuhan pendidikan secara terencana.
+              </p>
+              <ul className="mt-4 space-y-2">
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Untuk Kebutuhan pendidikan
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Membantu menyiapkan dana
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Dikelola secara syariah
+                </li>
+              </ul>
+              <Link
+                to="/daftar"
+                className="mt-5 block rounded-lg bg-emerald-600 py-2 text-center text-xs font-semibold text-white transition hover:bg-emerald-700"
+              >
+                Lihat Selengkapnya →
+              </Link>
+            </div>
+            {/* Tabungan Wadiah */}
+            <div className="group rounded-2xl border border-indigo-100 bg-indigo-50 p-6 transition-all duration-400 hover hover:-translate-y-1 hover:shadow-xl">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+                <ShieldCheck size={22} />
+              </div>
+              <h3 className="font-semibold text-slate-800">Tabungan Wadiah</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Simpanan dengan akad Wadiah yang dititipkan kepada koperasi dan
+                dikelola sesuai prinsip syariah.
+              </p>
+              <ul className="mt-4 space-y-2">
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Akad Wadiah
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Simpanan Titipan
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
+                  Sesuai Prinsip syariah
+                </li>
+              </ul>
+              <Link
+                to="/daftar"
+                className="mt-5 block rounded-lg bg-emerald-600 py-2 text-center text-xs font-semibold text-white transition hover:bg-emerald-700"
+              >
+                Lihat Selengkapnya →
+              </Link>
+            </div>
+            {/* Simpanan Berjangka */}
+            <div className="group rounded-2xl border border-orange-100 bg-orange-50 p-6 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600"> <Landmark size={22}/>
+              </div>
+              <h3 className="font-semibold text-slate-800">
+                Simpanan Berjangka
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Simpanan dengan jangka waktu tertentu yang dapat menjadi pilihan untuk merencanakan dan mengembangkan dana.
+              </p>
+              <ul className="mt-4 space-y-2">
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2 size={13} className="shirnk-0 text-emerald-500"/>
+                  Jangka waktu tertentu
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2 size={13} className="shirnk-0 text-emerald-500"/>
+                  Perencanaan dana
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-600">
+                  <CheckCircle2 size={13} className="shirnk-0 text-emerald-500"/>
+                  Dikelola dengan syariah
+                </li>
+              </ul>
+              <Link
+                to="/daftar"
+                className="mt-5 block rounded-lg bg-emerald-600 py-2 text-center text-xs font-semibold text-white transition hover:bg-emerald-700"
+              >
+                Lihat Selengkapnya →
+              </Link>
+            </div>
           </div>
         </div>
       </section>

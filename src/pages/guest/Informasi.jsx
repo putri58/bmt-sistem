@@ -41,44 +41,44 @@ const simpanan = [
   },
 ];
 
-const pinjaman = [
-  {
-    nama: "Pembiayaan Murabahah",
-    deskripsi: "Pembiayaan jual-beli untuk kebutuhan barang konsumtif maupun produktif.",
-    plafon: "Rp 500.000 – Rp 500.000.000",
-    tenor: "1 – 60 bulan",
-    ketentuan: ["Akad jual-beli syariah", "Margin kompetitif dan transparan", "Cicilan tetap setiap bulan"],
-    persyaratan: ["KTP/SIM yang masih berlaku", "Slip gaji / laporan usaha", "Jaminan sesuai plafon", "Foto terbaru"],
-    warna: "green",
-  },
-  {
-    nama: "Pembiayaan Mudharabah",
-    deskripsi: "Pembiayaan bagi hasil untuk pengembangan usaha produktif anggota.",
-    plafon: "Rp 5.000.000 – Rp 200.000.000",
-    tenor: "3 – 36 bulan",
-    ketentuan: ["Akad bagi hasil proporsional", "Keuntungan dibagi sesuai nisbah", "Laporan usaha berkala"],
-    persyaratan: ["Anggota aktif min. 3 bulan", "Proposal usaha", "Laporan keuangan usaha", "Jaminan usaha"],
-    warna: "blue",
-  },
-  {
-    nama: "Pembiayaan Ijarah",
-    deskripsi: "Pembiayaan sewa menyewa untuk kebutuhan pendidikan, kesehatan, atau jasa.",
-    plafon: "Rp 500.000 – Rp 50.000.000",
-    tenor: "1 – 24 bulan",
-    ketentuan: ["Akad sewa manfaat", "Biaya sewa tetap", "Cocok untuk pendidikan dan kesehatan"],
-    persyaratan: ["KTP/SIM", "Bukti kebutuhan (tagihan/invoice)", "Slip penghasilan"],
-    warna: "purple",
-  },
-  {
-    nama: "Pembiayaan Qardh",
-    deskripsi: "Pinjaman kebajikan tanpa bunga untuk kebutuhan darurat atau sosial.",
-    plafon: "Rp 500.000 – Rp 5.000.000",
-    tenor: "1 – 12 bulan",
-    ketentuan: ["Tanpa biaya tambahan (0%)", "Hanya untuk kebutuhan mendesak", "Pengembalian pokok pinjaman"],
-    persyaratan: ["Anggota aktif min. 6 bulan", "Surat permohonan", "KTP"],
-    warna: "rose",
-  },
-];
+// const pinjaman = [
+//   {
+//     nama: "Pembiayaan Murabahah",
+//     deskripsi: "Pembiayaan jual-beli untuk kebutuhan barang konsumtif maupun produktif.",
+//     plafon: "Rp 500.000 – Rp 500.000.000",
+//     tenor: "1 – 60 bulan",
+//     ketentuan: ["Akad jual-beli syariah", "Margin kompetitif dan transparan", "Cicilan tetap setiap bulan"],
+//     persyaratan: ["KTP/SIM yang masih berlaku", "Slip gaji / laporan usaha", "Jaminan sesuai plafon", "Foto terbaru"],
+//     warna: "green",
+//   },
+//   {
+//     nama: "Pembiayaan Mudharabah",
+//     deskripsi: "Pembiayaan bagi hasil untuk pengembangan usaha produktif anggota.",
+//     plafon: "Rp 5.000.000 – Rp 200.000.000",
+//     tenor: "3 – 36 bulan",
+//     ketentuan: ["Akad bagi hasil proporsional", "Keuntungan dibagi sesuai nisbah", "Laporan usaha berkala"],
+//     persyaratan: ["Anggota aktif min. 3 bulan", "Proposal usaha", "Laporan keuangan usaha", "Jaminan usaha"],
+//     warna: "blue",
+//   },
+//   {
+//     nama: "Pembiayaan Ijarah",
+//     deskripsi: "Pembiayaan sewa menyewa untuk kebutuhan pendidikan, kesehatan, atau jasa.",
+//     plafon: "Rp 500.000 – Rp 50.000.000",
+//     tenor: "1 – 24 bulan",
+//     ketentuan: ["Akad sewa manfaat", "Biaya sewa tetap", "Cocok untuk pendidikan dan kesehatan"],
+//     persyaratan: ["KTP/SIM", "Bukti kebutuhan (tagihan/invoice)", "Slip penghasilan"],
+//     warna: "purple",
+//   },
+//   {
+//     nama: "Pembiayaan Qardh",
+//     deskripsi: "Pinjaman kebajikan tanpa bunga untuk kebutuhan darurat atau sosial.",
+//     plafon: "Rp 500.000 – Rp 5.000.000",
+//     tenor: "1 – 12 bulan",
+//     ketentuan: ["Tanpa biaya tambahan (0%)", "Hanya untuk kebutuhan mendesak", "Pengembalian pokok pinjaman"],
+//     persyaratan: ["Anggota aktif min. 6 bulan", "Surat permohonan", "KTP"],
+//     warna: "rose",
+//   },
+// ];
 
 const colorMap = {
   emerald: "bg-emerald-50 border-emerald-200 text-emerald-700",
@@ -206,8 +206,8 @@ export default function Informasi() {
       <div className="sticky top-[80px] z-20 border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl gap-1 px-6 py-2">
           {[
-            { key: "simpanan", label: "Simpanan", icon: Wallet },
-            { key: "pinjaman", label: "Pembiayaan / Pinjaman", icon: CreditCard },
+            { key: "simpanan", label: "Produk", icon: Wallet },
+            // { key: "pinjaman", label: "Pembiayaan / Pinjaman", icon: CreditCard },
             { key: "simulasi", label: "Simulasi", icon: Calculator },
           ].map(({ key, label, icon: Icon }) => (
             <button
@@ -233,7 +233,7 @@ export default function Informasi() {
           {activeTab === "simpanan" && (
             <div>
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-slate-800">Produk Simpanan</h2>
+                <h2 className="text-2xl font-bold text-slate-800">Produk Layanan</h2>
                 <p className="mt-1 text-slate-500">Kelola keuangan Anda dengan produk simpanan syariah kami yang aman dan menguntungkan.</p>
               </div>
               <div className="space-y-4">
