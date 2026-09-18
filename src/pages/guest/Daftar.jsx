@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useAnggota } from "../../context/AnggotaContext";
+import api from "../../lib/api";
 import {
   Landmark,
   User,
@@ -184,13 +184,14 @@ function validate(form) {
 }
 
 export default function Daftar() {
-  const { tambahPendaftar } = useAnggota();
   const [form, setForm]           = useState(emptyForm);
   const [errors, setErrors]       = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed]       = useState(false);
   const [showPass, setShowPass]   = useState(false);
   const [showKonfirm, setShowKonfirm] = useState(false);
+  const [loading, setLoading]     = useState(false);
+  const [apiError, setApiError]   = useState("");
 
   const set = (key) => (e) =>
     setForm((prev) => ({ ...prev, [key]: e.target.value }));
@@ -201,35 +202,50 @@ export default function Daftar() {
   const removeFile = (key) => () =>
     setForm((prev) => ({ ...prev, [key]: null }));
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const errs = validate(form);
     if (!agreed) errs.agreed = "Anda harus menyetujui pernyataan di atas";
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
-      // Kirim data ke antrian pendaftaran admin
-      // File object bisa disimpan di React state (in-memory, valid selama session)
-      tambahPendaftar({
-        namaAnggota:    form.namaAnggota,
-        noIdentitas:    form.noIdentitas,
-        jenisIdentitas: form.jenisIdentitas,
-        tempatLahir:    form.tempatLahir,
-        tanggalLahir:   form.tanggalLahir,
-        kewarganegaraan: form.kewarganegaraan,
-        status:         form.status,
-        jenisKelamin:   form.jenisKelamin,
-        namaIbuKandung: form.namaIbuKandung,
-        alamatRumah:    form.alamatRumah,
-        kota:           form.kota,
-        kodePos:        form.kodePos,
-        email:          form.email,
-        noTelp:         form.noTelp,
-        username:       form.username,
-        fotoIdentitas:  form.fotoIdentitas,   // File object langsung
-        fotoNPWP:       form.fotoNPWP,        // File object langsung (null jika tidak diisi)
-      });
-      setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setLoading(true);
+      setApiError("");
+      try {
+        // Pakai FormData karena ada file yang diupload
+        const formData = new FormData();
+        formData.append('nama_anggota',      form.namaAnggota);
+        formData.append('no_identitas',      form.noIdentitas);
+        formData.append('jenis_identitas',   form.jenisIdentitas);
+        formData.append('tempat_lahir',      form.tempatLahir);
+        formData.append('tanggal_lahir',     form.tanggalLahir);
+        formData.append('kewarganegaraan',   form.kewarganegaraan);
+        formData.append('status_perkawinan', form.status);
+        formData.append('jenis_kelamin',     form.jenisKelamin);
+        formData.append('nama_ibu_kandung',  form.namaIbuKandung);
+        formData.append('alamat_rumah',      form.alamatRumah);
+        formData.append('kota',              form.kota);
+        formData.append('kode_pos',          form.kodePos);
+        formData.append('email',             form.email);
+        formData.append('no_telp',           form.noTelp);
+        formData.append('username',          form.username);
+        formData.append('password',          form.password);
+        formData.append('foto_identitas',    form.fotoIdentitas);
+        if (form.fotoNPWP) {
+          formData.append('foto_npwp', form.fotoNPWP);
+        }
+
+        await api.post('/daftar', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        const msg = err.response?.data?.message || "Pendaftaran gagal, coba lagi.";
+        setApiError(msg);
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
@@ -605,11 +621,27 @@ export default function Daftar() {
                 </p>
               )}
 
+              {apiError && (
+                <div className="mb-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                  <AlertCircle size={16} className="shrink-0" />
+                  {apiError}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="mt-6 w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[.98]"
+                disabled={loading}
+                className="mt-6 w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                KIRIM 
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    </svg>
+                    Mengirim...
+                  </span>
+                ) : "KIRIM"}
               </button>
 
               <p className="mt-4 text-center text-xs text-slate-400">

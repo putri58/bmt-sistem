@@ -22,10 +22,7 @@ export default function Login() {
     if (!form.username || !form.password) return;
 
     setLoading(true);
-    // Simulasi network delay 600ms
-    await new Promise((r) => setTimeout(r, 600));
-
-    const role = login(form.username, form.password, remember);
+    const role = await login(form.username, form.password, remember);
     setLoading(false);
 
     if (role === "admin")   navigate("/admin/dashboard");

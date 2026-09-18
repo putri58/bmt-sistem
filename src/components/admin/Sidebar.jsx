@@ -24,17 +24,17 @@ const menuUtama = [
   { name: "Dashboard",           path: "/admin/dashboard",           icon: LayoutDashboard },
   { name: "Pendaftaran Anggota", path: "/admin/pendaftaran-anggota", icon: ClipboardList },
   { name: "Kelola Anggota",      path: "/admin/anggota",             icon: Users },
-  { name: "Simpanan",            path: "/admin/simpanan",            icon: Wallet },
-  { name: "Pinjaman",            path: "/admin/pinjaman",            icon: CreditCard },
-  { name: "Angsuran",            path: "/admin/pengajuan",           icon: Receipt },
-  { name: "Transaksi",           path: "/admin/transaksi",           icon: ArrowLeftRight },
-  { name: "Laporan",             path: "/admin/laporan",             icon: ChartColumn },
+  // { name: "Simpanan",            path: "/admin/simpanan",            icon: Wallet },
+  // { name: "Pinjaman",            path: "/admin/pinjaman",            icon: CreditCard },
+  // { name: "Angsuran",            path: "/admin/pengajuan",           icon: Receipt },
+  // { name: "Transaksi",           path: "/admin/transaksi",           icon: ArrowLeftRight },
+  // { name: "Laporan",             path: "/admin/laporan",             icon: ChartColumn },
 ];
 
-const menuInformasi = [
-  { name: "Berita & Informasi", path: "/admin/informasi",  icon: Newspaper },
-  { name: "Pengumuman",         path: "/admin/pengumuman", icon: Megaphone },
-];
+// const menuInformasi = [
+//   // { name: "Berita & Informasi", path: "/admin/informasi",  icon: Newspaper },
+//   // { name: "Pengumuman",         path: "/admin/pengumuman", icon: Megaphone },
+// ];
 
 const menuSistem = [
   { name: "Manajemen Admin", path: "/admin/manajemen-admin", icon: UserCog },
@@ -134,10 +134,10 @@ export default function Sidebar() {
           <SidebarItem key={item.path} item={item} />
         ))}
 
-        <SectionLabel>Informasi</SectionLabel>
+        {/* <SectionLabel>Informasi</SectionLabel>
         {menuInformasi.map((item) => (
           <SidebarItem key={item.path} item={item} />
-        ))}
+        ))} */}
 
         <SectionLabel>Sistem</SectionLabel>
         {menuSistem.map((item) => (
