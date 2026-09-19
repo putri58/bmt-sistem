@@ -45,7 +45,7 @@ function NavItem({ item, onClick }) {
 /* ─── SIDEBAR CONTENT (shared antara desktop + mobile) ─── */
 function SidebarContent({ onClose, currentUser, handleLogout }) {
   const nama     = currentUser?.nama || "Anggota";
-  const nomor    = currentUser?.nomorAnggota || "-";
+  const nomor    = currentUser?.anggota_id || "-";
   const initials = nama.split(" ").map((w) => w[0]).slice(0, 2).join("");
 
   return (

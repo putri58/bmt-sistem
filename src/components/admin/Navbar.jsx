@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useAnggota } from "../../context/AnggotaContext";
+import api from "../../lib/api";
 
 function useClickOutside(ref, onClose) {
   useEffect(() => {
@@ -19,8 +19,19 @@ function useClickOutside(ref, onClose) {
 
 export default function Navbar() {
   const { currentUser, logout } = useAuth();
-  const { jumlahMenunggu }      = useAnggota();
   const navigate                = useNavigate();
+  const [jumlahMenunggu, setJumlahMenunggu] = useState(0);
+
+  useEffect(() => {
+    async function fetchBadge() {
+      try {
+        const res = await api.get('/pendaftar');
+        const menunggu = res.data.filter((p) => p.status_pendaftaran === "Menunggu").length;
+        setJumlahMenunggu(menunggu);
+      } catch (_) {}
+    }
+    fetchBadge();
+  }, []);
 
   const [notifOpen,   setNotifOpen]   = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);

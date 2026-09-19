@@ -1,140 +1,140 @@
-import { useState } from "react";
-import { User, Pencil, Check, X } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+import { useState, useEffect } from "react";
+import { User, MapPin, Phone, Mail, CreditCard, Calendar, Shield } from "lucide-react";
+import api from "../../lib/api";
 
 function formatDate(d) {
   if (!d) return "-";
   return new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 }
 
-const inputCls = "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none focus:border-[#1E5E3F] focus:bg-white transition";
+function InfoRow({ label, value }) {
+  return (
+    <div className="flex gap-4 border-b border-slate-100 py-3 last:border-0">
+      <span className="w-44 shrink-0 text-xs font-semibold text-slate-400">{label}</span>
+      <span className="text-sm text-slate-700">{value || "-"}</span>
+    </div>
+  );
+}
 
 export default function Profil() {
-  const { currentUser } = useAuth();
-  const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({
-    nama:        currentUser?.nama || "",
-    email:       currentUser?.email || "",
-    noHp:        currentUser?.noHp || "",
-    alamat:      currentUser?.alamat || "",
-    kota:        currentUser?.kota || "",
-    kodePos:     currentUser?.kodePos || "",
-  });
+  const [anggota, setAnggota] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const initials = currentUser?.nama
-    ? currentUser.nama.split(" ").map((w) => w[0]).slice(0, 2).join("")
-    : "AG";
+  useEffect(() => {
+    async function fetchProfil() {
+      try {
+        const res = await api.get('/member/profil');
+        setAnggota(res.data);
+      } catch (err) {
+        console.error('Gagal ambil profil', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProfil();
+  }, []);
 
-  const set = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
- 
+  if (loading) {
+    return <div className="flex items-center justify-center py-32 text-slate-400">Memuat data...</div>;
+  }
+
+  if (!anggota) {
+    return <div className="flex items-center justify-center py-32 text-slate-400">Data profil tidak ditemukan.</div>;
+  }
+
+  const initials = anggota.nama_anggota?.split(" ").map((w) => w[0]).slice(0, 2).join("") || "?";
+
   return (
     <div>
+      {/* HEADER */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-800">Profil Saya</h1>
-        <p className="mt-1 text-sm text-slate-500">Informasi pribadi akun keanggotaan Anda.</p>
+        <p className="mt-1 text-sm text-slate-500">Informasi data diri dan keanggotaan Anda.</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-
-        {/* KARTU PROFIL */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#1E5E3F] text-2xl font-bold text-white shadow-lg">
+      {/* CARD PROFIL UTAMA */}
+      <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-6">
+        <div className="flex items-center gap-5">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#1E5E3F] to-[#2E8B57] text-2xl font-bold text-white shadow-lg">
             {initials}
           </div>
-          <h2 className="font-bold text-slate-800">{currentUser?.nama}</h2>
-          <p className="mt-1 text-sm text-[#1E5E3F] font-semibold">{currentUser?.nomorAnggota || "KSP-00124"}</p>
-          <span className="mt-2 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
-            {currentUser?.statusAnggota || "Aktif"}
-          </span>
-
-          <div className="mt-5 border-t border-slate-100 pt-5 space-y-2 text-sm text-left">
-            <div className="flex justify-between">
-              <span className="text-slate-500">Anggota sejak</span>
-              <span className="font-medium text-slate-700">{formatDate(currentUser?.tglMasuk)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-slate-500">NIK</span>
-              <span className="font-mono text-xs text-slate-700">{currentUser?.noIdentitas || "-"}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* DETAIL PROFIL */}
-        <div className="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-6">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="font-semibold text-slate-800">Data Pribadi</h2>
-            {!editing ? (
-              <button onClick={() => setEditing(true)}
-                className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition">
-                <Pencil size={13} /> Edit Profil
-              </button>
-            ) : (
-              <div className="flex gap-2">
-                <button onClick={() => setEditing(false)}
-                  className="flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">
-                  <X size={13} /> Batal
-                </button>
-                <button onClick={() => setEditing(false)}
-                  className="flex items-center gap-1 rounded-lg bg-[#1E5E3F] px-3 py-2 text-xs font-semibold text-white hover:bg-[#174d33]">
-                  <Check size={13} /> Simpan
-                </button>
-              </div>
-            )}
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {[
-              { label: "Nama Lengkap",  key: "nama",    type: "text" },
-              { label: "Email",         key: "email",   type: "email" },
-              { label: "No. HP / WA",   key: "noHp",    type: "tel" },
-              { label: "Kota",          key: "kota",    type: "text" },
-              { label: "Kode Pos",      key: "kodePos", type: "text" },
-            ].map(({ label, key, type }) => (
-              <div key={key}>
-                <label className="mb-1 block text-xs font-semibold text-slate-500">{label}</label>
-                {editing ? (
-                  <input type={type} value={form[key]} onChange={set(key)} className={inputCls} />
-                ) : (
-                  <p className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5 text-sm text-slate-800">
-                    {form[key] || "-"}
-                  </p>
-                )}
-              </div>
-            ))}
-
-            <div className="md:col-span-2">
-              <label className="mb-1 block text-xs font-semibold text-slate-500">Alamat Rumah</label>
-              {editing ? (
-                <textarea value={form.alamat} onChange={set("alamat")} rows={3} className={`${inputCls} resize-none`} />
-              ) : (
-                <p className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5 text-sm text-slate-800">
-                  {form.alamat || "-"}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* READONLY INFO */}
-          <div className="mt-5 border-t border-slate-100 pt-5">
-            <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-400">Informasi Keanggotaan</p>
-            <div className="grid gap-3 md:grid-cols-3">
-              {[
-                { label: "Nomor Anggota",    value: currentUser?.nomorAnggota || "KSP-00124" },
-                { label: "Tempat Lahir",     value: currentUser?.tempatLahir || "-" },
-                { label: "Tanggal Lahir",    value: formatDate(currentUser?.tanggalLahir) },
-                { label: "Jenis Kelamin",    value: currentUser?.jenisKelamin || "-" },
-                { label: "Status Anggota",   value: currentUser?.statusAnggota || "Aktif" },
-                { label: "Tanggal Masuk",    value: formatDate(currentUser?.tglMasuk) },
-              ].map(({ label, value }) => (
-                <div key={label} className="rounded-xl bg-slate-50 p-3">
-                  <p className="text-[10px] font-semibold text-slate-400">{label}</p>
-                  <p className="mt-1 text-sm font-medium text-slate-700">{value}</p>
-                </div>
-              ))}
+          <div>
+            <h2 className="text-xl font-bold text-slate-800">{anggota.nama_anggota}</h2>
+            <p className="text-sm text-slate-500">{anggota.id_anggota}</p>
+            <div className="mt-2 flex items-center gap-2">
+              <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                anggota.status_anggota === "Aktif"
+                  ? "bg-emerald-100 text-emerald-600"
+                  : "bg-slate-100 text-slate-500"
+              }`}>
+                {anggota.status_anggota}
+              </span>
+              <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-600">
+                Anggota sejak {formatDate(anggota.tgl_disetujui)}
+              </span>
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="grid gap-6 lg:grid-cols-2">
+
+        {/* DATA DIRI */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1E5E3F]/10">
+              <User size={15} className="text-[#1E5E3F]" />
+            </div>
+            <h3 className="font-semibold text-slate-800">Data Diri</h3>
+          </div>
+          <InfoRow label="Nama Lengkap"     value={anggota.nama_anggota} />
+          <InfoRow label="No. Identitas"    value={`${anggota.no_identitas} (${anggota.jenis_identitas})`} />
+          <InfoRow label="Tempat Lahir"     value={anggota.tempat_lahir} />
+          <InfoRow label="Tanggal Lahir"    value={formatDate(anggota.tanggal_lahir)} />
+          <InfoRow label="Jenis Kelamin"    value={anggota.jenis_kelamin} />
+          <InfoRow label="Status Pernikahan" value={anggota.status_perkawinan} />
+          <InfoRow label="Kewarganegaraan"  value={anggota.kewarganegaraan} />
+          <InfoRow label="Nama Ibu Kandung" value={anggota.nama_ibu_kandung} />
+        </div>
+
+        {/* ALAMAT & KONTAK */}
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50">
+                <MapPin size={15} className="text-blue-600" />
+              </div>
+              <h3 className="font-semibold text-slate-800">Alamat</h3>
+            </div>
+            <InfoRow label="Alamat Rumah" value={anggota.alamat_rumah} />
+            <InfoRow label="Kota"         value={anggota.kota} />
+            <InfoRow label="Kode Pos"     value={anggota.kode_pos} />
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50">
+                <Phone size={15} className="text-purple-600" />
+              </div>
+              <h3 className="font-semibold text-slate-800">Kontak</h3>
+            </div>
+            <InfoRow label="No. Telepon / HP" value={anggota.no_telp} />
+            <InfoRow label="Email"            value={anggota.email} />
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50">
+                <Shield size={15} className="text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-slate-800">Info Keanggotaan</h3>
+            </div>
+            <InfoRow label="ID Anggota"    value={anggota.id_anggota} />
+            <InfoRow label="Status"        value={anggota.status_anggota} />
+            <InfoRow label="Tgl Daftar"    value={formatDate(anggota.tgl_daftar)} />
+            <InfoRow label="Tgl Disetujui" value={formatDate(anggota.tgl_disetujui)} />
+          </div>
+        </div>
       </div>
     </div>
   );

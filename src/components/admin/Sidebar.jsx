@@ -2,20 +2,14 @@ import {
   LayoutDashboard,
   ClipboardList,
   Users,
-  Wallet,
-  CreditCard,
-  Receipt,
-  ArrowLeftRight,
-  ChartColumn,
-  Newspaper,
-  Megaphone,
   UserCog,
   Settings,
 } from "lucide-react";
 
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAnggota } from "../../context/AnggotaContext";
-import { useAuth }    from "../../context/AuthContext";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../lib/api";
 
 const LOGO_URL =
   "https://ykpialittihad.or.id/wp-content/uploads/2025/01/logo-web-ykpi-al-ittihad.png";
@@ -78,9 +72,20 @@ function SectionLabel({ children }) {
 }
 
 export default function Sidebar() {
-  const { jumlahMenunggu } = useAnggota();
   const { logout, currentUser } = useAuth();
   const navigate = useNavigate();
+  const [jumlahMenunggu, setJumlahMenunggu] = useState(0);
+
+  useEffect(() => {
+    async function fetchBadge() {
+      try {
+        const res = await api.get('/pendaftar');
+        const menunggu = res.data.filter((p) => p.status_pendaftaran === "Menunggu").length;
+        setJumlahMenunggu(menunggu);
+      } catch (_) {}
+    }
+    fetchBadge();
+  }, []);
 
   function handleLogout() {
     logout();

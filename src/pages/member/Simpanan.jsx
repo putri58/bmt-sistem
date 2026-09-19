@@ -1,78 +1,95 @@
-import { Wallet } from "lucide-react";
-import { simpananData } from "../../data/memberData";
+import { useState, useEffect } from "react";
+import { Wallet, ArrowDownLeft, ArrowUpRight } from "lucide-react";
+import api from "../../lib/api";
 
-function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v); }
+function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v ?? 0); }
 function formatDate(d) {
+  if (!d) return "-";
   return new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 }
 
 const jenisBadge = {
-  "Simpanan Wajib":   "bg-blue-50 text-blue-600",
-  "Simpanan Sukarela":"bg-orange-50 text-orange-600",
-  "Simpanan Pokok":   "bg-[#1E5E3F]/10 text-[#1E5E3F]",
+  Wadiah:     "bg-blue-50 text-blue-600",
+  Mudharabah: "bg-purple-50 text-purple-600",
+  Wajib:      "bg-orange-50 text-orange-600",
+  Pokok:      "bg-emerald-50 text-emerald-600",
 };
 
-export default function Simpanan() {
+export default function MemberSimpanan() {
+  const [data, setData]     = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSimpanan() {
+      try {
+        const res = await api.get('/member/simpanan');
+        setData(res.data);
+      } catch (err) {
+        console.error('Gagal ambil data simpanan', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchSimpanan();
+  }, []);
+
+  if (loading) return <div className="flex items-center justify-center py-32 text-slate-400">Memuat data...</div>;
+
+  const total   = data?.total_simpanan ?? 0;
+  const riwayat = data?.riwayat ?? [];
+
   return (
     <div>
+      {/* HEADER */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-800">Simpanan Saya</h1>
-        <p className="mt-1 text-sm text-slate-500">Ringkasan dan riwayat simpanan keanggotaan Anda.</p>
+        <p className="mt-1 text-sm text-slate-500">Riwayat setoran dan penarikan simpanan Anda.</p>
       </div>
 
-      {/* SUMMARY */}
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {[
-          { label: "Simpanan Pokok",    value: simpananData.pokok,    color: "bg-[#1E5E3F]" },
-          { label: "Simpanan Wajib",    value: simpananData.wajib,    color: "bg-blue-600" },
-          { label: "Simpanan Sukarela", value: simpananData.sukarela, color: "bg-orange-500" },
-          { label: "Total Simpanan",    value: simpananData.total,    color: "bg-slate-800", bold: true },
-        ].map((s) => (
-          <div key={s.label} className={`rounded-2xl p-5 text-white ${s.color} shadow-sm`}>
-            <div className="flex items-center gap-2 mb-2">
-              <Wallet size={16} className="opacity-70" />
-              <p className="text-xs opacity-80">{s.label}</p>
-            </div>
-            <p className={`text-xl ${s.bold ? "font-black" : "font-bold"}`}>
-              Rp {formatRp(s.value)}
-            </p>
-          </div>
-        ))}
+      {/* SALDO CARD */}
+      <div className="mb-6 rounded-2xl bg-gradient-to-br from-[#1E5E3F] to-[#2E8B57] p-6 text-white shadow-lg">
+        <div className="flex items-center gap-3 mb-2">
+          <Wallet size={20} />
+          <p className="text-sm font-medium opacity-80">Total Saldo Simpanan</p>
+        </div>
+        <p className="text-3xl font-bold">Rp {formatRp(total)}</p>
+        <p className="mt-1 text-xs opacity-60">Semua jenis simpanan</p>
       </div>
 
-      {/* RIWAYAT */}
+      {/* TABEL RIWAYAT */}
       <div className="rounded-2xl border border-slate-200 bg-white">
         <div className="border-b border-slate-100 px-6 py-4">
           <h2 className="font-semibold text-slate-800">Riwayat Simpanan</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-100 bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <th className="px-5 py-3 text-left">Tanggal</th>
-                <th className="px-5 py-3 text-left">Jenis</th>
-                <th className="px-5 py-3 text-right">Nominal</th>
-                <th className="px-5 py-3 text-left">Keterangan</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {simpananData.riwayat.map((r) => (
-                <tr key={r.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-5 py-4 text-slate-600">{formatDate(r.tanggal)}</td>
-                  <td className="px-5 py-4">
-                    <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${jenisBadge[r.jenis] || "bg-slate-100 text-slate-500"}`}>
-                      {r.jenis}
+
+        {riwayat.length === 0 ? (
+          <div className="py-16 text-center text-slate-400">Belum ada riwayat simpanan.</div>
+        ) : (
+          <div className="divide-y divide-slate-100">
+            {riwayat.map((item) => (
+              <div key={item.id} className="flex items-center gap-4 px-6 py-4">
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                  item.tipe === "Setor" ? "bg-emerald-100 text-emerald-600" : "bg-red-100 text-red-600"
+                }`}>
+                  {item.tipe === "Setor" ? <ArrowDownLeft size={16} /> : <ArrowUpRight size={16} />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-slate-700">{item.tipe} Simpanan</p>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${jenisBadge[item.jenis_simpanan] || "bg-slate-100 text-slate-500"}`}>
+                      {item.jenis_simpanan}
                     </span>
-                  </td>
-                  <td className="px-5 py-4 text-right font-semibold text-emerald-600">
-                    + Rp {formatRp(r.nominal)}
-                  </td>
-                  <td className="px-5 py-4 text-slate-500">{r.keterangan}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                  <p className="text-xs text-slate-400">{item.kode_simpanan} · {formatDate(item.tanggal)}</p>
+                  {item.keterangan && <p className="text-xs text-slate-400">{item.keterangan}</p>}
+                </div>
+                <span className={`text-sm font-bold ${item.tipe === "Setor" ? "text-emerald-600" : "text-red-600"}`}>
+                  {item.tipe === "Setor" ? "+" : "-"} Rp {formatRp(item.jumlah)}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

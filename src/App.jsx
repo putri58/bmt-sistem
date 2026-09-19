@@ -1,7 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-
-import { AuthProvider }    from "./context/AuthContext";
-import { AnggotaProvider } from "./context/AnggotaContext";
+import { AuthProvider } from "./context/AuthContext";
 
 /* ── LAYOUTS ── */
 import GuestLayout  from "./layouts/GuestLayout";
@@ -41,7 +39,6 @@ import MemberTransaksi  from "./pages/member/Transaksi";
 export default function App() {
   return (
     <AuthProvider>
-      <AnggotaProvider>
         <Routes>
 
           {/* ── GUEST ── */}
@@ -86,7 +83,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
 
         </Routes>
-      </AnggotaProvider>
     </AuthProvider>
   );
 }
