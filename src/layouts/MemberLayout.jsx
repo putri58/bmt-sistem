@@ -84,7 +84,7 @@ function SidebarContent({ onClose, currentUser, handleLogout }) {
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-400 transition hover:bg-red-500/10 hover:text-red-400"
         >
           <LogOut size={17} className="text-slate-500" />
-          Keluar
+          Logout
         </button>
       </div>
 
@@ -121,7 +121,7 @@ export default function MemberLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-
+      
       {/* SIDEBAR DESKTOP */}
       <aside className="fixed left-0 top-0 z-40 hidden h-screen w-64 lg:block">
         <SidebarContent currentUser={currentUser} handleLogout={handleLogout} />

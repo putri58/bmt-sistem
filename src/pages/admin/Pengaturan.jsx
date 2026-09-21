@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Save, Building2, Bell, Lock, Database, RefreshCw } from "lucide-react";
+import api from "../../lib/api";
+import { useAuth } from "../../context/AuthContext";
 
 const tabs = [
   { key: "umum", label: "Umum", icon: Building2 },
@@ -9,8 +11,10 @@ const tabs = [
 ];
 
 export default function Pengaturan() {
+  const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("umum");
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved]         = useState(false);
+  const [pwMsg, setPwMsg]         = useState({ type: "", text: "" });
 
   const [umum, setUmum] = useState({
     namaKoperasi: "KSP Maju Bersama",
@@ -39,6 +43,26 @@ export default function Pengaturan() {
   function handleSave() {
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
+  }
+
+  async function handleGantiPassword() {
+    if (!keamanan.passwordBaru || !keamanan.passwordLama) {
+      setPwMsg({ type: "error", text: "Password lama dan baru wajib diisi." });
+      return;
+    }
+    if (keamanan.passwordBaru !== keamanan.konfirmasiPassword) {
+      setPwMsg({ type: "error", text: "Konfirmasi password tidak cocok." });
+      return;
+    }
+    try {
+      await api.put(`/users/${currentUser?.id}`, {
+        password: keamanan.passwordBaru,
+      });
+      setPwMsg({ type: "success", text: "Password berhasil diperbarui." });
+      setKeamanan({ passwordLama: "", passwordBaru: "", konfirmasiPassword: "", sesiOtomatis: keamanan.sesiOtomatis });
+    } catch {
+      setPwMsg({ type: "error", text: "Gagal memperbarui password." });
+    }
   }
 
   return (
@@ -158,7 +182,12 @@ export default function Pengaturan() {
                     {["15", "30", "60", "120"].map((v) => <option key={v} value={v}>{v} menit</option>)}
                   </select>
                 </div>
-                <button onClick={handleSave} className="w-full rounded-lg bg-indigo-600 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors">
+                {pwMsg.text && (
+                  <div className={`rounded-lg px-4 py-2.5 text-sm ${pwMsg.type === "success" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"}`}>
+                    {pwMsg.text}
+                  </div>
+                )}
+                <button onClick={handleGantiPassword} className="w-full rounded-lg bg-indigo-600 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors">
                   Perbarui Password
                 </button>
               </div>

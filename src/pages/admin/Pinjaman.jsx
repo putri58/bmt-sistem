@@ -1,225 +1,401 @@
-import { useState } from "react";
-import { Plus, Search, Eye, Pencil, Trash2, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, Search, Eye, CheckCircle, XCircle, Trash2, X, Filter, CreditCard } from "lucide-react";
+import api from "../../lib/api";
 
-const statusList = ["Aktif", "Lunas", "Macet"];
-const jenisList = ["Pinjaman Modal Usaha", "Pinjaman Pendidikan", "Pinjaman Konsumtif", "Pinjaman Renovasi", "Pinjaman Darurat"];
+function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v ?? 0); }
+function formatDate(d) {
+  if (!d) return "-";
+  return new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+}
 
-const initialData = [
-  { id: "PJM-001", anggota: "Sari Wulandari", jenis: "Pinjaman Modal Usaha", pokok: 15000000, bunga: 1.5, tenor: 12, tglMulai: "2026-03-01", status: "Aktif" },
-  { id: "PJM-002", anggota: "Dedi Kurniawan", jenis: "Pinjaman Pendidikan", pokok: 8000000, bunga: 1.2, tenor: 10, tglMulai: "2026-04-01", status: "Aktif" },
-  { id: "PJM-003", anggota: "Rina Melati", jenis: "Pinjaman Konsumtif", pokok: 5000000, bunga: 1.5, tenor: 6, tglMulai: "2026-02-01", status: "Lunas" },
-  { id: "PJM-004", anggota: "Budi Santoso", jenis: "Pinjaman Renovasi", pokok: 12000000, bunga: 1.8, tenor: 18, tglMulai: "2025-10-01", status: "Macet" },
-  { id: "PJM-005", anggota: "Ahmad Fauzi", jenis: "Pinjaman Modal Usaha", pokok: 20000000, bunga: 1.5, tenor: 24, tglMulai: "2026-01-01", status: "Aktif" },
-  { id: "PJM-006", anggota: "Hendra Gunawan", jenis: "Pinjaman Darurat", pokok: 3000000, bunga: 1.0, tenor: 3, tglMulai: "2026-07-01", status: "Aktif" },
-];
-
-const statusColors = {
-  Aktif: "bg-emerald-50 text-emerald-600",
-  Lunas: "bg-blue-50 text-blue-600",
-  Macet: "bg-red-50 text-red-600",
+const statusStyle = {
+  Pengajuan: "bg-orange-50 text-orange-600",
+  Disetujui: "bg-emerald-50 text-emerald-600",
+  Ditolak:   "bg-red-50 text-red-600",
+  Lunas:     "bg-blue-50 text-blue-600",
 };
 
-function formatRupiah(v) { return new Intl.NumberFormat("id-ID").format(v); }
-function formatDate(d) { return new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }); }
+function Modal({ title, onClose, children, size = "md" }) {
+  const widths = { md: "max-w-md", lg: "max-w-2xl" };
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+      <div className={`w-full ${widths[size]} rounded-2xl bg-white shadow-xl`}>
+        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+          <h2 className="font-semibold text-slate-800">{title}</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><X size={18} /></button>
+        </div>
+        <div className="max-h-[75vh] overflow-y-auto px-6 py-5">{children}</div>
+      </div>
+    </div>
+  );
+}
 
-export default function Pinjaman() {
-  const [data, setData] = useState(initialData);
-  const [search, setSearch] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
-  const [modalMode, setModalMode] = useState(null);
-  const [selected, setSelected] = useState(null);
-  const [form, setForm] = useState({ anggota: "", jenis: jenisList[0], pokok: "", bunga: "1.5", tenor: "", tglMulai: "", status: "Aktif" });
+const emptyForm = {
+  anggota_id:    "",
+  jumlah_pinjaman: "",
+  margin:        "2",
+  tenor_bulan:   "12",
+  tgl_pengajuan: new Date().toISOString().split("T")[0],
+};
 
-  const filtered = data.filter((d) => {
-    const matchSearch = d.anggota.toLowerCase().includes(search.toLowerCase()) || d.id.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = filterStatus ? d.status === filterStatus : true;
+export default function AdminPinjaman() {
+  const [pinjamanList, setPinjamanList] = useState([]);
+  const [anggotaList,  setAnggotaList]  = useState([]);
+  const [loading,      setLoading]      = useState(true);
+  const [search,       setSearch]       = useState("");
+  const [filterStatus, setFilter]       = useState("");
+  const [modalMode,    setModalMode]    = useState(null);
+  const [selected,     setSelected]     = useState(null);
+  const [form,         setForm]         = useState(emptyForm);
+  const [saving,       setSaving]       = useState(false);
+  const [error,        setError]        = useState("");
+
+  async function fetchData() {
+    try {
+      const [pinRes, angRes] = await Promise.all([
+        api.get('/pinjaman'),
+        api.get('/anggota'),
+      ]);
+      setPinjamanList(pinRes.data);
+      setAnggotaList(angRes.data);
+    } catch (err) {
+      console.error('Gagal ambil data', err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => { fetchData(); }, []);
+
+  const filtered = pinjamanList.filter((p) => {
+    const matchSearch =
+      p.anggota?.nama_anggota?.toLowerCase().includes(search.toLowerCase()) ||
+      p.kode_pinjaman?.toLowerCase().includes(search.toLowerCase());
+    const matchStatus = filterStatus ? p.status === filterStatus : true;
     return matchSearch && matchStatus;
   });
 
-  function openAdd() { setForm({ anggota: "", jenis: jenisList[0], pokok: "", bunga: "1.5", tenor: "", tglMulai: new Date().toISOString().split("T")[0], status: "Aktif" }); setModalMode("add"); }
-  function openEdit(row) { setSelected(row); setForm({ ...row, pokok: String(row.pokok), bunga: String(row.bunga), tenor: String(row.tenor) }); setModalMode("edit"); }
-  function openView(row) { setSelected(row); setModalMode("view"); }
-  function openDelete(row) { setSelected(row); setModalMode("delete"); }
-  function closeModal() { setModalMode(null); setSelected(null); }
+  // Hitung estimasi angsuran
+  const jumlah  = Number(form.jumlah_pinjaman) || 0;
+  const margin  = Number(form.margin) || 0;
+  const tenor   = Number(form.tenor_bulan) || 1;
+  const estimasiAngsuran = jumlah > 0 ? Math.round((jumlah * (1 + margin / 100)) / tenor) : 0;
 
-  function handleSave() {
-    const entry = { ...form, pokok: Number(form.pokok) || 0, bunga: Number(form.bunga) || 0, tenor: Number(form.tenor) || 0 };
-    if (modalMode === "add") {
-      setData([...data, { ...entry, id: `PJM-${String(data.length + 1).padStart(3, "0")}` }]);
-    } else {
-      setData(data.map((d) => (d.id === selected.id ? { ...entry, id: selected.id } : d)));
+  async function handleSave() {
+    if (!form.anggota_id || !form.jumlah_pinjaman) {
+      setError("Anggota dan jumlah pinjaman wajib diisi.");
+      return;
     }
-    closeModal();
+    setSaving(true);
+    setError("");
+    try {
+      await api.post('/pinjaman', {
+        ...form,
+        jumlah_pinjaman: Number(form.jumlah_pinjaman),
+        margin:          Number(form.margin),
+        tenor_bulan:     Number(form.tenor_bulan),
+      });
+      await fetchData();
+      setModalMode(null);
+      setForm(emptyForm);
+    } catch (err) {
+      setError(err.response?.data?.message || "Gagal menyimpan data.");
+    } finally {
+      setSaving(false);
+    }
   }
 
-  const angsuranBulanan = (row) => {
-    const total = row.pokok + (row.pokok * (row.bunga / 100) * row.tenor);
-    return Math.round(total / row.tenor);
+  async function handleSetujui() {
+    setSaving(true);
+    try {
+      await api.post(`/pinjaman/${selected.id}/setujui`);
+      await fetchData();
+      setModalMode(null);
+    } catch (err) {
+      alert(err.response?.data?.message || "Gagal menyetujui pinjaman.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleTolak() {
+    setSaving(true);
+    try {
+      await api.post(`/pinjaman/${selected.id}/tolak`);
+      await fetchData();
+      setModalMode(null);
+    } catch {
+      alert("Gagal menolak pinjaman.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete(id) {
+    if (!confirm("Hapus data pinjaman ini?")) return;
+    try {
+      await api.delete(`/pinjaman/${id}`);
+      await fetchData();
+    } catch {
+      alert("Gagal menghapus data.");
+    }
+  }
+
+  const counts = {
+    Pengajuan: pinjamanList.filter((p) => p.status === "Pengajuan").length,
+    Disetujui: pinjamanList.filter((p) => p.status === "Disetujui").length,
+    Lunas:     pinjamanList.filter((p) => p.status === "Lunas").length,
   };
 
   return (
     <div>
+      {/* HEADER */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Data Pinjaman</h1>
-          <p className="mt-1 text-sm text-slate-500">Kelola data pinjaman anggota koperasi.</p>
+          <h1 className="text-2xl font-bold text-slate-800">Kelola Pinjaman</h1>
+          <p className="mt-1 text-sm text-slate-500">Kelola pengajuan dan persetujuan pinjaman anggota.</p>
         </div>
-        <button onClick={openAdd} className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 transition-colors">
-          <Plus size={16} />
-          Tambah Pinjaman
+        <button onClick={() => { setModalMode("add"); setForm(emptyForm); setError(""); }}
+          className="flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-orange-600 transition-colors">
+          <Plus size={16} /> Tambah Pinjaman
         </button>
       </div>
 
-      {/* STAT CARDS */}
+      {/* STAT */}
       <div className="mb-6 grid grid-cols-3 gap-4">
         {[
-          { label: "Total Pinjaman Aktif", value: data.filter((d) => d.status === "Aktif").length },
-          { label: "Total Pinjaman Lunas", value: data.filter((d) => d.status === "Lunas").length },
-          { label: "Pinjaman Macet", value: data.filter((d) => d.status === "Macet").length },
+          { label: "Pengajuan", value: counts.Pengajuan, cls: "border-orange-100 bg-orange-50 text-orange-600" },
+          { label: "Disetujui", value: counts.Disetujui, cls: "border-emerald-100 bg-emerald-50 text-emerald-600" },
+          { label: "Lunas",     value: counts.Lunas,     cls: "border-blue-100 bg-blue-50 text-blue-600" },
         ].map((s) => (
-          <div key={s.label} className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-xs text-slate-500">{s.label}</p>
-            <p className="mt-1 text-2xl font-bold text-slate-800">{s.value}</p>
+          <div key={s.label} className={`rounded-2xl border p-5 text-center ${s.cls}`}>
+            <p className="text-2xl font-bold">{s.value}</p>
+            <p className="text-xs mt-1">{s.label}</p>
           </div>
         ))}
       </div>
 
+      {/* TABLE */}
       <div className="rounded-2xl border border-slate-200 bg-white">
         <div className="flex flex-wrap items-center gap-3 border-b border-slate-100 p-5">
           <div className="relative max-w-xs flex-1">
             <Search size={15} className="absolute left-3 top-2.5 text-slate-400" />
-            <input type="text" placeholder="Cari nama atau ID..." value={search} onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none focus:border-indigo-400 focus:bg-white" />
+            <input type="text" placeholder="Cari nama anggota atau kode..."
+              value={search} onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none focus:border-orange-400 focus:bg-white" />
           </div>
-          <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none">
-            <option value="">Semua Status</option>
-            {statusList.map((s) => <option key={s}>{s}</option>)}
-          </select>
+          <div className="flex items-center gap-1.5">
+            <Filter size={14} className="text-slate-400" />
+            {["", "Pengajuan", "Disetujui", "Ditolak", "Lunas"].map((s) => (
+              <button key={s} onClick={() => setFilter(s)}
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  filterStatus === s ? "bg-orange-500 text-white" : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                }`}>
+                {s || "Semua"}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <th className="px-5 py-3">ID</th>
+                <th className="px-5 py-3">Kode</th>
                 <th className="px-5 py-3">Anggota</th>
-                <th className="px-5 py-3">Jenis</th>
-                <th className="px-5 py-3">Pokok</th>
+                <th className="px-5 py-3">Jumlah</th>
                 <th className="px-5 py-3">Angsuran/Bln</th>
                 <th className="px-5 py-3">Tenor</th>
+                <th className="px-5 py-3">Tgl Pengajuan</th>
                 <th className="px-5 py-3">Status</th>
                 <th className="px-5 py-3 text-center">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {filtered.length === 0 ? (
-                <tr><td colSpan={8} className="py-12 text-center text-slate-400">Tidak ada data.</td></tr>
-              ) : filtered.map((row) => (
-                <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-5 py-4 font-mono text-xs text-slate-500">{row.id}</td>
-                  <td className="px-5 py-4 font-medium text-slate-700">{row.anggota}</td>
-                  <td className="px-5 py-4 text-slate-600">{row.jenis}</td>
-                  <td className="px-5 py-4 font-semibold text-slate-700">Rp {formatRupiah(row.pokok)}</td>
-                  <td className="px-5 py-4 text-slate-600">Rp {formatRupiah(angsuranBulanan(row))}</td>
-                  <td className="px-5 py-4 text-slate-600">{row.tenor} bln</td>
-                  <td className="px-5 py-4">
-                    <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${statusColors[row.status]}`}>{row.status}</span>
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center justify-center gap-2">
-                      <button onClick={() => openView(row)} className="rounded-lg p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-colors"><Eye size={15} /></button>
-                      <button onClick={() => openEdit(row)} className="rounded-lg p-1.5 text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"><Pencil size={15} /></button>
-                      <button onClick={() => openDelete(row)} className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors"><Trash2 size={15} /></button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {loading ? (
+                <tr><td colSpan={8} className="py-14 text-center text-slate-400">Memuat data...</td></tr>
+              ) : filtered.length === 0 ? (
+                <tr><td colSpan={8} className="py-14 text-center text-slate-400">Belum ada data pinjaman.</td></tr>
+              ) : (
+                filtered.map((p) => (
+                  <tr key={p.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-5 py-4 font-mono text-xs text-slate-400">{p.kode_pinjaman}</td>
+                    <td className="px-5 py-4">
+                      <p className="font-medium text-slate-700">{p.anggota?.nama_anggota || "-"}</p>
+                      <p className="text-xs text-slate-400">{p.anggota?.id_anggota}</p>
+                    </td>
+                    <td className="px-5 py-4 font-semibold text-slate-700">Rp {formatRp(p.jumlah_pinjaman)}</td>
+                    <td className="px-5 py-4 text-slate-600">Rp {formatRp(p.angsuran_per_bulan)}</td>
+                    <td className="px-5 py-4 text-slate-600">{p.tenor_bulan} bln</td>
+                    <td className="px-5 py-4 text-xs text-slate-500">{formatDate(p.tgl_pengajuan)}</td>
+                    <td className="px-5 py-4">
+                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${statusStyle[p.status] || "bg-slate-50 text-slate-500"}`}>
+                        {p.status}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center justify-center gap-1.5">
+                        <button onClick={() => { setSelected(p); setModalMode("view"); }}
+                          className="rounded-lg p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-colors" title="Detail">
+                          <Eye size={15} />
+                        </button>
+                        {p.status === "Pengajuan" && (
+                          <>
+                            <button onClick={() => { setSelected(p); setModalMode("setujui"); }}
+                              className="rounded-lg p-1.5 text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-colors" title="Setujui">
+                              <CheckCircle size={15} />
+                            </button>
+                            <button onClick={() => { setSelected(p); setModalMode("tolak"); }}
+                              className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors" title="Tolak">
+                              <XCircle size={15} />
+                            </button>
+                          </>
+                        )}
+                        <button onClick={() => handleDelete(p.id)}
+                          className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors" title="Hapus">
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* MODAL ADD/EDIT */}
-      {(modalMode === "add" || modalMode === "edit") && (
-        <Modal title={modalMode === "add" ? "Tambah Pinjaman" : "Edit Pinjaman"} onClose={closeModal}>
+      {/* MODAL TAMBAH */}
+      {modalMode === "add" && (
+        <Modal title="Tambah Pinjaman" onClose={() => setModalMode(null)}>
           <div className="space-y-4">
-            {[
-              { label: "Nama Anggota", key: "anggota", type: "text" },
-              { label: "Pokok Pinjaman (Rp)", key: "pokok", type: "number" },
-              { label: "Bunga (% per bulan)", key: "bunga", type: "number" },
-              { label: "Tenor (bulan)", key: "tenor", type: "number" },
-              { label: "Tanggal Mulai", key: "tglMulai", type: "date" },
-            ].map(({ label, key, type }) => (
-              <div key={key}>
-                <label className="mb-1 block text-xs font-semibold text-slate-600">{label}</label>
-                <input type={type} value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-indigo-400" />
+            {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-600">{error}</div>}
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-slate-600">Pilih Anggota *</label>
+              <select value={form.anggota_id} onChange={(e) => setForm({ ...form, anggota_id: e.target.value })}
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-400">
+                <option value="">-- Pilih Anggota --</option>
+                {anggotaList.map((a) => (
+                  <option key={a.id} value={a.id}>{a.nama_anggota} ({a.id_anggota})</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-slate-600">Jumlah Pinjaman (Rp) *</label>
+              <input type="number" value={form.jumlah_pinjaman} onChange={(e) => setForm({ ...form, jumlah_pinjaman: e.target.value })}
+                placeholder="Contoh: 10000000"
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-400" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-slate-600">Margin (%)</label>
+                <input type="number" value={form.margin} onChange={(e) => setForm({ ...form, margin: e.target.value })}
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-400" />
               </div>
-            ))}
-            <div>
-              <label className="mb-1 block text-xs font-semibold text-slate-600">Jenis Pinjaman</label>
-              <select value={form.jenis} onChange={(e) => setForm({ ...form, jenis: e.target.value })}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none">
-                {jenisList.map((j) => <option key={j}>{j}</option>)}
-              </select>
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-slate-600">Tenor (Bulan)</label>
+                <input type="number" value={form.tenor_bulan} onChange={(e) => setForm({ ...form, tenor_bulan: e.target.value })}
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-400" />
+              </div>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-slate-600">Status</label>
-              <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none">
-                {statusList.map((s) => <option key={s}>{s}</option>)}
-              </select>
+              <label className="mb-1 block text-xs font-semibold text-slate-600">Tanggal Pengajuan</label>
+              <input type="date" value={form.tgl_pengajuan} onChange={(e) => setForm({ ...form, tgl_pengajuan: e.target.value })}
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-400" />
             </div>
+            {estimasiAngsuran > 0 && (
+              <div className="rounded-xl bg-orange-50 border border-orange-100 px-4 py-3">
+                <p className="text-xs text-orange-600">Estimasi angsuran per bulan:</p>
+                <p className="text-lg font-bold text-orange-700">Rp {formatRp(estimasiAngsuran)}</p>
+              </div>
+            )}
           </div>
           <div className="mt-6 flex justify-end gap-3">
-            <button onClick={closeModal} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Batal</button>
-            <button onClick={handleSave} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Simpan</button>
+            <button onClick={() => setModalMode(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Batal</button>
+            <button onClick={handleSave} disabled={saving}
+              className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 disabled:opacity-60">
+              {saving ? "Menyimpan..." : "Simpan"}
+            </button>
           </div>
         </Modal>
       )}
 
-      {/* MODAL VIEW */}
+      {/* MODAL DETAIL */}
       {modalMode === "view" && selected && (
-        <Modal title="Detail Pinjaman" onClose={closeModal}>
+        <Modal title="Detail Pinjaman" onClose={() => setModalMode(null)} size="lg">
           <div className="space-y-3">
-            {[["ID", selected.id], ["Anggota", selected.anggota], ["Jenis", selected.jenis], ["Pokok", `Rp ${formatRupiah(selected.pokok)}`], ["Bunga", `${selected.bunga}% per bulan`], ["Tenor", `${selected.tenor} bulan`], ["Tgl Mulai", formatDate(selected.tglMulai)], ["Status", selected.status]].map(([l, v]) => (
-              <div key={l} className="flex gap-3 border-b border-slate-100 pb-3">
-                <span className="w-28 shrink-0 text-xs font-semibold text-slate-500">{l}</span>
-                <span className="text-sm text-slate-700">{v}</span>
+            {[
+              ["Kode Pinjaman",    selected.kode_pinjaman],
+              ["Anggota",         `${selected.anggota?.nama_anggota} (${selected.anggota?.id_anggota})`],
+              ["Jumlah Pinjaman", `Rp ${formatRp(selected.jumlah_pinjaman)}`],
+              ["Margin",          `${selected.margin}%`],
+              ["Tenor",           `${selected.tenor_bulan} bulan`],
+              ["Angsuran/Bulan",  `Rp ${formatRp(selected.angsuran_per_bulan)}`],
+              ["Status",          selected.status],
+              ["Tgl Pengajuan",   formatDate(selected.tgl_pengajuan)],
+              ["Tgl Disetujui",   formatDate(selected.tgl_disetujui)],
+            ].map(([l, v]) => (
+              <div key={l} className="flex gap-3 border-b border-slate-100 pb-2">
+                <span className="w-36 shrink-0 text-xs font-semibold text-slate-400">{l}</span>
+                <span className="text-sm text-slate-700">{v || "-"}</span>
               </div>
             ))}
           </div>
-          <div className="mt-6 flex justify-end">
-            <button onClick={closeModal} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Tutup</button>
+          <div className="mt-5 flex justify-end gap-3">
+            {selected.status === "Pengajuan" && (
+              <>
+                <button onClick={() => setModalMode("setujui")}
+                  className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">
+                  Setujui
+                </button>
+                <button onClick={() => setModalMode("tolak")}
+                  className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600">
+                  Tolak
+                </button>
+              </>
+            )}
+            <button onClick={() => setModalMode(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Tutup</button>
           </div>
         </Modal>
       )}
 
-      {/* MODAL DELETE */}
-      {modalMode === "delete" && selected && (
-        <Modal title="Hapus Pinjaman" onClose={closeModal}>
-          <p className="text-sm text-slate-600">Hapus data pinjaman <strong>{selected.id}</strong> milik <strong>{selected.anggota}</strong>?</p>
+      {/* MODAL SETUJUI */}
+      {modalMode === "setujui" && selected && (
+        <Modal title="Setujui Pinjaman" onClose={() => setModalMode(null)}>
+          <p className="text-sm text-slate-600">
+            Setujui pinjaman <strong>{selected.kode_pinjaman}</strong> untuk{" "}
+            <strong>{selected.anggota?.nama_anggota}</strong> sebesar{" "}
+            <strong>Rp {formatRp(selected.jumlah_pinjaman)}</strong>?
+          </p>
+          <p className="mt-2 text-xs text-slate-400">
+            Sistem akan otomatis membuat {selected.tenor_bulan} jadwal angsuran setelah pinjaman disetujui.
+          </p>
           <div className="mt-6 flex justify-end gap-3">
-            <button onClick={closeModal} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Batal</button>
-            <button onClick={() => { setData(data.filter((d) => d.id !== selected.id)); closeModal(); }} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Hapus</button>
+            <button onClick={() => setModalMode(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Batal</button>
+            <button onClick={handleSetujui} disabled={saving}
+              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60">
+              {saving ? "Memproses..." : "Ya, Setujui"}
+            </button>
           </div>
         </Modal>
       )}
-    </div>
-  );
-}
 
-function Modal({ title, onClose, children }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white shadow-xl">
-        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-          <h2 className="font-semibold text-slate-800">{title}</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><X size={18} /></button>
-        </div>
-        <div className="max-h-[70vh] overflow-y-auto px-6 py-5">{children}</div>
-      </div>
+      {/* MODAL TOLAK */}
+      {modalMode === "tolak" && selected && (
+        <Modal title="Tolak Pinjaman" onClose={() => setModalMode(null)}>
+          <p className="text-sm text-slate-600">
+            Tolak pinjaman <strong>{selected.kode_pinjaman}</strong> dari{" "}
+            <strong>{selected.anggota?.nama_anggota}</strong>?
+          </p>
+          <div className="mt-6 flex justify-end gap-3">
+            <button onClick={() => setModalMode(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Batal</button>
+            <button onClick={handleTolak} disabled={saving}
+              className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 disabled:opacity-60">
+              {saving ? "Memproses..." : "Ya, Tolak"}
+            </button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
