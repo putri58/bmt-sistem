@@ -67,13 +67,13 @@ export default function GuestLayout() {
               </>
             ) : (
               <>
-                <Link to="/login"
+                {/* <Link to="/login"
                   className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100">
                   Masuk
-                </Link>
+                </Link> */}
                 <Link to="/daftar"
                   className="rounded-lg bg-[#1E5E3F] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#174d33]">
-                  Buat Akun
+                  Daftar Sebagai  Anggota
                 </Link>
               </>
             )}

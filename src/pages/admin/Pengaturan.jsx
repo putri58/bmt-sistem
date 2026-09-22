@@ -10,37 +10,55 @@ const tabs = [
   { key: "data", label: "Data & Backup", icon: Database },
 ];
 
+const DEFAULT_UMUM = {
+  namaKoperasi: "KSPPS BMT Al Ittihad",
+  singkatan:    "BMT",
+  alamat:       "-",
+  telepon:      "-",
+  email:        "admin@bmtalittihad.id",
+  website:      "-",
+  noBadan:      "-",
+};
+
+const DEFAULT_NOTIF = {
+  emailPengajuan:           true,
+  emailAnggotaBaru:         true,
+  emailAngsuranJatuhTempo:  true,
+  smsNotifikasi:            false,
+};
+
 export default function Pengaturan() {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("umum");
-  const [saved, setSaved]         = useState(false);
-  const [pwMsg, setPwMsg]         = useState({ type: "", text: "" });
+  const [saved,     setSaved]     = useState(false);
+  const [pwMsg,     setPwMsg]     = useState({ type: "", text: "" });
 
-  const [umum, setUmum] = useState({
-    namaKoperasi: "KSP Maju Bersama",
-    singkatan: "KSP",
-    alamat: "Jl. Merdeka No. 10, Bandung, Jawa Barat 40111",
-    telepon: "022-1234567",
-    email: "admin@kspmajubersama.id",
-    website: "www.kspmajubersama.id",
-    noBadan: "BH.123/PAD/KWK.10/VI/2020",
+  // Ambil dari localStorage, kalau belum ada pakai default
+  const [umum, setUmum] = useState(() => {
+    try {
+      const saved = localStorage.getItem("bmt_pengaturan_umum");
+      return saved ? JSON.parse(saved) : DEFAULT_UMUM;
+    } catch { return DEFAULT_UMUM; }
   });
 
-  const [notif, setNotif] = useState({
-    emailPengajuan: true,
-    emailAnggotaBaru: true,
-    emailAngsuranJatuhTempo: true,
-    smsNotifikasi: false,
+  const [notif, setNotif] = useState(() => {
+    try {
+      const saved = localStorage.getItem("bmt_pengaturan_notif");
+      return saved ? JSON.parse(saved) : DEFAULT_NOTIF;
+    } catch { return DEFAULT_NOTIF; }
   });
 
   const [keamanan, setKeamanan] = useState({
-    passwordLama: "",
-    passwordBaru: "",
+    passwordLama:       "",
+    passwordBaru:       "",
     konfirmasiPassword: "",
-    sesiOtomatis: "30",
+    sesiOtomatis:       "30",
   });
 
+  // Simpan ke localStorage
   function handleSave() {
+    localStorage.setItem("bmt_pengaturan_umum",  JSON.stringify(umum));
+    localStorage.setItem("bmt_pengaturan_notif", JSON.stringify(notif));
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   }

@@ -211,23 +211,19 @@ export default function Home() {
               </div>
             </div>
 
-            {/* STATS CARD */}
-            <div className="grid grid-cols-2 gap-4">
-              {stats.map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur"
-                >
-                  <p className="text-2xl font-bold text-white">{s.value}</p>
-                  <p className="mt-1 text-sm text-slate-400">{s.label}</p>
-                </div>
-              ))}
+            {/* COMPANY LOGO */}
+            <div className="flex items-center object-center">
+              <img
+                src="/ittihad.png"
+                alt="Logo BMT Al-Ittihad"
+                className="w-[400px] object-contain"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── TENTANG ── */}
+      {/* ── Tentang ── */}
       <section id="tentang" className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid items-center gap-14 md:grid-cols-2">
@@ -421,25 +417,37 @@ export default function Home() {
             </div>
             {/* Simpanan Berjangka */}
             <div className="group rounded-2xl border border-orange-100 bg-orange-50 p-6 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600"> <Landmark size={22}/>
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+                {" "}
+                <Landmark size={22} />
               </div>
               <h3 className="font-semibold text-slate-800">
                 Simpanan Berjangka
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                Simpanan dengan jangka waktu tertentu yang dapat menjadi pilihan untuk merencanakan dan mengembangkan dana.
+                Simpanan dengan jangka waktu tertentu yang dapat menjadi pilihan
+                untuk merencanakan dan mengembangkan dana.
               </p>
               <ul className="mt-4 space-y-2">
                 <li className="flex items-center gap-2 text-xs text-slate-600">
-                  <CheckCircle2 size={13} className="shirnk-0 text-emerald-500"/>
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
                   Jangka waktu tertentu
                 </li>
                 <li className="flex items-center gap-2 text-xs text-slate-600">
-                  <CheckCircle2 size={13} className="shirnk-0 text-emerald-500"/>
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
                   Perencanaan dana
                 </li>
                 <li className="flex items-center gap-2 text-xs text-slate-600">
-                  <CheckCircle2 size={13} className="shirnk-0 text-emerald-500"/>
+                  <CheckCircle2
+                    size={13}
+                    className="shirnk-0 text-emerald-500"
+                  />
                   Dikelola dengan syariah
                 </li>
               </ul>

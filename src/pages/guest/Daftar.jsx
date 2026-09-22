@@ -490,16 +490,16 @@ export default function Daftar() {
             </div>
 
             {/* ── SEKSI AKUN ── */}
-            <div className="border-b border-t border-slate-100 bg-slate-50/50 px-8 py-5">
-              <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
+            {/* <div className="border-b border-t border-slate-100 bg-slate-50/50 px-8 py-5"> */}
+              {/* <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
                 <User size={15} />
                 Data Akun 
-              </h2>
-            </div>
-            <div className="grid gap-5 px-8 py-7 md:grid-cols-2">
+              </h2> */}
+            {/* </div>
+            <div className="grid gap-5 px-8 py-7 md:grid-cols-2"> */}
 
               {/* USERNAME */}
-              <div className="md:col-span-2">
+              {/* <div className="md:col-span-2">
                 <Field label="Username" required hint="Digunakan untuk login. Minimal 4 karakter, tanpa spasi." error={errors.username}>
                   <input
                     type="text"
@@ -510,10 +510,10 @@ export default function Daftar() {
                     className={inputCls}
                   />
                 </Field>
-              </div>
+              </div> */}
 
               {/* PASSWORD */}
-              <Field label="Password" required hint="Minimal 8 karakter." error={errors.password}>
+              {/* <Field label="Password" required hint="Minimal 8 karakter." error={errors.password}>
                 <div className="relative">
                   <input
                     type={showPass ? "text" : "password"}
@@ -527,10 +527,10 @@ export default function Daftar() {
                     {showPass ? <EyeOff size={17} /> : <Eye size={17} />}
                   </button>
                 </div>
-              </Field>
+              </Field> */}
 
               {/* KONFIRMASI PASSWORD */}
-              <Field label="Konfirmasi Password" required error={errors.konfirmasiPassword}>
+              {/* <Field label="Konfirmasi Password" required error={errors.konfirmasiPassword}>
                 <div className="relative">
                   <input
                     type={showKonfirm ? "text" : "password"}
@@ -544,9 +544,9 @@ export default function Daftar() {
                     {showKonfirm ? <EyeOff size={17} /> : <Eye size={17} />}
                   </button>
                 </div>
-              </Field>
+              </Field> */}
 
-            </div>
+            {/* </div> */}
 
             {/* ── SEKSI C: DOKUMEN ── */}
             <div className="border-b border-t border-slate-100 bg-slate-50/50 px-8 py-5">
