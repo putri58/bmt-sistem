@@ -173,12 +173,14 @@ function validate(form) {
   if (!form.email.trim())           e.email          = "Email wajib diisi";
   else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Format email tidak valid";
   if (!form.noTelp.trim())          e.noTelp         = "Nomor telepon wajib diisi";
-  if (!form.username.trim())        e.username       = "Username wajib diisi";
-  else if (form.username.length < 4) e.username      = "Username minimal 4 karakter";
-  else if (/\s/.test(form.username)) e.username      = "Username tidak boleh mengandung spasi";
-  if (!form.password)               e.password       = "Password wajib diisi";
-  else if (form.password.length < 8) e.password      = "Password minimal 8 karakter";
-  if (form.password !== form.konfirmasiPassword) e.konfirmasiPassword = "Password tidak cocok";
+  // ── DATA AKUN (dinonaktifkan sementara) ──────────────────
+  // if (!form.username.trim())        e.username       = "Username wajib diisi";
+  // else if (form.username.length < 4) e.username      = "Username minimal 4 karakter";
+  // else if (/\s/.test(form.username)) e.username      = "Username tidak boleh mengandung spasi";
+  // if (!form.password)               e.password       = "Password wajib diisi";
+  // else if (form.password.length < 8) e.password      = "Password minimal 8 karakter";
+  // if (form.password !== form.konfirmasiPassword) e.konfirmasiPassword = "Password tidak cocok";
+  // ─────────────────────────────────────────────────────────
   if (!form.fotoIdentitas)          e.fotoIdentitas  = "Unggah foto KTP / SIM";
   return e;
 }
@@ -227,8 +229,10 @@ export default function Daftar() {
         formData.append('kode_pos',          form.kodePos);
         formData.append('email',             form.email);
         formData.append('no_telp',           form.noTelp);
-        formData.append('username',          form.username);
-        formData.append('password',          form.password);
+        // ── DATA AKUN (dinonaktifkan sementara) ──────────────────
+        // formData.append('username',          form.username);
+        // formData.append('password',          form.password);
+        // ─────────────────────────────────────────────────────────
         formData.append('foto_identitas',    form.fotoIdentitas);
         if (form.fotoNPWP) {
           formData.append('foto_npwp', form.fotoNPWP);

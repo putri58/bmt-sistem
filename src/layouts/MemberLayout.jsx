@@ -17,7 +17,7 @@ const menuMember = [
   { name: "Angsuran",   path: "/member/angsuran",    icon: Receipt },
   { name: "Transaksi",  path: "/member/transaksi",   icon: ArrowLeftRight },
 ];
-
+ 
 function NavItem({ item, onClick }) {
   const Icon = item.icon;
   return (
