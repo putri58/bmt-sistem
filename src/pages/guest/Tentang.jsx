@@ -232,52 +232,58 @@ export default function Tentang() {
       </section>
 
       {/* LEGALITAS */}
-      <section className="bg-slate-50 py-16">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-10 text-center">
-            <span className="text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
-              Legalitas
-            </span>
-            <h2 className="mt-2 text-3xl font-bold text-slate-800">
-              Legalitas & Perizinan
-            </h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {[
-              {
-                label: "Akta Pendirian",
-                value: "-",
-              },
-              {
-                label: "Nomor Badan Hukum",
-                value: "-",
-              },
-              { label: "NPWP Koperasi", value: "-" },
-              { label: "Izin Operasional", value: "-" },
-              { label: "Terdaftar di OJK", value: "-" },
-              { label: "Sertifikasi DSN-MUI", value: "-" },
-            ].map((l) => (
-              <div
-                key={l.label}
-                className="flex gap-4 rounded-xl border border-slate-200 bg-white p-4"
-              >
-                <ShieldCheck
-                  size={18}
-                  className="mt-0.5 shrink-0 text-[#1E5E3F]"
-                />
-                <div>
-                  <p className="text-xs font-semibold text-slate-500">
-                    {l.label}
-                  </p>
-                  <p className="mt-0.5 text-sm font-medium text-slate-800">
-                    {l.value}
-                  </p>
-                </div>
-              </div>
-            ))}
+      <section className="bg-slate-50 py-16 md:py-20">
+  <div className="mx-auto max-w-6xl px-6">
+    {/* Header */}
+    <div className="mx-auto mb-12 max-w-xl text-center">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1E5E3F]/10 px-3 py-1 text-xs font-semibold text-[#1E5E3F]">
+        <ShieldCheck className="h-3.5 w-3.5" />
+        Legalitas Resmi
+      </span>
+      <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+        Legalitas & Perizinan
+      </h2>
+      <p className="mt-2 text-sm text-slate-600">
+        Terdaftar dan beroperasi secara sah berdasarkan legalitas hukum yang berlaku.
+      </p>
+    </div>
+
+    {/* Cards Grid */}
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        {
+          label: "Pendirian",
+          value: "Didirikan 12 Rabiul Awal 1421 H / 15 Juni 2000",
+        },
+        {
+          label: "Nomor Badan Hukum",
+          value: "No. 272/BH/DISKOP&UMKM/3/X/2001",
+        },
+        {
+          label: "Pinbuk Riau",
+          value: "034/PINBUK/RIAU/XI/2000",
+        },
+      ].map((l) => (
+        <div
+          key={l.label}
+          className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#1E5E3F]/30 hover:shadow-md"
+        >
+          <div>
+            <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F] transition-colors group-hover:bg-[#1E5E3F] group-hover:text-white">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              {l.label}
+            </p>
+            <p className="mt-1.5 text-base font-semibold leading-snug text-slate-800">
+              {l.value}
+            </p>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* STRUKTUR ORGANISASI */}
 <section id="struktur-organisasi" className="relative overflow-hidden bg-slate-50 py-20">
