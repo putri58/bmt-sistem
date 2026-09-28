@@ -159,8 +159,8 @@ export default function GuestLayout() {
             <div>
               <h3 className="mb-4 font-semibold text-white">Layanan</h3>
               <ul className="space-y-2 text-sm">
-                {["Simpanan Wadiah", "Simpanan Mudharabah", "Pembiayaan Murabahah", "Pembiayaan Mudharabah", "Pembiayaan Ijarah"].map((item) => (
-                  <li key={item}><a href="#produk" className="transition hover:text-emerald-400">{item}</a></li>
+                {["Tabungan Mudharabah", "Tabungan Pendidikan", "Tabungan Wadiah", "Simpanan Berjangka (SIMJAKA)"].map((item) => (
+                  <li key={item}><a href="/informasi" className="transition hover:text-emerald-400">{item}</a></li>
                 ))}
               </ul>
             </div>
@@ -169,9 +169,21 @@ export default function GuestLayout() {
             <div>
               <h3 className="mb-4 font-semibold text-white">Informasi</h3>
               <ul className="space-y-2 text-sm">
-                {["Tentang Kami", "Berita & Artikel", "Pengumuman", "FAQ", "Syarat & Ketentuan"].map((item) => (
-                  <li key={item}><a href="#" className="transition hover:text-emerald-400">{item}</a></li>
-                ))}
+                <li>
+                  <a href="#tentang-kami" className="transition hover:text-emerald-400">Tentang Kami</a>
+                </li>
+                <li>
+                  <a href="#produk" className="transition hover:text-emerald-400">Produk & Layanan</a>
+                </li>
+                <li>
+                  <a href="#keunggulan" className="transition hover:text-emerald-400">Keunggulan</a>
+                </li>
+                <li>
+                  <a href="#cara-bergabung" className="transition hover:text-emerald-400">Cara Bergabung</a>
+                </li>
+                <li>
+                  <a href="#syarat-ketentuan" className="transition hover:text-emerald-400">Syarat & Ketentuan</a>
+                </li>
               </ul>
             </div>
 
@@ -181,15 +193,15 @@ export default function GuestLayout() {
               <ul className="space-y-3 text-sm">
                 <li className="flex gap-3">
                   <MapPin size={15} className="mt-0.5 shrink-0 text-emerald-400" />
-                  <span>-</span>
+                  <span>Komplek Damar 610 Camp PT. PHR– Komplek Mesjid Al-Ittihad Rumbai Pekanbaru – RIAU</span>
                 </li>
                 <li className="flex gap-3">
                   <Phone size={15} className="shrink-0 text-emerald-400" />
-                  <span>-</span>
+                  <span> (0761) 943025, 559030</span>
                 </li>
                 <li className="flex gap-3">
                   <Mail size={15} className="shrink-0 text-emerald-400" />
-                  <span>-</span>
+                  <span>bmt@al-ittihad.org</span>
                 </li>
               </ul>
               <div className="mt-4 rounded-lg bg-white/5 px-4 py-3 text-xs">

@@ -224,7 +224,7 @@ export default function Home() {
       </section>
 
       {/* ── Tentang ── */}
-      <section id="tentang" className="bg-white py-20">
+      <section id="tentang-kami" className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid items-center gap-14 md:grid-cols-2">
             {/* IMAGE PLACEHOLDER */}
@@ -463,7 +463,7 @@ export default function Home() {
       </section>
 
       {/* ── KEUNGGULAN ── */}
-      <section className="bg-white py-20">
+      <section id="keunggulan" className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-emerald-600">
@@ -496,7 +496,7 @@ export default function Home() {
       </section>
 
       {/* ── LANGKAH DAFTAR ── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1f3c] via-[#0a2940] to-[#0a3d2e] py-20 text-white">
+      <section id="cara-bergabung" className="relative overflow-hidden bg-gradient-to-br from-[#0a1f3c] via-[#0a2940] to-[#0a3d2e] py-20 text-white">
         {/* Decorative background */}
         <div className="absolute -left-24 top-20 h-64 w-64 rounded-full bg-emerald-400/10 blur-3xl" />
         <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />

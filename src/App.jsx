@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 /* ── LAYOUTS ── */
 import GuestLayout  from "./layouts/GuestLayout";
@@ -39,6 +40,7 @@ import MemberTransaksi  from "./pages/member/Transaksi";
 export default function App() {
   return (
     <AuthProvider>
+        <ScrollToTop />
         <Routes>
 
           {/* ── GUEST ── */}

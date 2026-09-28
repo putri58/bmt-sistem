@@ -139,7 +139,7 @@ export default function MemberLayout() {
               handleLogout={handleLogout}
             />
           </aside>
-        </div>
+        </div> 
       )}
 
       {/* MAIN */}
