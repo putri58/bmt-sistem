@@ -41,45 +41,6 @@ const simpanan = [
   },
 ];
 
-// const pinjaman = [
-//   {
-//     nama: "Pembiayaan Murabahah",
-//     deskripsi: "Pembiayaan jual-beli untuk kebutuhan barang konsumtif maupun produktif.",
-//     plafon: "Rp 500.000 – Rp 500.000.000",
-//     tenor: "1 – 60 bulan",
-//     ketentuan: ["Akad jual-beli syariah", "Margin kompetitif dan transparan", "Cicilan tetap setiap bulan"],
-//     persyaratan: ["KTP/SIM yang masih berlaku", "Slip gaji / laporan usaha", "Jaminan sesuai plafon", "Foto terbaru"],
-//     warna: "green",
-//   },
-//   {
-//     nama: "Pembiayaan Mudharabah",
-//     deskripsi: "Pembiayaan bagi hasil untuk pengembangan usaha produktif anggota.",
-//     plafon: "Rp 5.000.000 – Rp 200.000.000",
-//     tenor: "3 – 36 bulan",
-//     ketentuan: ["Akad bagi hasil proporsional", "Keuntungan dibagi sesuai nisbah", "Laporan usaha berkala"],
-//     persyaratan: ["Anggota aktif min. 3 bulan", "Proposal usaha", "Laporan keuangan usaha", "Jaminan usaha"],
-//     warna: "blue",
-//   },
-//   {
-//     nama: "Pembiayaan Ijarah",
-//     deskripsi: "Pembiayaan sewa menyewa untuk kebutuhan pendidikan, kesehatan, atau jasa.",
-//     plafon: "Rp 500.000 – Rp 50.000.000",
-//     tenor: "1 – 24 bulan",
-//     ketentuan: ["Akad sewa manfaat", "Biaya sewa tetap", "Cocok untuk pendidikan dan kesehatan"],
-//     persyaratan: ["KTP/SIM", "Bukti kebutuhan (tagihan/invoice)", "Slip penghasilan"],
-//     warna: "purple",
-//   },
-//   {
-//     nama: "Pembiayaan Qardh",
-//     deskripsi: "Pinjaman kebajikan tanpa bunga untuk kebutuhan darurat atau sosial.",
-//     plafon: "Rp 500.000 – Rp 5.000.000",
-//     tenor: "1 – 12 bulan",
-//     ketentuan: ["Tanpa biaya tambahan (0%)", "Hanya untuk kebutuhan mendesak", "Pengembalian pokok pinjaman"],
-//     persyaratan: ["Anggota aktif min. 6 bulan", "Surat permohonan", "KTP"],
-//     warna: "rose",
-//   },
-// ];
-
 const colorMap = {
   emerald: "bg-emerald-50 border-emerald-200 text-emerald-700",
   blue:    "bg-blue-50 border-blue-200 text-blue-700",
@@ -257,195 +218,9 @@ export default function Informasi() {
         </div>
         {/* SIMULASI */}
 {activeTab === "simulasi" && (
-  <div>
-    <div className="mb-8">
-      <h2 className="text-2xl font-bold text-slate-800">
-        Simulasi Keuangan
-      </h2>
-      <p className="mt-1 text-slate-500">
-        Hitung estimasi simpanan dan pembiayaan sesuai dengan kebutuhan Anda.
-      </p>
-    </div>
-
-    <div className="grid gap-6 md:grid-cols-2">
-
-      {/* SIMULASI SIMPANAN */}
-      <div className="rounded-2xl border border-emerald-200 bg-white p-6 shadow-sm">
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
-            <Wallet className="h-6 w-6 text-emerald-600" />
-          </div>
-
-          <div>
-            <h3 className="text-lg font-bold text-slate-800">
-              Simulasi Simpanan
-            </h3>
-            <p className="text-sm text-slate-500">
-              Perkirakan simpanan Anda
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Jenis Simpanan
-            </label>
-
-            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
-              <option>Tabungan Mudharabah</option>
-              <option>Tabungan Pendidikan</option>
-              <option>Tabungan Wadiah</option>
-              <option>Simpanan Berjangka (SIMJAKA)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Nominal Simpanan
-            </label>
-
-            <input
-              type="number"
-              placeholder="Masukkan nominal"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Jangka Waktu
-            </label>
-
-            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
-              <option>3 Bulan</option>
-              <option>6 Bulan</option>
-              <option>12 Bulan</option>
-            </select>
-          </div>
-
-          <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] px-4 py-3 font-semibold text-white transition hover:bg-[#174b32]">
-            <Calculator className="h-5 w-5" />
-            Hitung Simulasi
-          </button>
-
-          <div className="rounded-xl bg-emerald-50 p-4">
-            <p className="text-sm font-medium text-emerald-700">
-              Hasil Simulasi
-            </p>
-
-            <p className="mt-1 text-xl font-bold text-emerald-800">
-              Estimasi Saldo
-            </p>
-
-            <p className="mt-1 text-2xl font-bold text-[#1E5E3F]">
-              Rp 0
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* SIMULASI PEMBIAYAAN */}
-      <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-sm">
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
-            <CreditCard className="h-6 w-6 text-blue-600" />
-          </div>
-
-          <div>
-            <h3 className="text-lg font-bold text-slate-800">
-              Simulasi Pembiayaan
-            </h3>
-            <p className="text-sm text-slate-500">
-              Perkirakan angsuran pembiayaan
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Jenis Pembiayaan
-            </label>
-
-            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
-              <option>Pembiayaan Murabahah</option>
-              <option>Pembiayaan Mudharabah</option>
-              <option>Pembiayaan Ijarah</option>
-              <option>Pembiayaan Qardh</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Jumlah Pembiayaan
-            </label>
-
-            <input
-              type="number"
-              placeholder="Masukkan jumlah pembiayaan"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Jangka Waktu
-            </label>
-
-            <select className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
-              <option>6 Bulan</option>
-              <option>12 Bulan</option>
-              <option>24 Bulan</option>
-              <option>36 Bulan</option>
-              <option>60 Bulan</option>
-            </select>
-          </div>
-
-          <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700">
-            <Calculator className="h-5 w-5" />
-            Hitung Simulasi
-          </button>
-
-          <div className="rounded-xl bg-blue-50 p-4">
-            <p className="text-sm font-medium text-blue-700">
-              Hasil Simulasi
-            </p>
-
-            <p className="mt-2 text-sm text-slate-600">
-              Total Pembayaran
-            </p>
-
-            <p className="text-2xl font-bold text-blue-700">
-              Rp 0
-            </p>
-
-            <div className="mt-3 border-t border-blue-100 pt-3">
-              <p className="text-sm text-slate-600">
-                Estimasi Angsuran / Bulan
-              </p>
-
-              <p className="text-lg font-bold text-slate-800">
-                Rp 0
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* CATATAN */}
-    <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
-      <p className="text-sm leading-relaxed text-amber-800">
-        <span className="font-semibold">Catatan:</span> Hasil simulasi
-        merupakan estimasi dan dapat berbeda dengan perhitungan sebenarnya
-        sesuai ketentuan koperasi yang berlaku.
-      </p>
-    </div>
-  </div>
+  <SimulasiSection />
 )}
       </section>
-
       {/* CTA */}
       <section className="bg-[#1E5E3F] py-14 text-white">
         <div className="mx-auto max-w-3xl px-6 text-center">
@@ -460,5 +235,509 @@ export default function Informasi() {
       </section>
 
     </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+   SIMULASI DEPOSITO
+───────────────────────────────────────────────────────── */
+
+// Mapping nisbah bagi hasil berdasarkan jangka waktu (sesuai file asli)
+const NISBAH_DEPOSITO = { 3: 0.32, 6: 0.33, 9: 0.34, 12: 0.35 };
+
+function SimulasiDeposito() {
+  const today = new Date();
+  const defaultMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+
+  const [jumlah,      setJumlah]      = useState("");
+  const [jangka,      setJangka]      = useState(3);
+  const [nisbah,      setNisbah]      = useState(NISBAH_DEPOSITO[3]);
+  const [awal,        setAwal]        = useState(defaultMonth);
+  const [hasil,       setHasil]       = useState(null);
+
+  function hitungDeposito(e) {
+    e.preventDefault();
+
+    // Bersihkan format rupiah → angka murni (sama seperti di JS asli)
+    const nominal = Math.round(parseFloat(jumlah.replace(/[^\d]/g, "")));
+    if (!nominal || isNaN(nominal)) return;
+
+    const sukuBunga   = parseFloat(nisbah) / 100;
+    const [thn, bln]  = awal.split("-").map(Number);
+    const awalDate    = new Date(thn, bln - 1, 1);
+
+    let totalKotor  = 0;
+    let totalPPH    = 0;
+    let totalBersih = 0;
+
+    const rows = [];
+    for (let i = 1; i <= jangka; i++) {
+      // Periode bulan ke-i (sama persis dengan JS asli)
+      const currentMonth = new Date(awalDate.getFullYear(), awalDate.getMonth() + i, 1);
+      const mm   = String(currentMonth.getMonth() + 1).padStart(2, "0");
+      const yyyy = currentMonth.getFullYear();
+
+      const bungaKotor  = Math.round(nominal * sukuBunga);   // sesuai formula asli
+      const pph         = Math.round(bungaKotor * 0.10);      // PPH 10%
+      const bungaBersih = Math.round(bungaKotor - pph);
+
+      totalKotor  += bungaKotor;
+      totalPPH    += pph;
+      totalBersih += bungaBersih;
+
+      rows.push({ no: i, periode: `${mm}/${yyyy}`, bungaKotor, pph, bungaBersih });
+    }
+
+    setHasil({
+      rows,
+      totalKotor,
+      totalPPH,
+      totalBersih,
+      nominal,
+      totalPengembalian: nominal + totalBersih,
+    });
+  }
+
+  function resetDeposito() {
+    setJumlah("");
+    setJangka(3);
+    setNisbah(NISBAH_DEPOSITO[3]);
+    setAwal(defaultMonth);
+    setHasil(null);
+  }
+
+  const inputCls = "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#1E5E3F] focus:bg-white";
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-2">
+
+      {/* FORM */}
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
+            <Wallet className="h-6 w-6 text-emerald-600" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-slate-800">Simulasi Deposito</h3>
+            <p className="text-sm text-slate-500">Perkirakan bagi hasil deposito Anda</p>
+          </div>
+        </div>
+
+        <form onSubmit={hitungDeposito} className="space-y-4">
+          {/* Jumlah Deposito */}
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jumlah Deposito</label>
+            <input
+              type="text"
+              value={jumlah}
+              onChange={(e) => {
+                // Format rupiah saat input (sesuai formatJumlah() di JS asli)
+                const raw = e.target.value.replace(/[^\d]/g, "");
+                setJumlah(raw ? "Rp " + new Intl.NumberFormat("id-ID").format(raw) : "");
+              }}
+              placeholder="Rp 0"
+              required
+              className={inputCls}
+            />
+          </div>
+
+          {/* Jangka Waktu */}
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jangka Waktu</label>
+            <select
+              value={jangka}
+              onChange={(e) => {
+                const j = Number(e.target.value);
+                setJangka(j);
+                setNisbah(NISBAH_DEPOSITO[j]);
+              }}
+              className={inputCls}
+            >
+              <option value={3}>3 Bulan</option>
+              <option value={6}>6 Bulan</option>
+              <option value={9}>9 Bulan</option>
+              <option value={12}>12 Bulan</option>
+            </select>
+          </div>
+
+          {/* Bagi Hasil — editable, auto-update saat jangka waktu berubah */}
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+              Bagi Hasil Bulanan (%)
+              <span className="ml-2 text-xs font-normal text-slate-400">— otomatis, bisa diubah</span>
+            </label>
+            <input
+              type="number"
+              value={nisbah}
+              onChange={(e) => setNisbah(e.target.value)}
+              step="0.01"
+              min="0"
+              className={inputCls}
+            />
+            <p className="mt-1 text-xs text-slate-400">
+              Default: 3bln (0.32%) | 6bln (0.33%) | 9bln (0.34%) | 12bln (0.35%)
+            </p>
+          </div>
+
+          {/* Waktu Deposito */}
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-slate-700">Waktu Deposito</label>
+            <input
+              type="month"
+              value={awal}
+              onChange={(e) => setAwal(e.target.value)}
+              required
+              className={inputCls}
+            />
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <button type="submit"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] px-4 py-3 font-semibold text-white transition hover:bg-[#174b32]">
+              <Calculator size={18} /> Hitung
+            </button>
+            <button type="button" onClick={resetDeposito}
+              className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+              Ulangi
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* HASIL */}
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 className="mb-5 font-bold text-slate-800">Perkiraan Bagi Hasil / Bulan</h3>
+
+        {!hasil ? (
+          <div className="flex flex-col items-center justify-center py-16 text-slate-400">
+            <Calculator size={40} className="mb-3 opacity-30" />
+            <p className="text-sm">Isi form dan klik Hitung untuk melihat hasil</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+
+            {/* TABEL BULANAN */}
+            <div className="overflow-x-auto rounded-xl border border-slate-200">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-slate-50 text-xs font-semibold uppercase text-slate-500">
+                    <th className="px-3 py-2 text-center">No.</th>
+                    <th className="px-3 py-2 text-center">Periode</th>
+                    <th className="px-3 py-2 text-right">Bagi Hasil Kotor</th>
+                    <th className="px-3 py-2 text-right">PPH</th>
+                    <th className="px-3 py-2 text-right">Bagi Hasil Bersih</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {hasil.rows.map((row) => (
+                    <tr key={row.no} className="hover:bg-slate-50">
+                      <td className="px-3 py-2 text-center">{row.no}</td>
+                      <td className="px-3 py-2 text-center">{row.periode}</td>
+                      <td className="px-3 py-2 text-right">{formatRp(row.bungaKotor)}</td>
+                      <td className="px-3 py-2 text-right">{formatRp(row.pph)}</td>
+                      <td className="px-3 py-2 text-right font-semibold text-emerald-600">{formatRp(row.bungaBersih)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-slate-50 font-semibold">
+                    <td colSpan={2} className="px-3 py-2 text-center">Jumlah</td>
+                    <td className="px-3 py-2 text-right">{formatRp(hasil.totalKotor)}</td>
+                    <td className="px-3 py-2 text-right">{formatRp(hasil.totalPPH)}</td>
+                    <td className="px-3 py-2 text-right text-emerald-600">{formatRp(hasil.totalBersih)}</td>
+                  </tr>
+                  <tr className="bg-slate-50">
+                    <td colSpan={4} className="px-3 py-2 font-semibold">Nominal Penempatan</td>
+                    <td className="px-3 py-2 text-right font-bold">{formatRp(hasil.nominal)}</td>
+                  </tr>
+                  <tr className="bg-[#1E5E3F] text-white">
+                    <td colSpan={4} className="px-3 py-2 font-semibold">Total Pengembalian</td>
+                    <td className="px-3 py-2 text-right font-bold">{formatRp(hasil.totalPengembalian)}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {/* DISCLAIMER — sesuai note di file asli */}
+            <div className="rounded-xl border border-red-200 bg-red-50 p-3">
+              <p className="text-center text-xs font-semibold text-red-600">
+                ⚠ Note : Perhitungan Bagi Hasil Bersifat Fluktuatif / Tidak Tetap
+              </p>
+            </div>
+
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+function formatRp(v) {
+  return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(v);
+}
+
+// Margin otomatis berdasarkan jenis dan tenor
+function getMarginDefault(jenis, tenor) {
+  if (jenis === "KPR") {
+    if (tenor <= 60)  return 0.7;
+    if (tenor <= 120) return 0.8;
+    return 0.85;
+  }
+  // Murabahah, Ijarah, Istishna
+  if (tenor <= 12) return 0.9;
+  if (tenor <= 24) return 1.0;
+  if (tenor <= 36) return 1.1;
+  return 1.2;
+}
+
+function SimulasiSection() {
+  const [tab, setTab] = useState("pembiayaan");
+
+  // ── STATE PEMBIAYAAN ──
+  const [pForm, setPForm] = useState({
+    jenis:  "Murabahah",
+    jumlah: "",
+    tenor:  "12",
+    margin: "0.9",
+  });
+  const [pHasil,  setPHasil]  = useState(null);
+  const [pTabel,  setPTabel]  = useState([]);
+  const [pShowTabel, setPShowTabel] = useState(false);
+
+  function handlePFormChange(key, val) {
+    const updated = { ...pForm, [key]: val };
+    // Auto-update margin saat jenis atau tenor berubah
+    if (key === "jenis" || key === "tenor") {
+      updated.margin = String(getMarginDefault(updated.jenis, Number(updated.tenor)));
+    }
+    setPForm(updated);
+  }
+
+  function hitungPembiayaan(e) {
+    e.preventDefault();
+    const pokok  = Number(pForm.jumlah.replace(/[^\d]/g, ""));
+    const tenor  = Number(pForm.tenor);
+    const margin = Number(pForm.margin);
+
+    if (!pokok || !tenor || !margin) return;
+
+    const marginPerBulan     = pokok * (margin / 100);
+    const totalMargin        = marginPerBulan * tenor;
+    const angsuranPokok      = pokok / tenor;
+    const totalAngsuranBulan = angsuranPokok + marginPerBulan;
+
+    setPHasil({
+      pokok,
+      totalMargin,
+      tenor,
+      marginPersen:    margin,
+      angsuranPokok,
+      angsuranMargin:  marginPerBulan,
+      totalAngsuran:   totalAngsuranBulan,
+    });
+
+    // Generate tabel angsuran
+    const rows = [];
+    for (let i = 1; i <= tenor; i++) {
+      rows.push({
+        ke:             i,
+        angsuranPokok,
+        angsuranMargin: marginPerBulan,
+        total:          totalAngsuranBulan,
+        sisaPokok:      pokok - angsuranPokok * i,
+      });
+    }
+    setPTabel(rows);
+    setPShowTabel(false);
+  }
+
+  function resetPembiayaan() {
+    setPForm({ jenis: "Murabahah", jumlah: "", tenor: "12", margin: "0.9" });
+    setPHasil(null);
+    setPTabel([]);
+  }
+
+  const inputCls = "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#1E5E3F] focus:bg-white";
+
+  return (
+    <section className="bg-slate-50">
+      <div className="mx-auto max-w-6xl px-6">
+
+        {/* HEADER */}
+        <div className="mb-8">
+          <h2 className="text-4xl font-bold text-slate-800">Simulasi Keuangan</h2>
+          <p className="mt-1 text-slate-500">Hitung estimasi pembiayaan sesuai kebutuhan Anda.</p>
+        </div>
+
+        {/* TAB SWITCH */}
+        <div className="mb-6 flex gap-2">
+          {[
+            { key: "pembiayaan", label: "Simulasi Pembiayaan" },
+            { key: "deposito",   label: "Simulasi Deposito" },
+          ].map((t) => (
+            <button key={t.key} onClick={() => setTab(t.key)}
+              className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
+                tab === t.key ? "bg-[#1E5E3F] text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+              }`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ── SIMULASI PEMBIAYAAN ── */}
+        {tab === "pembiayaan" && (
+          <div className="grid gap-6 lg:grid-cols-2">
+
+            {/* FORM */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
+                  <CreditCard className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800">Simulasi Pembiayaan</h3>
+                  <p className="text-sm text-slate-500">Hitung estimasi angsuran pembiayaan Anda</p>
+                </div>
+              </div>
+
+              <form onSubmit={hitungPembiayaan} className="space-y-4">
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jenis Pembiayaan</label>
+                  <select value={pForm.jenis} onChange={(e) => handlePFormChange("jenis", e.target.value)} className={inputCls}>
+                    <option value="Murabahah">Murabahah</option>
+                    <option value="Ijarah">Ijarah</option>
+                    <option value="Istishna">Istishna</option>
+                    <option value="KPR">KPR</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jumlah Pembiayaan (Rp)</label>
+                  <input
+                    type="text"
+                    value={pForm.jumlah}
+                    onChange={(e) => {
+                      const raw = e.target.value.replace(/[^\d]/g, "");
+                      handlePFormChange("jumlah", raw ? "Rp " + new Intl.NumberFormat("id-ID").format(raw) : "");
+                    }}
+                    placeholder="Rp 0"
+                    className={inputCls}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jangka Waktu (Bulan)</label>
+                  <input type="number" value={pForm.tenor} onChange={(e) => handlePFormChange("tenor", e.target.value)}
+                    placeholder="Contoh: 12" min="1" max="180" className={inputCls} />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                    Margin per Bulan (%)
+                    <span className="ml-2 text-xs font-normal text-slate-400">— otomatis, bisa diubah</span>
+                  </label>
+                  <input type="number" value={pForm.margin} onChange={(e) => handlePFormChange("margin", e.target.value)}
+                    placeholder="Contoh: 0.9" step="0.1" className={inputCls} />
+                  <p className="mt-1 text-xs text-slate-400">
+                    {pForm.jenis === "KPR"
+                      ? "KPR: 1–5thn (0.7%) | 6–10thn (0.8%) | 11–15thn (0.85%)"
+                      : "Murabahah/Ijarah/Istishna: 1–12bln (0.9%) | 13–24bln (1%) | 25–36bln (1.1%) | 37–60bln (1.2%)"}
+                  </p>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <button type="submit"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] px-4 py-3 font-semibold text-white transition hover:bg-[#174b32]">
+                    <Calculator size={18} /> Hitung
+                  </button>
+                  <button type="button" onClick={resetPembiayaan}
+                    className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+                    Ulangi
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* HASIL */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="mb-5 font-bold text-slate-800">Rincian Pembiayaan</h3>
+              {!pHasil ? (
+                <div className="flex flex-col items-center justify-center py-16 text-slate-400">
+                  <Calculator size={40} className="mb-3 opacity-30" />
+                  <p className="text-sm">Isi form dan klik Hitung untuk melihat hasil</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {[
+                    ["Jumlah Pokok Pembiayaan",  formatRp(pHasil.pokok)],
+                    ["Jumlah Margin Pembiayaan", formatRp(pHasil.totalMargin)],
+                    ["Jangka Waktu",             `${pHasil.tenor} bulan`],
+                    ["Margin Per Bulan",         `${pHasil.marginPersen}%`],
+                    ["Angsuran Pokok/Bulan",     formatRp(pHasil.angsuranPokok)],
+                    ["Angsuran Margin/Bulan",    formatRp(pHasil.angsuranMargin)],
+                  ].map(([l, v]) => (
+                    <div key={l} className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3">
+                      <span className="text-sm text-slate-600">{l}</span>
+                      <span className="font-semibold text-slate-800">{v}</span>
+                    </div>
+                  ))}
+
+                  {/* TOTAL */}
+                  <div className="flex items-center justify-between rounded-xl bg-[#1E5E3F] px-4 py-4">
+                    <span className="font-semibold text-white">Total Angsuran/Bulan</span>
+                    <span className="text-xl font-bold text-white">{formatRp(pHasil.totalAngsuran)}</span>
+                  </div>
+
+                  {/* TABEL ANGSURAN */}
+                  <button onClick={() => setPShowTabel(!pShowTabel)}
+                    className="flex w-full items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+                    <span>Lihat Tabel Angsuran per Bulan</span>
+                    {pShowTabel ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+
+                  {pShowTabel && (
+                    <div className="overflow-x-auto rounded-xl border border-slate-200">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="bg-slate-50 text-xs font-semibold uppercase text-slate-500">
+                            <th className="px-3 py-2 text-center">Ke</th>
+                            <th className="px-3 py-2 text-right">Pokok</th>
+                            <th className="px-3 py-2 text-right">Margin</th>
+                            <th className="px-3 py-2 text-right">Total</th>
+                            <th className="px-3 py-2 text-right">Sisa Pokok</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {pTabel.map((row) => (
+                            <tr key={row.ke} className="hover:bg-slate-50">
+                              <td className="px-3 py-2 text-center font-medium">{row.ke}</td>
+                              <td className="px-3 py-2 text-right">{formatRp(row.angsuranPokok)}</td>
+                              <td className="px-3 py-2 text-right">{formatRp(row.angsuranMargin)}</td>
+                              <td className="px-3 py-2 text-right font-semibold text-[#1E5E3F]">{formatRp(row.total)}</td>
+                              <td className="px-3 py-2 text-right text-slate-500">{formatRp(Math.max(0, row.sisaPokok))}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
+                    <p className="text-xs text-amber-700">
+                      <span className="font-semibold">Catatan:</span> Hasil simulasi merupakan estimasi dan dapat berbeda dengan perhitungan sebenarnya sesuai ketentuan koperasi yang berlaku.
+                    </p>
+                  </div> */}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ── SIMULASI DEPOSITO ── */}
+        {tab === "deposito" && (
+          <SimulasiDeposito />
+        )}
+
+      </div>
+    </section>
   );
 }

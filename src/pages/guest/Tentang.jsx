@@ -326,7 +326,7 @@ export default function Tentang() {
           <div className="mx-auto mb-5 h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-lg ring-4 ring-[#1E5E3F]/10">
             <img
               src="/images/struktur/ketua.jpg"
-              alt="Agung Subarkat"
+              alt="Ali Masyhuri"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           </div>
@@ -338,7 +338,7 @@ export default function Tentang() {
 
           {/* Nama */}
           <h3 className="mt-3 text-xl font-bold text-slate-800">
-            Agung Subarkat
+            Ali Masyhuri
           </h3>
 
           <div className="mx-auto mt-4 h-1 w-10 rounded-full bg-[#1E5E3F] transition-all duration-500 group-hover:w-20" />
@@ -370,22 +370,22 @@ export default function Tentang() {
           <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
             <img
               src="/images/struktur/wakil-sektor-rill.jpg"
-              alt="Ali Masyhuri"
+              alt="Agung Subarkat"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           </div>
 
           <div className="text-center">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#1E5E3F]">
-              Wakil Sektor
+              Wakil Ketua
             </span>
 
             <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Ali Masyhuri
+              Agung Subarkat
             </h3>
 
             <p className="mt-1 text-sm text-slate-500">
-              Sektor Rill
+              Bidang Pembiayaan
             </p>
           </div>
         </div>
@@ -403,22 +403,22 @@ export default function Tentang() {
           <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
             <img
               src="/images/struktur/wakil-sektor-pembiayaan.jpg"
-              alt="Aswandi Janahar"
+              alt="Elvian Boes"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           </div>
 
           <div className="text-center">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#1E5E3F]">
-              Wakil Sektor
+              Wakil Ketua
             </span>
 
             <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Aswandi Janahar
+              Elvian Boes
             </h3>
 
             <p className="mt-1 text-sm text-slate-500">
-              Pembiayaan
+              Bidang Pengembangan Usaha
             </p>
           </div>
         </div>
@@ -436,7 +436,7 @@ export default function Tentang() {
           <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
             <img
               src="/images/struktur/sekretaris.jpg"
-              alt="Yon Hendri"
+              alt="Syamsul Hadi Harnianto"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           </div>
@@ -447,7 +447,7 @@ export default function Tentang() {
             </span>
 
             <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Yon Hendri
+              Syamsul Hadi Harnianto 
             </h3>
 
             <p className="mt-1 text-sm text-slate-500">

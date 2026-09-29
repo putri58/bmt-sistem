@@ -96,22 +96,22 @@ const keunggulan = [
 
 const testimonials = [
   {
-    nama: "Hendra Gunawan",
-    peran: "Pedagang Pasar, Anggota sejak 2018",
+    nama: "Jumali Suryono",
+    peran: "",
     bintang: 5,
-    text: "Alhamdulillah, dengan pembiayaan dari BMT Al Ittihad usaha warung saya bisa berkembang. Prosesnya mudah dan tidak ribet.",
+    text: "Tempat yg sangat baik untuk menyimpan uang dan sesuai syariat islam",
   },
   {
-    nama: "Siti Rahayu",
-    peran: "Guru SD, Anggota sejak 2020",
-    bintang: 5,
-    text: "Simpanan di BMT Al Ittihad sangat menguntungkan. Bagi hasilnya lebih baik dari bank biasa dan sesuai syariah.",
+    nama: "bg BARAT18.parbaju",
+    peran: "",
+    bintang: 4,
+    text: "Pelayanannya mantap dan bunganya pun gak banyak",
   },
   {
-    nama: "Budi Santoso",
-    peran: "Pengusaha UMKM, Anggota sejak 2015",
+    nama: "Hesti Suwaryani",
+    peran: "",
     bintang: 5,
-    text: "Sudah lebih dari 9 tahun jadi anggota. Pelayanannya ramah, amanah, dan selalu membantu ketika butuh modal usaha.",
+    text: "Sesuai syariah Islam",
   },
 ];
 
