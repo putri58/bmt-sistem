@@ -1,28 +1,25 @@
 const strukturOrganisasi = [
   {
-    nama: "Agung Subarkat",
-    jabatan: "Ketua",
-    foto: "/images/struktur/ketua.jpg",
-  },
-  {
     nama: "Ali Masyhuri",
-    jabatan: "Wakil Sektor Rill",
-    foto: "/images/struktur/wakil-sektor-rill.jpg",
+    jabatan: "Ketua",
   },
   {
-    nama: "Aswandi Janahar",
-    jabatan: "Wakil Sektor Pembiayaan",
-    foto: "/images/struktur/wakil-sektor-pembiayaan.jpg",
+    nama: "Agung Subarkat",
+    jabatan: "Wakil Ketua",
+    bidang: "Bidang Pembiayaan",
   },
   {
-    nama: "Yon Hendri",
+    nama: "Elvian Boes",
+    jabatan: "Wakil Ketua",
+    bidang: "Bidang Pengembangan Usaha",
+  },
+  {
+    nama: "Syamsul Hadi Harnianto",
     jabatan: "Sekretaris",
-    foto: "/images/struktur/sekretaris.jpg",
   },
   {
     nama: "Edi Wibowo",
     jabatan: "Bendahara",
-    foto: "/images/struktur/bendahara.jpg",
   },
 ];
 

@@ -286,216 +286,101 @@ export default function Tentang() {
 </section>
 
       {/* STRUKTUR ORGANISASI */}
-<section id="struktur-organisasi" className="relative overflow-hidden bg-slate-50 py-20">
-  {/* Decorative Background */}
-  <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
-  <div className="pointer-events-none absolute -right-32 bottom-10 h-80 w-80 rounded-full bg-green-200/30 blur-3xl" />
+<section id="struktur-organisasi" className="relative overflow-hidden bg-white py-20">
+  <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-emerald-100/40 blur-3xl" />
+  <div className="pointer-events-none absolute -right-32 bottom-10 h-80 w-80 rounded-full bg-green-100/40 blur-3xl" />
 
   <div className="relative mx-auto max-w-6xl px-6">
 
-    {/* Section Header */}
+    {/* Header */}
     <div className="mb-16 text-center">
       <span className="inline-flex items-center gap-2 rounded-full bg-[#1E5E3F]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#1E5E3F]">
         <span className="h-2 w-2 rounded-full bg-[#1E5E3F]" />
         Organisasi
       </span>
-
-      <h2 className="mt-4 text-3xl font-bold text-slate-800 md:text-4xl">
-        Struktur Organisasi
-      </h2>
-
+      <h2 className="mt-4 text-3xl font-bold text-slate-800 md:text-4xl">Struktur Organisasi</h2>
       <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
-        Mengenal jajaran pengurus KSPPS BMT Al-Ittihad yang berperan
-        dalam menjalankan dan mengembangkan organisasi.
+        Mengenal jajaran pengurus KSPPS BMT Al-Ittihad yang berperan dalam menjalankan dan mengembangkan organisasi.
       </p>
     </div>
 
-    {/* ================= KETUA ================= */}
-    <div className="flex justify-center">
-      <div className="group relative w-full max-w-sm">
-
-        {/* Glow */}
-        <div className="absolute -inset-1 rounded-[2rem] bg-gradient-to-r from-[#1E5E3F]/20 via-emerald-400/20 to-[#1E5E3F]/20 opacity-0 blur-xl transition duration-500 group-hover:opacity-100" />
-
-        <div className="relative overflow-hidden rounded-[2rem] border border-emerald-100 bg-white p-6 text-center shadow-lg transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl">
-
-          {/* Top Accent */}
-          <div className="absolute left-0 right-0 top-0 h-1.5 bg-gradient-to-r from-[#1E5E3F] via-emerald-400 to-[#1E5E3F]" />
-
-          {/* Foto */}
-          <div className="mx-auto mb-5 h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-lg ring-4 ring-[#1E5E3F]/10">
-            <img
-              src="/images/struktur/ketua.jpg"
-              alt="Ali Masyhuri"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
+    {/* KETUA */}
+    <div className="flex justify-center mb-4">
+      <div className="group relative w-full max-w-xs">
+        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#1E5E3F]/30 via-emerald-300/20 to-[#1E5E3F]/30 opacity-0 blur-xl transition duration-500 group-hover:opacity-100" />
+        <div className="relative overflow-hidden rounded-3xl border-2 border-[#1E5E3F]/20 bg-gradient-to-br from-[#1E5E3F] to-emerald-700 p-7 text-center shadow-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl">
+          {/* Dekorasi */}
+          <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/5" />
+          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-emerald-400/10" />
+          {/* Avatar inisial */}
+          <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/15 ring-4 ring-white/20 text-3xl font-black text-white shadow-inner">
+            {strukturOrganisasi[0].nama.split(" ").map(w => w[0]).slice(0,2).join("")}
           </div>
-
-          {/* Jabatan */}
-          <span className="inline-flex rounded-full bg-[#1E5E3F]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#1E5E3F]">
-            Ketua
+          <span className="inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-white/90">
+            {strukturOrganisasi[0].jabatan}
           </span>
-
-          {/* Nama */}
-          <h3 className="mt-3 text-xl font-bold text-slate-800">
-            Ali Masyhuri
-          </h3>
-
-          <div className="mx-auto mt-4 h-1 w-10 rounded-full bg-[#1E5E3F] transition-all duration-500 group-hover:w-20" />
+          <h3 className="mt-3 text-xl font-bold text-white">{strukturOrganisasi[0].nama}</h3>
+          <div className="mx-auto mt-4 h-px w-12 bg-white/30 transition-all duration-500 group-hover:w-24" />
         </div>
       </div>
     </div>
 
-    {/* Connector */}
-    <div className="relative mx-auto h-16 w-full max-w-4xl">
-      {/* Vertical line */}
-      <div className="absolute left-1/2 top-0 h-16 w-px -translate-x-1/2 bg-[#1E5E3F]/30" />
-
-      {/* Horizontal line */}
-      <div className="absolute bottom-0 left-[12.5%] right-[12.5%] hidden h-px bg-[#1E5E3F]/30 md:block" />
+    {/* Connector vertikal */}
+    <div className="relative mx-auto h-10 flex justify-center">
+      <div className="w-px bg-[#1E5E3F]/30 h-full" />
+    </div>
+    {/* Connector horisontal */}
+    <div className="relative mx-auto mb-0 hidden md:flex items-start justify-center">
+      <div className="w-3/4 h-px bg-[#1E5E3F]/30" />
     </div>
 
-    {/* ================= PENGURUS ================= */}
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {/* PENGURUS */}
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {strukturOrganisasi.slice(1).map((org, idx) => {
+        const initials = org.nama.split(" ").map(w => w[0]).slice(0,2).join("");
+        const colors = [
+          { ring: "ring-emerald-200", bg: "bg-emerald-50", text: "text-emerald-700", accent: "bg-emerald-600", badge: "bg-emerald-100 text-emerald-700" },
+          { ring: "ring-blue-200",    bg: "bg-blue-50",    text: "text-blue-700",    accent: "bg-blue-600",    badge: "bg-blue-100 text-blue-700"    },
+          { ring: "ring-indigo-200",  bg: "bg-indigo-50",  text: "text-indigo-700",  accent: "bg-indigo-600",  badge: "bg-indigo-100 text-indigo-700" },
+          { ring: "ring-teal-200",    bg: "bg-teal-50",    text: "text-teal-700",    accent: "bg-teal-600",    badge: "bg-teal-100 text-teal-700"    },
+        ];
+        const c = colors[idx % colors.length];
+        return (
+          <div key={org.nama} className="group relative">
+            <div className={`absolute -inset-1 rounded-3xl ${c.bg} opacity-0 blur-lg transition duration-500 group-hover:opacity-60`} />
+            <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-slate-300 group-hover:shadow-xl">
+              {/* Top accent bar animasi */}
+              <div className={`absolute left-0 top-0 h-1 w-0 ${c.accent} transition-all duration-500 group-hover:w-full rounded-t-3xl`} />
 
-      {/* Wakil Sektor Rill */}
-      <div className="group relative">
-        <div className="absolute -inset-1 rounded-3xl bg-[#1E5E3F]/10 opacity-0 blur-lg transition duration-500 group-hover:opacity-100" />
+              {/* Avatar inisial */}
+              <div className={`mx-auto mb-4 mt-2 flex h-16 w-16 items-center justify-center rounded-full ${c.bg} ring-4 ${c.ring} text-xl font-black ${c.text} shadow-sm transition-transform duration-500 group-hover:scale-110`}>
+                {initials}
+              </div>
 
-        <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#1E5E3F]/30 group-hover:shadow-xl">
+              {/* Jabatan badge */}
+              <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold ${c.badge}`}>
+                {org.jabatan}
+              </span>
 
-          <div className="absolute left-0 top-0 h-1 w-0 bg-[#1E5E3F] transition-all duration-500 group-hover:w-full" />
+              {/* Nama */}
+              <h3 className="mt-2.5 text-base font-bold text-slate-800 leading-snug">{org.nama}</h3>
 
-          {/* Foto */}
-          <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
-            <img
-              src="/images/struktur/wakil-sektor-rill.jpg"
-              alt="Agung Subarkat"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
+              {/* Bidang (opsional) */}
+              {org.bidang && (
+                <p className="mt-1 text-xs text-slate-500">{org.bidang}</p>
+              )}
+
+              {/* Divider animasi */}
+              <div className={`mx-auto mt-3 h-0.5 w-8 rounded-full ${c.accent} transition-all duration-500 group-hover:w-16`} />
+            </div>
           </div>
-
-          <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#1E5E3F]">
-              Wakil Ketua
-            </span>
-
-            <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Agung Subarkat
-            </h3>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Bidang Pembiayaan
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Wakil Sektor Pembiayaan */}
-      <div className="group relative">
-        <div className="absolute -inset-1 rounded-3xl bg-[#1E5E3F]/10 opacity-0 blur-lg transition duration-500 group-hover:opacity-100" />
-
-        <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#1E5E3F]/30 group-hover:shadow-xl">
-
-          <div className="absolute left-0 top-0 h-1 w-0 bg-[#1E5E3F] transition-all duration-500 group-hover:w-full" />
-
-          {/* Foto */}
-          <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
-            <img
-              src="/images/struktur/wakil-sektor-pembiayaan.jpg"
-              alt="Elvian Boes"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-
-          <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#1E5E3F]">
-              Wakil Ketua
-            </span>
-
-            <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Elvian Boes
-            </h3>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Bidang Pengembangan Usaha
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Sekretaris */}
-      <div className="group relative">
-        <div className="absolute -inset-1 rounded-3xl bg-[#1E5E3F]/10 opacity-0 blur-lg transition duration-500 group-hover:opacity-100" />
-
-        <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#1E5E3F]/30 group-hover:shadow-xl">
-
-          <div className="absolute left-0 top-0 h-1 w-0 bg-[#1E5E3F] transition-all duration-500 group-hover:w-full" />
-
-          {/* Foto */}
-          <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
-            <img
-              src="/images/struktur/sekretaris.jpg"
-              alt="Syamsul Hadi Harnianto"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-
-          <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#1E5E3F]">
-              Sekretaris
-            </span>
-
-            <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Syamsul Hadi Harnianto 
-            </h3>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Sekretaris
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Bendahara */}
-      <div className="group relative">
-        <div className="absolute -inset-1 rounded-3xl bg-[#1E5E3F]/10 opacity-0 blur-lg transition duration-500 group-hover:opacity-100" />
-
-        <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[#1E5E3F]/30 group-hover:shadow-xl">
-
-          <div className="absolute left-0 top-0 h-1 w-0 bg-[#1E5E3F] transition-all duration-500 group-hover:w-full" />
-
-          {/* Foto */}
-          <div className="mx-auto mb-5 h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md ring-4 ring-[#1E5E3F]/10">
-            <img
-              src="/images/struktur/bendahara.jpg"
-              alt="Edi Wibowo"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-
-          <div className="text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#1E5E3F]">
-              Bendahara
-            </span>
-
-            <h3 className="mt-2 text-lg font-bold text-slate-800">
-              Edi Wibowo
-            </h3>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Bendahara
-            </p>
-          </div>
-        </div>
-      </div>
-
+        );
+      })}
     </div>
 
-    {/* Bottom Caption */}
+    {/* Caption bawah */}
     <div className="mt-14 text-center">
       <div className="mx-auto h-px w-24 bg-[#1E5E3F]/30" />
-
       <p className="mt-5 text-sm italic text-slate-500">
         Bersama membangun dan mengembangkan BMT Al-Ittihad
       </p>
