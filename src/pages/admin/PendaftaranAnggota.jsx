@@ -389,8 +389,9 @@ export default function PendaftaranAnggota() {
 
           <div className="mb-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-400">Dokumen yang Diunggah</p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <DocPreview label="Foto KTP / SIM" path={selected.foto_identitas} />
+              <DocPreview label="Pas Foto 3×4"   path={selected.pas_foto} />
               <DocPreview label="NPWP"           path={selected.foto_npwp} />
             </div>
           </div>

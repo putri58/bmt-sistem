@@ -545,7 +545,7 @@ function SimulasiSection() {
     const totalMargin        = marginPerBulan * tenor;
     const angsuranPokok      = pokok / tenor;
     const totalAngsuranBulan = angsuranPokok + marginPerBulan;
-
+ 
     setPHasil({
       pokok,
       totalMargin,
@@ -714,7 +714,7 @@ function SimulasiSection() {
                     <span>Lihat Tabel Angsuran per Bulan</span>
                     {pShowTabel ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </button>
-
+ 
                   {pShowTabel && (
                     <div className="overflow-x-auto rounded-xl border border-slate-200">
                       <table className="w-full text-sm">
