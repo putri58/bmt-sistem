@@ -223,7 +223,7 @@ export default function AdminPinjaman() {
                     <td className="px-5 py-4">
                       <p className="font-medium text-slate-700">{p.anggota?.nama_anggota || "-"}</p>
                       <p className="text-xs text-slate-400">{p.anggota?.id_anggota}</p>
-                    </td>
+                    </td> 
                     <td className="px-5 py-4 font-semibold text-slate-700">Rp {formatRp(p.jumlah_pinjaman)}</td>
                     <td className="px-5 py-4 text-slate-600">Rp {formatRp(p.angsuran_per_bulan)}</td>
                     <td className="px-5 py-4 text-slate-600">{p.tenor_bulan} bln</td>

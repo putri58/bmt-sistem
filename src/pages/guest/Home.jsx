@@ -75,7 +75,7 @@ const keunggulan = [
   {
     icon: ShieldCheck,
     title: "Terpercaya & terdaftar",
-    desc: "Terdaftar dan diawasi oleh OJK serta Dinas Koperasi. Legalitas lengkap sejak 2001.",
+    desc: "Legalitas & Perizinan lengkap sejak tahun 2001.",
   },
   {
     icon: Users,
@@ -99,7 +99,7 @@ const testimonials = [
     nama: "Jumali Suryono",
     peran: "",
     bintang: 5,
-    text: "Tempat yg sangat baik untuk menyimpan uang dan sesuai syariat islam",
+    text: "Tempat yang sangat baik untuk menyimpan uang dan sesuai syariat islam",
   },
   {
     nama: "bg BARAT18.parbaju",
@@ -122,19 +122,15 @@ const faqs = [
   },
   {
     q: "Bagaimana cara menjadi anggota?",
-    a: "Cukup isi form pendaftaran online di halaman Daftar Anggota atau datang langsung ke kantor kami. Syarat utama: WNI, usia minimal 17 tahun, memiliki KTP, dan membayar simpanan pokok.",
+    a: "Cukup isi form pendaftaran online di halaman Daftar Anggota atau datang langsung ke kantor kami. Syarat utama: WNI, usia minimal 17 tahun, memiliki KTP, dan membayar simpanan pokok, simpanan wajib, simpanan mudharabah, dan biaya cetak kartu.",
   },
   {
     q: "Apakah simpanan saya aman?",
-    a: "Ya, dana anggota dijamin keamanannya. BMT Al Ittihad diawasi oleh OJK dan Dinas Koperasi setempat, serta memiliki sistem pengelolaan keuangan yang transparan dan akuntabel.",
+    a: "Ya, dana anggota dijamin keamanannya. BMT Al Ittihad memiliki Legalitas & Perizinan, serta memiliki sistem pengelolaan keuangan yang transparan dan akuntabel.",
   },
   {
     q: "Berapa minimal simpanan awal?",
-    a: "Simpanan pokok sebesar Rp 100.000 (dibayar sekali) dan simpanan wajib minimal Rp 50.000 per bulan. Simpanan sukarela tidak ada batas minimal.",
-  },
-  {
-    q: "Apakah bisa mengajukan pembiayaan tanpa jaminan?",
-    a: "Untuk pembiayaan produktif di bawah Rp 5 juta dapat diproses tanpa jaminan fisik dengan syarat sudah menjadi anggota aktif minimal 3 bulan.",
+    a: "Simpanan pokok sebesar Rp 50.000 (dibayar sekali) dan simpanan wajib Rp 20.000 per bulan. Simpanan Mudharabah Rp 10.000. Biaya cetak kartu anggota Rp 5.000.",
   },
 ];
 

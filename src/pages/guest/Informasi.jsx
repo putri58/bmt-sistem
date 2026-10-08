@@ -422,7 +422,7 @@ function SimulasiDeposito() {
               Ulangi
             </button>
           </div>
-        </form>
+        </form> 
       </div>
 
       {/* HASIL */}

@@ -23,11 +23,11 @@ const menuUtama = [
   { name: "Dashboard",           path: "/admin/dashboard",           icon: LayoutDashboard },
   { name: "Pendaftar Baru",      path: "/admin/pendaftaran-anggota", icon: ClipboardList },
   { name: "Kelola Anggota",      path: "/admin/anggota",             icon: Users },
-  { name: "Simpanan",            path: "/admin/simpanan",            icon: Wallet },
-  { name: "Pinjaman",            path: "/admin/pinjaman",            icon: CreditCard },
-  { name: "Angsuran",            path: "/admin/pengajuan",           icon: Receipt },
-  { name: "Transaksi",           path: "/admin/transaksi",           icon: ArrowLeftRight },
-  { name: "Laporan",             path: "/admin/laporan",             icon: ChartColumn },
+  // { name: "Simpanan",            path: "/admin/simpanan",            icon: Wallet },
+  // { name: "Pinjaman",            path: "/admin/pinjaman",            icon: CreditCard },
+  // { name: "Angsuran",            path: "/admin/pengajuan",           icon: Receipt },
+  // { name: "Transaksi",           path: "/admin/transaksi",           icon: ArrowLeftRight },
+  // { name: "Laporan",             path: "/admin/laporan",             icon: ChartColumn },
 ];
 
 // const menuInformasi = [
