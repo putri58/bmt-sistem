@@ -22,11 +22,10 @@ export default function Login() {
     if (!form.username || !form.password) return;
 
     setLoading(true);
-    const role = await login(form.username, form.password, remember);
+    const redirectPath = await login(form.username, form.password);
     setLoading(false);
 
-    if (role === "admin")   navigate("/admin/dashboard");
-    if (role === "anggota") navigate("/member/dashboard");
+    if (redirectPath) navigate(redirectPath);
   }
 
   const inputCls =
@@ -154,19 +153,35 @@ export default function Login() {
         </div>
 
         {/* DEMO CREDENTIALS */}
-        <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+        {/* <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
           <p className="mb-2 text-xs font-bold text-slate-500">Demo Akun:</p>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="rounded-lg bg-slate-50 p-2">
-              <p className="font-semibold text-slate-700">Admin</p>
-              <p className="text-slate-500">admin / admin123</p>
+              <p className="font-semibold text-slate-700">Superadmin</p>
+              <p className="text-slate-500">superadmin / super123</p>
             </div>
             <div className="rounded-lg bg-slate-50 p-2">
-              <p className="font-semibold text-slate-700">Anggota</p>
-              <p className="text-slate-500">anggota / anggota123</p>
+              <p className="font-semibold text-slate-700">Admin Pusat</p>
+              <p className="text-slate-500">admin.pusat / pusat123</p>
+            </div>
+            <div className="rounded-lg bg-slate-50 p-2">
+              <p className="font-semibold text-slate-700">Admin Rumbai</p>
+              <p className="text-slate-500">admin.rumbai / rumbai123</p>
+            </div>
+            <div className="rounded-lg bg-slate-50 p-2">
+              <p className="font-semibold text-slate-700">Admin Panam</p>
+              <p className="text-slate-500">admin.panam / panam123</p>
+            </div>
+            <div className="rounded-lg bg-slate-50 p-2">
+              <p className="font-semibold text-slate-700">Admin Duri</p>
+              <p className="text-slate-500">admin.duri / duri123</p>
+            </div>
+            <div className="rounded-lg bg-slate-50 p-2">
+              <p className="font-semibold text-slate-700">Admin Cibubur</p>
+              <p className="text-slate-500">admin.cibubur / cibubur123</p>
             </div>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>

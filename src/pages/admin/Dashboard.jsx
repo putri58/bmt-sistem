@@ -6,6 +6,7 @@ import {
 import { Link } from "react-router-dom";
 import StatCard from "../../components/admin/StatCard";
 import api from "../../lib/api";
+import { useAuth } from "../../context/AuthContext";
 
 function formatRupiah(value) {
   return new Intl.NumberFormat("id-ID").format(value ?? 0);
@@ -32,8 +33,15 @@ function StatusBadge({ status }) {
 }
 
 export default function Dashboard() {
-  const [data, setData]     = useState(null);
+  const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Ambil info kantor dari user yang login
+  const { currentUser } = useAuth ? useAuth() : { currentUser: null };
+  const kantorLabel = {
+    pusat: "Kantor Pusat", rumbai: "Cabang Rumbai", panam: "Cabang Panam",
+    duri: "Cabang Duri", cibubur: "Cabang Cibubur", superadmin: "Semua Cabang",
+  }[currentUser?.role === "superadmin" ? "superadmin" : currentUser?.kantor] || "Admin";
 
   useEffect(() => {
     async function fetchDashboard() {
@@ -62,7 +70,7 @@ export default function Dashboard() {
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Dashboard Admin</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Selamat datang kembali, Admin 👋 Pantau aktivitas koperasi hari ini.
+            {kantorLabel} — Pantau aktivitas koperasi hari ini 👋
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">

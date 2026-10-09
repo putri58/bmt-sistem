@@ -147,6 +147,7 @@ const emptyForm = {
   tempatLahir: "", tanggalLahir: "", kewarganegaraan: "WNI",
   status: "", jenisKelamin: "", namaIbuKandung: "",
   alamatRumah: "", kota: "", kodePos: "", email: "", noTelp: "",
+  kantorTujuan: "",
   fotoIdentitas: null, fotoNPWP: null, pasFoto: null,
 };
 
@@ -163,6 +164,7 @@ function validateStep(form, step) {
     if (!form.status)                e.status         = "Pilih status perkawinan";
     if (!form.jenisKelamin)          e.jenisKelamin   = "Pilih jenis kelamin";
     if (!form.namaIbuKandung.trim()) e.namaIbuKandung = "Nama ibu kandung wajib diisi";
+    if (!form.kantorTujuan)          e.kantorTujuan   = "Pilih kantor tujuan";
   }
   if (step === 1) {
     if (!form.alamatRumah.trim())    e.alamatRumah    = "Alamat wajib diisi";
@@ -196,13 +198,14 @@ function ReviewRow({ label, value }) {
    MAIN
 ───────────────────────────────────────── */
 export default function Daftar() {
-  const [form, setForm]       = useState(emptyForm);
-  const [errors, setErrors]   = useState({});
-  const [step, setStep]       = useState(0);
-  const [agreed, setAgreed]   = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState("");
+  const [form, setForm]           = useState(emptyForm);
+  const [errors, setErrors]       = useState({});
+  const [step, setStep]           = useState(0);
+  const [agreed, setAgreed]       = useState(false);
+  const [loading, setLoading]     = useState(false);
+  const [apiError, setApiError]   = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [noPendaftaran, setNoPendaftaran] = useState("");
 
   const set    = (key) => (e) => setForm(p => ({ ...p, [key]: e.target.value }));
   const setFile  = (key) => (file) => setForm(p => ({ ...p, [key]: file }));
@@ -235,11 +238,13 @@ export default function Daftar() {
       fd.append("kode_pos",          form.kodePos);
       fd.append("email",             form.email);
       fd.append("no_telp",           form.noTelp);
+      fd.append("kantor_tujuan",     form.kantorTujuan);
       fd.append("foto_identitas",    form.fotoIdentitas);
       fd.append("pas_foto",          form.pasFoto);
       if (form.fotoNPWP) fd.append("foto_npwp", form.fotoNPWP);
 
-      await api.post("/daftar", fd, { headers: { "Content-Type": "multipart/form-data" } });
+      const res = await api.post("/daftar", fd, { headers: { "Content-Type": "multipart/form-data" } });
+      setNoPendaftaran(res.data.pendaftar_id || "");
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
@@ -252,6 +257,11 @@ export default function Daftar() {
 
   /* ── SUKSES ── */
   if (submitted) {
+    const kantorLabel = {
+      pusat: "Kantor Pusat", rumbai: "Cabang Rumbai",
+      panam: "Cabang Panam", duri: "Cabang Duri", cibubur: "Cabang Cibubur"
+    }[form.kantorTujuan] || form.kantorTujuan;
+
     return (
       <div className="flex min-h-[70vh] items-center justify-center bg-slate-50 px-6 py-20">
         <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-xl">
@@ -261,19 +271,32 @@ export default function Daftar() {
           <h2 className="text-2xl font-bold text-slate-800">Pendaftaran Terkirim!</h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-500">
             Terima kasih, <strong className="text-slate-700">{form.namaAnggota}</strong>.
-            Tim kami akan menghubungi Anda melalui{" "}
-            <strong className="text-slate-700">{form.email}</strong> atau{" "}
+            Pendaftaran Anda ke <strong className="text-slate-700">{kantorLabel}</strong> telah kami terima.
+            Tim kami akan menghubungi Anda melalui WhatsApp di nomor{" "}
             <strong className="text-slate-700">+62{form.noTelp}</strong> dalam 1–2 hari kerja.
           </p>
-          <div className="mt-5 rounded-2xl bg-emerald-50 px-5 py-4 text-left">
-            <p className="text-xs font-semibold text-emerald-700">Langkah Selanjutnya:</p>
+
+          {/* Nomor Pendaftaran */}
+          {noPendaftaran && (
+            <div className="mt-4 rounded-2xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-5 py-4">
+              <p className="text-xs text-slate-500">Nomor Pendaftaran Anda</p>
+              <p className="mt-1 text-2xl font-black tracking-widest text-emerald-700">{noPendaftaran}</p>
+              <p className="mt-1 text-xs text-slate-400">Simpan nomor ini untuk keperluan konfirmasi</p>
+            </div>
+          )}
+
+          <div className="mt-4 rounded-2xl bg-slate-50 px-5 py-4 text-left">
+            <p className="text-xs font-semibold text-slate-700">Langkah Selanjutnya:</p>
             <ul className="mt-2 space-y-1.5 text-xs text-slate-600">
-              {["Tunggu konfirmasi verifikasi dari petugas kami", "Siapkan dokumen asli untuk verifikasi lanjutan", "Lakukan pembayaran simpanan pokok setelah disetujui"]
-                .map(item => (
-                  <li key={item} className="flex items-start gap-2">
-                    <CheckCircle2 size={12} className="mt-0.5 shrink-0 text-emerald-500" />{item}
-                  </li>
-                ))}
+              {[
+                "Tunggu konfirmasi dari petugas melalui WhatsApp",
+                "Siapkan dokumen asli untuk verifikasi lanjutan",
+                "Lakukan pembayaran simpanan pokok setelah disetujui"
+              ].map(item => (
+                <li key={item} className="flex items-start gap-2">
+                  <CheckCircle2 size={12} className="mt-0.5 shrink-0 text-emerald-500" />{item}
+                </li>
+              ))}
             </ul>
           </div>
           <Link to="/" className="mt-6 block w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700">
@@ -398,6 +421,20 @@ export default function Daftar() {
                     placeholder="Nama ibu kandung sesuai akta lahir" className={inputCls} />
                 </Field>
               </div>
+
+              <div className="md:col-span-2">
+                <Field label="Kantor Tujuan" required error={errors.kantorTujuan}
+                  hint="Pilih kantor BMT AL-Ittihad yang ingin Anda tuju untuk menjadi anggota">
+                  <select value={form.kantorTujuan} onChange={set("kantorTujuan")} className={selectCls}>
+                    <option value="">-- Pilih Kantor Tujuan --</option>
+                    <option value="pusat">Kantor Pusat</option>
+                    <option value="rumbai">Cabang Rumbai</option>
+                    <option value="panam">Cabang Panam</option>
+                    <option value="duri">Cabang Duri</option>
+                    <option value="cibubur">Cabang Cibubur</option>
+                  </select>
+                </Field>
+              </div>
             </div>
           )}
 
@@ -507,6 +544,10 @@ export default function Daftar() {
                     <ReviewRow label="Status"           value={form.status} />
                     <ReviewRow label="Jenis Kelamin"    value={form.jenisKelamin} />
                     <ReviewRow label="Nama Ibu Kandung" value={form.namaIbuKandung} />
+                    <ReviewRow label="Kantor Tujuan"    value={
+                      { pusat: "Kantor Pusat", rumbai: "Cabang Rumbai", panam: "Cabang Panam",
+                        duri: "Cabang Duri", cibubur: "Cabang Cibubur" }[form.kantorTujuan] || "-"
+                    } />
                   </div>
                 </div>
 
