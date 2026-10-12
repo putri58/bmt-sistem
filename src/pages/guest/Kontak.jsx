@@ -185,8 +185,13 @@ export default function Kontak() {
                   <div className="space-y-3">
                     {[
                       {
-                        hari: "Senin - Jumat",
-                        jam: "08.00 - 16.00 WIB",
+                        hari: "Senin - Kamis",
+                        jam: "08.00 - 14.00 WIB",
+                        aktif: true,
+                      },
+                                            {
+                        hari: "Jum'at",
+                        jam: "08.00 - 14.30 WIB",
                         aktif: true,
                       },
                       {

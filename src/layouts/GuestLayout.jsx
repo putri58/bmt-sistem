@@ -206,8 +206,9 @@ export default function GuestLayout() {
               </ul>
               <div className="mt-4 rounded-lg bg-white/5 px-4 py-3 text-xs">
                 <p className="font-semibold text-white">Jam Operasional</p>
-                <p className="mt-1 text-slate-400">Senin – Jumat: 08.00 – 16.00 WIB</p>
-                <p className="text-slate-400">Sabtu: 08.00 – 12.00 WIB</p>
+                <p className="mt-1 text-slate-400">Senin – Kamis: 08.00 – 14.00 WIB</p>
+                <p className="text-slate-400">Jum'at            : 08.00 – 14.30 WIB</p>
+                <p className="text-slate-400">Sabtu             : 09.00 – 12.00 WIB</p>
               </div>
             </div>
 
