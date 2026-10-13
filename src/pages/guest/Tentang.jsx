@@ -84,7 +84,7 @@ export default function Tentang() {
                 Berawal dari modal awal yang sederhana dan puluhan anggota
                 pendiri, KSPPS BMT Al Ittihad kini telah berkembang menjadi
                 salah satu koperasi simpan pinjam syariah terpercaya di Provinsi
-                Riau dengan lebih dari 12.000 anggota aktif.
+                Riau dengan lebih dari 8.000 anggota aktif.
               </p>
               <p className="mt-3 leading-relaxed text-slate-500">
                 Selama lebih dari dua dekade, kami terus berkomitmen untuk
@@ -96,7 +96,7 @@ export default function Tentang() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: "Tahun Berdiri", value: "2001" },
-                { label: "Anggota Aktif", value: "12.000+" },
+                { label: "Anggota Aktif", value: "8.000+" },
                 { label: "Total Aset", value: "Rp 45 M+" },
                 { label: "Karyawan", value: "85+" },
               ].map((s) => (
