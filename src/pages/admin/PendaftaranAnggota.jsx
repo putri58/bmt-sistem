@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   Search, Eye, CheckCircle, XCircle, X, Clock,
-  UserCheck, UserX, Calendar, Filter, FileText, ZoomIn,
+  UserCheck, UserX, Calendar, Filter, FileText, ZoomIn, Trash2,
 } from "lucide-react";
 import api from "../../lib/api";
 
@@ -185,6 +185,16 @@ export default function PendaftaranAnggota() {
     }
   }
 
+  async function handleHapus(id) {
+    if (!window.confirm('Yakin ingin menghapus data pendaftar ini? Tindakan ini tidak dapat dibatalkan.')) return;
+    try {
+      await api.delete(`/pendaftar/${id}`);
+      await fetchPendaftar();
+    } catch (err) {
+      alert('Gagal menghapus data pendaftar');
+    }
+  }
+
   const counts = {
     Menunggu:  pendaftarList.filter((p) => p.status_pendaftaran === "Menunggu").length,
     Disetujui: pendaftarList.filter((p) => p.status_pendaftaran === "Disetujui").length,
@@ -339,6 +349,10 @@ export default function PendaftaranAnggota() {
                               </button>
                             </>
                           )}
+                          <button onClick={() => handleHapus(row.id)}
+                            className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors" title="Hapus">
+                            <Trash2 size={15} />
+                          </button>
                         </div>
                       </td>
                     </tr>
