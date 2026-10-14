@@ -49,8 +49,14 @@ function DetailRow({ label, value }) {
 
 function DocPreview({ label, path }) {
   const [lightbox, setLightbox] = useState(false);
-  const url = path ? `http://localhost:8000/storage/${path}` : null;
-  const isImage = path && /\.(jpg|jpeg|png)$/i.test(path);
+
+  // Kalau path sudah berupa URL lengkap (Cloudinary), pakai langsung
+  // Kalau masih path lokal lama, tambah prefix storage
+  const url = path
+    ? (path.startsWith('http') ? path : `${import.meta.env.VITE_API_URL?.replace('/api','') || 'http://localhost:8000'}/storage/${path}`)
+    : null;
+
+  const isImage = path && /\.(jpg|jpeg|png|webp)$/i.test(path) || (path && path.includes('cloudinary.com') && !path.includes('.pdf'));
   const isPDF   = path && /\.pdf$/i.test(path);
 
   if (!path) {
