@@ -187,11 +187,14 @@ export default function PendaftaranAnggota() {
 
   async function handleHapus(id) {
     if (!window.confirm('Yakin ingin menghapus data pendaftar ini? Tindakan ini tidak dapat dibatalkan.')) return;
+    // Optimistic update — langsung hapus dari UI
+    setPendaftarList(prev => prev.filter(p => p.id !== id));
     try {
       await api.delete(`/pendaftar/${id}`);
-      await fetchPendaftar();
     } catch (err) {
+      // Kalau gagal, fetch ulang untuk restore data
       alert('Gagal menghapus data pendaftar');
+      fetchPendaftar();
     }
   }
 

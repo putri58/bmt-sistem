@@ -92,12 +92,14 @@ export default function Anggota() {
 
   async function handleDelete() {
     setSaving(true);
+    // Optimistic update
+    setAnggotaList(prev => prev.filter(a => a.id !== selected.id));
+    closeModal();
     try {
       await api.delete(`/anggota/${selected.id}`);
-      await fetchAnggota();
-      closeModal();
     } catch (err) {
       alert('Gagal menghapus anggota');
+      fetchAnggota(); // restore jika gagal
     } finally {
       setSaving(false);
     }
