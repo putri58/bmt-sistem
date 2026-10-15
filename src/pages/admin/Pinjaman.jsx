@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Search, Eye, CheckCircle, XCircle, Trash2, X, Filter, CreditCard } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v ?? 0); }
 function formatDate(d) {
@@ -111,8 +112,9 @@ export default function AdminPinjaman() {
       await api.post(`/pinjaman/${selected.id}/setujui`);
       await fetchData();
       setModalMode(null);
+      toast.success('Pinjaman berhasil disetujui');
     } catch (err) {
-      alert(err.response?.data?.message || "Gagal menyetujui pinjaman.");
+      toast.error(err.response?.data?.message || "Gagal menyetujui pinjaman.");
     } finally {
       setSaving(false);
     }
@@ -124,8 +126,9 @@ export default function AdminPinjaman() {
       await api.post(`/pinjaman/${selected.id}/tolak`);
       await fetchData();
       setModalMode(null);
+      toast.success('Pinjaman berhasil ditolak');
     } catch {
-      alert("Gagal menolak pinjaman.");
+      toast.error("Gagal menolak pinjaman.");
     } finally {
       setSaving(false);
     }
@@ -136,8 +139,9 @@ export default function AdminPinjaman() {
     try {
       await api.delete(`/pinjaman/${id}`);
       await fetchData();
+      toast.success('Data pinjaman berhasil dihapus');
     } catch {
-      alert("Gagal menghapus data.");
+      toast.error("Gagal menghapus data.");
     }
   }
 

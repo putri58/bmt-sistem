@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Eye, Pencil, Trash2, X, Search, Shield } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 function formatDate(d) {
   if (!d) return "-";
@@ -92,8 +93,9 @@ export default function ManajemenAdmin() {
       await api.delete(`/users/${selected.id}`);
       await fetchAdmins();
       closeModal();
+      toast.success('Admin berhasil dihapus');
     } catch (err) {
-      alert('Gagal menghapus admin');
+      toast.error('Gagal menghapus admin');
     } finally {
       setSaving(false);
     }

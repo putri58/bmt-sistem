@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Search, Eye, Pencil, Trash2, X } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 function formatRupiah(value) {
   return new Intl.NumberFormat("id-ID").format(value);
@@ -83,8 +84,9 @@ export default function Anggota() {
       });
       await fetchAnggota();
       closeModal();
+      toast.success('Data anggota berhasil disimpan');
     } catch (err) {
-      alert('Gagal menyimpan perubahan');
+      toast.error('Gagal menyimpan perubahan');
     } finally {
       setSaving(false);
     }
@@ -98,7 +100,7 @@ export default function Anggota() {
     try {
       await api.delete(`/anggota/${selected.id}`);
     } catch (err) {
-      alert('Gagal menghapus anggota');
+      toast.error('Gagal menghapus anggota');
       fetchAnggota(); // restore jika gagal
     } finally {
       setSaving(false);

@@ -4,6 +4,7 @@ import {
   UserCheck, UserX, Calendar, Filter, FileText, ZoomIn, Trash2,
 } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 const statusColors = {
   Menunggu:  "bg-orange-50 text-orange-600 border-orange-200",
@@ -165,8 +166,9 @@ export default function PendaftaranAnggota() {
       await api.post(`/pendaftar/${selected.id}/setujui`);
       await fetchPendaftar();
       closeModal();
+      toast.success('Pendaftar berhasil disetujui');
     } catch (err) {
-      alert('Gagal menyetujui pendaftar');
+      toast.error('Gagal menyetujui pendaftar');
     } finally {
       setActionLoading(false);
     }
@@ -178,8 +180,9 @@ export default function PendaftaranAnggota() {
       await api.post(`/pendaftar/${selected.id}/tolak`, { alasan: alasanTolak });
       await fetchPendaftar();
       closeModal();
+      toast.success('Pendaftar berhasil ditolak');
     } catch (err) {
-      alert('Gagal menolak pendaftar');
+      toast.error('Gagal menolak pendaftar');
     } finally {
       setActionLoading(false);
     }
@@ -193,7 +196,7 @@ export default function PendaftaranAnggota() {
       await api.delete(`/pendaftar/${id}`);
     } catch (err) {
       // Kalau gagal, fetch ulang untuk restore data
-      alert('Gagal menghapus data pendaftar');
+      toast.error('Gagal menghapus data pendaftar');
       fetchPendaftar();
     }
   }

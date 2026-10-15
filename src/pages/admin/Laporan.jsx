@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Download, TrendingUp, TrendingDown, Users, CreditCard, Wallet, ArrowLeftRight } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v ?? 0); }
 
@@ -94,7 +95,7 @@ export default function Laporan() {
             className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none focus:border-indigo-400 shadow-sm">
             {tahunList.map((t) => <option key={t}>{t}</option>)}
           </select>
-          <button onClick={() => alert('Fitur export PDF dalam pengembangan')}
+          <button onClick={() => toast('Fitur export PDF dalam pengembangan', { icon: '🚧' })}
             className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 transition-colors">
             <Download size={15} /> Export PDF
           </button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Search, Trash2, X, ArrowDownLeft, ArrowUpRight, Filter } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v ?? 0); }
 function formatDate(d) {
@@ -101,8 +102,9 @@ export default function AdminSimpanan() {
     try {
       await api.delete(`/simpanan/${id}`);
       await fetchData();
+      toast.success("Data simpanan berhasil dihapus");
     } catch {
-      alert("Gagal menghapus data.");
+      toast.error("Gagal menghapus data.");
     }
   }
 

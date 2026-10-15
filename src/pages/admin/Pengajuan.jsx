@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Search, CheckCircle, AlertTriangle, Clock, Filter } from "lucide-react";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 function formatRp(v) { return new Intl.NumberFormat("id-ID").format(v ?? 0); }
 function formatDate(d) {
@@ -57,8 +58,9 @@ export default function AdminPengajuan() {
     try {
       await api.post(`/angsuran/${id}/lunas`);
       await fetchData();
+      toast.success('Angsuran berhasil ditandai lunas');
     } catch (err) {
-      alert(err.response?.data?.message || "Gagal menandai lunas.");
+      toast.error(err.response?.data?.message || "Gagal menandai lunas.");
     } finally {
       setSaving(null);
     }
