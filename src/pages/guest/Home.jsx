@@ -177,7 +177,7 @@ export default function Home() {
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
               <span className="mb-4 inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-400">
-                ✦ Terpercaya Sejak Tahun 2000
+                ✦ Terpercaya Sejak Tahun 2001
               </span>
               <h1 className="text-4xl font-bold leading-tight md:text-5xl">
                 Koperasi Simpan Pinjam Pembiayaan Syariah{" "}

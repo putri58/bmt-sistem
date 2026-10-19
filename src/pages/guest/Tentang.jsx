@@ -1,16 +1,84 @@
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import strukturOrganisasi from "../../data/strukturOrganisasi";
 import {
-  Landmark,
   ShieldCheck,
   Target,
   Heart,
   Award,
-  Users,
   BookOpen,
   ArrowRight,
 } from "lucide-react";
 
+/* ─────────────────────────────────────────────────────────
+   KOMPONEN ANIMASI ANGKA (COUNTER)
+───────────────────────────────────────────────────────── */
+function AnimatedCounter({ value }) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
+
+  // Mengambil angka murni (misal: "8.000+" -> 8000)
+  const numericValue = parseInt(value.replace(/\D/g, ""), 10) || 0;
+  const hasPlus = value.includes("+");
+  const isFormattedDot = value.includes(".");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+
+          let start = 0;
+          const end = numericValue;
+          const duration = 2000; // Durasi 2 detik
+          const frameDuration = 1000 / 60; // 60 FPS
+          const totalFrames = Math.round(duration / frameDuration);
+          let frame = 0;
+
+          const timer = setInterval(() => {
+            frame++;
+            // Rumus Ease-Out (gerakan melambat halus di akhir)
+            const progress = frame / totalFrames;
+            const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+            const currentCount = Math.round(end * easeOutProgress);
+
+            if (frame >= totalFrames) {
+              setCount(end);
+              clearInterval(timer);
+            } else {
+              setCount(currentCount);
+            }
+          }, frameDuration);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [numericValue, hasAnimated]);
+
+  // Format angka kembali dengan titik jika ribuan
+  const formattedCount =
+    isFormattedDot || numericValue >= 1000
+      ? new Intl.NumberFormat("id-ID").format(count)
+      : count;
+
+  return (
+    <span ref={ref}>
+      {formattedCount}
+      {hasPlus && "+"}
+    </span>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+   DATA NILAI
+───────────────────────────────────────────────────────── */
 const nilai = [
   {
     icon: ShieldCheck,
@@ -34,6 +102,9 @@ const nilai = [
   },
 ];
 
+/* ─────────────────────────────────────────────────────────
+   HALAMAN UTAMA TENTANG
+───────────────────────────────────────────────────────── */
 export default function Tentang() {
   return (
     <div>
@@ -97,14 +168,16 @@ export default function Tentang() {
               {[
                 { label: "Tahun Berdiri", value: "2001" },
                 { label: "Anggota Aktif", value: "8.000+" },
-                { label: "Total Aset", value: "Rp 45 M+" },
-                { label: "Karyawan", value: "85+" },
+                { label: "Total Cabang", value: "5" },
+                { label: "Karyawan", value: "30+" },
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-2xl border border-slate-100 bg-slate-50 p-6 text-center"
+                  className="rounded-2xl border border-slate-100 bg-slate-50 p-6 text-center shadow-sm"
                 >
-                  <p className="text-2xl font-bold text-[#1E5E3F]">{s.value}</p>
+                  <p className="text-2xl font-bold text-[#1E5E3F]">
+                    <AnimatedCounter value={s.value} />
+                  </p>
                   <p className="mt-1 text-sm text-slate-500">{s.label}</p>
                 </div>
               ))}
@@ -116,7 +189,7 @@ export default function Tentang() {
       {/* VISI MISI */}
       <section className="relative overflow-hidden bg-slate-50 py-20">
         {/* Decorative background */}
-        <div className="absolute -left-24 top-10 h-64 w-64 rounded-full bg-emeralad-200/30 blur-3xl" />
+        <div className="absolute -left-24 top-10 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl" />
         <div className="absolute -right-24 bottom-10 h-64 w-64 rounded-full bg-green-200/30 blur-3xl" />
         <div className="relative mx-auto max-w-6xl px-6" />
         {/* Heading */}
@@ -135,25 +208,24 @@ export default function Tentang() {
         {/* Visi Misi */}
         <div className="grid gap-8 md:grid-cols-2">
           {/* Visi */}
-          <div className="group relative overflow-hidden rounded-3xl bg-[#1E5E3F] p-8 text-white shadow-lg shadow-green-900/10 transition-all duration-500 hover:=-translate-y-2 hover:shadow-2xl hover:shadow-green-900/20">
+          <div className="group relative overflow-hidden rounded-3xl bg-[#1E5E3F] p-8 text-white shadow-lg shadow-green-900/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-900/20">
             {/* Decoration circle */}
             <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/5 transition-transform duration-700 group-hover:scale-150" />
             <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-emerald-400/10 blur-2xl" />
             {/* icon */}
-            <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/10 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-wgite/15">
+            <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/10 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-white/15">
               <Target
                 size={26}
                 className="transition-transform duration-500 group-hover:scale-110"
               />
             </div>
-            <div className="relativer">
+            <div className="relative">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">
                 Our Vision
               </span>
               <h2 className="mt-2 text-2xl font-bold">Visi</h2>
               <div className="mt-4 h-1 w-10 rounded-full bg-emerald-300 transition-all duration-500 group-hover:w-20" />
               <p className="mt-5 leading-7 text-green-100">
-                {" "}
                 Menjadi koperasi simpan pinjam dan pembiayaan syariah yang
                 terpercaya, profesional, dan berdaya saing tinggi dalam rangka
                 mewujudkan kesejahteraan anggota dan masyarakat berdasarkan
@@ -161,15 +233,15 @@ export default function Tentang() {
               </p>
             </div>
             {/* bottom decoration */}
-            <div className="relative mt-8 flex items-center gap-2 text-xs font-medium text-emerald">
+            <div className="relative mt-8 flex items-center gap-2 text-xs font-medium text-emerald-200">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />{" "}
               Berlandaskan Prinsip Syariah
             </div>
           </div>
-          {/* misi */}
+          {/* Misi */}
           <div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-lg shadow-slate-200/50 transition-all duration-500 hover:-translate-y-2 hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-900/10">
-            {/* Decorative backgronud */}
-            <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emeralad-50 transition-transform duration-700 group-hover:scale-150" />
+            {/* Decorative background */}
+            <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-50 transition-transform duration-700 group-hover:scale-150" />
             <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-green-100/40 blur-2xl" />
             {/* icon */}
             <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1E5E3F]/10 transition-all duration-500 group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-[#1E5E3F]/15">
@@ -190,8 +262,8 @@ export default function Tentang() {
               </p>
             </div>
             {/* Bottom decoration */}
-            <div className="relative mt-8 flex items-center gp-2 text-xs font-medium text-[#1E5E3F]">
-              <span className="h-1.5 animate-pulse rounded-full bg-[#1E5E3F]" />{" "}
+            <div className="relative mt-8 flex items-center gap-2 text-xs font-medium text-[#1E5E3F]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#1E5E3F]" />{" "}
               Untuk Kesejahteraan bersama
             </div>
           </div>
@@ -233,161 +305,214 @@ export default function Tentang() {
 
       {/* LEGALITAS */}
       <section className="bg-slate-50 py-16 md:py-20">
-  <div className="mx-auto max-w-6xl px-6">
-    {/* Header */}
-    <div className="mx-auto mb-12 max-w-xl text-center">
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1E5E3F]/10 px-3 py-1 text-xs font-semibold text-[#1E5E3F]">
-        <ShieldCheck className="h-3.5 w-3.5" />
-        Legalitas Resmi
-      </span>
-      <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-        Legalitas & Perizinan
-      </h2>
-      <p className="mt-2 text-sm text-slate-600">
-        Terdaftar dan beroperasi secara sah berdasarkan legalitas hukum yang berlaku.
-      </p>
-    </div>
-
-    {/* Cards Grid */}
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {[
-        {
-          label: "Pendirian",
-          value: "Didirikan 12 Rabiul Awal 1421 H / 15 Juni 2000",
-        },
-        {
-          label: "Nomor Badan Hukum",
-          value: "No. 272/BH/DISKOP&UMKM/3/X/2001",
-        },
-        {
-          label: "Pinbuk Riau",
-          value: "034/PINBUK/RIAU/XI/2000",
-        },
-      ].map((l) => (
-        <div
-          key={l.label}
-          className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#1E5E3F]/30 hover:shadow-md"
-        >
-          <div>
-            <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F] transition-colors group-hover:bg-[#1E5E3F] group-hover:text-white">
-              <ShieldCheck className="h-5 w-5" />
-            </div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-              {l.label}
-            </p>
-            <p className="mt-1.5 text-base font-semibold leading-snug text-slate-800">
-              {l.value}
+        <div className="mx-auto max-w-6xl px-6">
+          {/* Header */}
+          <div className="mx-auto mb-12 max-w-xl text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1E5E3F]/10 px-3 py-1 text-xs font-semibold text-[#1E5E3F]">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Legalitas Resmi
+            </span>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              Legalitas & Perizinan
+            </h2>
+            <p className="mt-2 text-sm text-slate-600">
+              Terdaftar dan beroperasi secara sah berdasarkan legalitas hukum
+              yang berlaku.
             </p>
           </div>
+
+          {/* Cards Grid */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                label: "Pendirian",
+                value: "Didirikan 12 Rabiul Awal 1421 H / 15 Juni 2000",
+              },
+              {
+                label: "Nomor Badan Hukum",
+                value: "No. 272/BH/DISKOP&UMKM/3/X/2001",
+              },
+              {
+                label: "Pinbuk Riau",
+                value: "034/PINBUK/RIAU/XI/2000",
+              },
+            ].map((l) => (
+              <div
+                key={l.label}
+                className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#1E5E3F]/30 hover:shadow-md"
+              >
+                <div>
+                  <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F] transition-colors group-hover:bg-[#1E5E3F] group-hover:text-white">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    {l.label}
+                  </p>
+                  <p className="mt-1.5 text-base font-semibold leading-snug text-slate-800">
+                    {l.value}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* STRUKTUR ORGANISASI */}
-<section id="struktur-organisasi" className="relative overflow-hidden bg-white py-20">
-  <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-emerald-100/40 blur-3xl" />
-  <div className="pointer-events-none absolute -right-32 bottom-10 h-80 w-80 rounded-full bg-green-100/40 blur-3xl" />
+      <section
+        id="struktur-organisasi"
+        className="relative overflow-hidden bg-white py-20"
+      >
+        <div className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-emerald-100/40 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-10 h-80 w-80 rounded-full bg-green-100/40 blur-3xl" />
 
-  <div className="relative mx-auto max-w-6xl px-6">
-
-    {/* Header */}
-    <div className="mb-16 text-center">
-      <span className="inline-flex items-center gap-2 rounded-full bg-[#1E5E3F]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#1E5E3F]">
-        <span className="h-2 w-2 rounded-full bg-[#1E5E3F]" />
-        Organisasi
-      </span>
-      <h2 className="mt-4 text-3xl font-bold text-slate-800 md:text-4xl">Struktur Organisasi</h2>
-      <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
-        Mengenal jajaran pengurus KSPPS BMT Al-Ittihad yang berperan dalam menjalankan dan mengembangkan organisasi.
-      </p>
-    </div>
-
-    {/* KETUA */}
-    <div className="flex justify-center mb-4">
-      <div className="group relative w-full max-w-xs">
-        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#1E5E3F]/30 via-emerald-300/20 to-[#1E5E3F]/30 opacity-0 blur-xl transition duration-500 group-hover:opacity-100" />
-        <div className="relative overflow-hidden rounded-3xl border-2 border-[#1E5E3F]/20 bg-gradient-to-br from-[#1E5E3F] to-emerald-700 p-7 text-center shadow-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl">
-          {/* Dekorasi */}
-          <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/5" />
-          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-emerald-400/10" />
-          {/* Avatar inisial */}
-          <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/15 ring-4 ring-white/20 text-3xl font-black text-white shadow-inner">
-            {strukturOrganisasi[0].nama.split(" ").map(w => w[0]).slice(0,2).join("")}
+        <div className="relative mx-auto max-w-6xl px-6">
+          {/* Header */}
+          <div className="mb-16 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#1E5E3F]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#1E5E3F]">
+              <span className="h-2 w-2 rounded-full bg-[#1E5E3F]" />
+              Organisasi
+            </span>
+            <h2 className="mt-4 text-3xl font-bold text-slate-800 md:text-4xl">
+              Struktur Organisasi
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
+              Mengenal jajaran pengurus KSPPS BMT Al-Ittihad yang berperan dalam
+              menjalankan dan mengembangkan organisasi.
+            </p>
           </div>
-          <span className="inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-white/90">
-            {strukturOrganisasi[0].jabatan}
-          </span>
-          <h3 className="mt-3 text-xl font-bold text-white">{strukturOrganisasi[0].nama}</h3>
-          <div className="mx-auto mt-4 h-px w-12 bg-white/30 transition-all duration-500 group-hover:w-24" />
-        </div>
-      </div>
-    </div>
 
-    {/* Connector vertikal */}
-    <div className="relative mx-auto h-10 flex justify-center">
-      <div className="w-px bg-[#1E5E3F]/30 h-full" />
-    </div>
-    {/* Connector horisontal */}
-    <div className="relative mx-auto mb-0 hidden md:flex items-start justify-center">
-      <div className="w-3/4 h-px bg-[#1E5E3F]/30" />
-    </div>
-
-    {/* PENGURUS */}
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {strukturOrganisasi.slice(1).map((org, idx) => {
-        const initials = org.nama.split(" ").map(w => w[0]).slice(0,2).join("");
-        const colors = [
-          { ring: "ring-emerald-200", bg: "bg-emerald-50", text: "text-emerald-700", accent: "bg-emerald-600", badge: "bg-emerald-100 text-emerald-700" },
-          { ring: "ring-blue-200",    bg: "bg-blue-50",    text: "text-blue-700",    accent: "bg-blue-600",    badge: "bg-blue-100 text-blue-700"    },
-          { ring: "ring-indigo-200",  bg: "bg-indigo-50",  text: "text-indigo-700",  accent: "bg-indigo-600",  badge: "bg-indigo-100 text-indigo-700" },
-          { ring: "ring-teal-200",    bg: "bg-teal-50",    text: "text-teal-700",    accent: "bg-teal-600",    badge: "bg-teal-100 text-teal-700"    },
-        ];
-        const c = colors[idx % colors.length];
-        return (
-          <div key={org.nama} className="group relative">
-            <div className={`absolute -inset-1 rounded-3xl ${c.bg} opacity-0 blur-lg transition duration-500 group-hover:opacity-60`} />
-            <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-slate-300 group-hover:shadow-xl">
-              {/* Top accent bar animasi */}
-              <div className={`absolute left-0 top-0 h-1 w-0 ${c.accent} transition-all duration-500 group-hover:w-full rounded-t-3xl`} />
-
-              {/* Avatar inisial */}
-              <div className={`mx-auto mb-4 mt-2 flex h-16 w-16 items-center justify-center rounded-full ${c.bg} ring-4 ${c.ring} text-xl font-black ${c.text} shadow-sm transition-transform duration-500 group-hover:scale-110`}>
-                {initials}
+          {/* KETUA */}
+          <div className="mb-4 flex justify-center">
+            <div className="group relative w-full max-w-xs">
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#1E5E3F]/30 via-emerald-300/20 to-[#1E5E3F]/30 opacity-0 blur-xl transition duration-500 group-hover:opacity-100" />
+              <div className="relative overflow-hidden rounded-3xl border-2 border-[#1E5E3F]/20 bg-gradient-to-br from-[#1E5E3F] to-emerald-700 p-7 text-center shadow-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl">
+                {/* Dekorasi */}
+                <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/5" />
+                <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-emerald-400/10" />
+                {/* Avatar inisial */}
+                <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/15 ring-4 ring-white/20 text-3xl font-black text-white shadow-inner">
+                  {strukturOrganisasi[0].nama
+                    .split(" ")
+                    .map((w) => w[0])
+                    .slice(0, 2)
+                    .join("")}
+                </div>
+                <span className="inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-white/90">
+                  {strukturOrganisasi[0].jabatan}
+                </span>
+                <h3 className="mt-3 text-xl font-bold text-white">
+                  {strukturOrganisasi[0].nama}
+                </h3>
+                <div className="mx-auto mt-4 h-px w-12 bg-white/30 transition-all duration-500 group-hover:w-24" />
               </div>
-
-              {/* Jabatan badge */}
-              <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold ${c.badge}`}>
-                {org.jabatan}
-              </span>
-
-              {/* Nama */}
-              <h3 className="mt-2.5 text-base font-bold text-slate-800 leading-snug">{org.nama}</h3>
-
-              {/* Bidang (opsional) */}
-              {org.bidang && (
-                <p className="mt-1 text-xs text-slate-500">{org.bidang}</p>
-              )}
-
-              {/* Divider animasi */}
-              <div className={`mx-auto mt-3 h-0.5 w-8 rounded-full ${c.accent} transition-all duration-500 group-hover:w-16`} />
             </div>
           </div>
-        );
-      })}
-    </div>
 
-    {/* Caption bawah */}
-    <div className="mt-14 text-center">
-      <div className="mx-auto h-px w-24 bg-[#1E5E3F]/30" />
-      <p className="mt-5 text-sm italic text-slate-500">
-        Bersama membangun dan mengembangkan BMT Al-Ittihad
-      </p>
-    </div>
+          {/* Connector vertikal */}
+          <div className="relative mx-auto flex h-10 justify-center">
+            <div className="h-full w-px bg-[#1E5E3F]/30" />
+          </div>
+          {/* Connector horisontal */}
+          <div className="relative mx-auto mb-0 hidden items-start justify-center md:flex">
+            <div className="h-px w-3/4 bg-[#1E5E3F]/30" />
+          </div>
 
-  </div>
-</section>
+          {/* PENGURUS */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {strukturOrganisasi.slice(1).map((org, idx) => {
+              const initials = org.nama
+                .split(" ")
+                .map((w) => w[0])
+                .slice(0, 2)
+                .join("");
+              const colors = [
+                {
+                  ring: "ring-emerald-200",
+                  bg: "bg-emerald-50",
+                  text: "text-emerald-700",
+                  accent: "bg-emerald-600",
+                  badge: "bg-emerald-100 text-emerald-700",
+                },
+                {
+                  ring: "ring-blue-200",
+                  bg: "bg-blue-50",
+                  text: "text-blue-700",
+                  accent: "bg-blue-600",
+                  badge: "bg-blue-100 text-blue-700",
+                },
+                {
+                  ring: "ring-indigo-200",
+                  bg: "bg-indigo-50",
+                  text: "text-indigo-700",
+                  accent: "bg-indigo-600",
+                  badge: "bg-indigo-100 text-indigo-700",
+                },
+                {
+                  ring: "ring-teal-200",
+                  bg: "bg-teal-50",
+                  text: "text-teal-700",
+                  accent: "bg-teal-600",
+                  badge: "bg-teal-100 text-teal-700",
+                },
+              ];
+              const c = colors[idx % colors.length];
+              return (
+                <div key={org.nama} className="group relative">
+                  <div
+                    className={`absolute -inset-1 rounded-3xl ${c.bg} opacity-0 blur-lg transition duration-500 group-hover:opacity-60`}
+                  />
+                  <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:border-slate-300 group-hover:shadow-xl">
+                    {/* Top accent bar animasi */}
+                    <div
+                      className={`absolute left-0 top-0 h-1 w-0 ${c.accent} rounded-t-3xl transition-all duration-500 group-hover:w-full`}
+                    />
+
+                    {/* Avatar inisial */}
+                    <div
+                      className={`mx-auto mb-4 mt-2 flex h-16 w-16 items-center justify-center rounded-full ${c.bg} ring-4 ${c.ring} text-xl font-black ${c.text} shadow-sm transition-transform duration-500 group-hover:scale-110`}
+                    >
+                      {initials}
+                    </div>
+
+                    {/* Jabatan badge */}
+                    <span
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-bold ${c.badge}`}
+                    >
+                      {org.jabatan}
+                    </span>
+
+                    {/* Nama */}
+                    <h3 className="mt-2.5 text-base font-bold leading-snug text-slate-800">
+                      {org.nama}
+                    </h3>
+
+                    {/* Bidang (opsional) */}
+                    {org.bidang && (
+                      <p className="mt-1 text-xs text-slate-500">
+                        {org.bidang}
+                      </p>
+                    )}
+
+                    {/* Divider animasi */}
+                    <div
+                      className={`mx-auto mt-3 h-0.5 w-8 rounded-full ${c.accent} transition-all duration-500 group-hover:w-16`}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Caption bawah */}
+          <div className="mt-14 text-center">
+            <div className="mx-auto h-px w-24 bg-[#1E5E3F]/30" />
+            <p className="mt-5 text-sm italic text-slate-500">
+              Bersama membangun dan mengembangkan BMT Al-Ittihad
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="bg-[#1E5E3F] py-14 text-white">
