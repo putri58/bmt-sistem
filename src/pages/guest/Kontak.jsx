@@ -65,7 +65,7 @@ export default function Kontak() {
       icon: Mail,
       title: "Kantor Cabang Cibubur",
       lines: ["bmtalittihadcibb@gmail.com"],
-      alamat: "Isi alamat Cabang Cibubur di sini",
+      alamat: "Ruko Concordia / Trafalgar blok H 22 Kota Wisata Cibubur Bogor Telp. 021-22997410",
       noHp: "08128288220",
     },
     {
