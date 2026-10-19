@@ -81,22 +81,22 @@ const simpanan = [
   {
     nama: "Tabungan Mudharabah",
     warna: "emerald",
-    deskripsi: "Tabungan Mudharabah adalah tabungan berdasarkan prinsip syariah dengan sistem bagi hasil antara nasabah sebagai pemilik dana dan koperasi sebagai pengelola dana sesuai kesepakatan bersama.",
+    deskripsi: "Tabungan Mudharabah adalah Tabungan dari BMT AL-Ittihad dengan prinsip bagi hasil yang dirancang untuk mewujudkan impian anda dengan terencana. Tabungan Mudharabah BMT AL-Ittihad memberikan ketenangan dan kenyamanan yang penuh nilai kebaikan serta lebih berkah karena pengelolaan dana sesuai syariah",
   },
   {
     nama: "Tabungan Pendidikan",
     warna: "blue",
-    deskripsi: "Tabungan Pendidikan adalah tabungan yang diperuntukkan bagi anggota untuk mempersiapkan kebutuhan biaya pendidikan secara terencana sesuai dengan prinsip syariah.",
+    deskripsi: "Tabungan Pendidikan adalah Tabungan yang diperuntukan untuk anak yang masih dalam masa pendidikan dengan rekening tabungan juga atas nama anak yang bersangkutan, tentunya tabungan ini bertujuan untuk mendidik anak dari dini rajin menabung dan tabungan ini menggunakan prinsip bagi hasil ",
   },
   {
     nama: "Tabungan Wadiah",
     warna: "indigo",
-    deskripsi: "Tabungan Wadiah adalah tabungan berdasarkan prinsip titipan, di mana anggota menitipkan dana kepada koperasi yang dapat diambil kembali sesuai ketentuan yang berlaku dan prinsip syariah.",
+    deskripsi: "Tabungan Wadiah adalah Tabungan yang dijalankan berdasarkan akad wadiah, yaitu titipan murni yang setiap saat dapat diambil jika pemiliknya menhendaki. Konsep yang dipakai adalah wadiah yad dhamanah. Dalam hal ini nasabah bertindak sebagai penitip yang memberikan hak kepada BMT unutk menggunakan atau memanfaatkan uang atau barang titipan",
   },
   {
     nama: "Simpanan Berjangka (SIMJAKA)",
     warna: "orange",
-    deskripsi: "Simpanan Berjangka (SIMJAKA) adalah simpanan anggota dalam jangka waktu tertentu yang dikelola koperasi berdasarkan prinsip syariah dengan sistem bagi hasil sesuai kesepakatan.",
+    deskripsi: "Simpanan Berjangka adalah Simpanan dari mitra dengan BMT yang penarikanya hanya dapat dilakukan dalam jangka waktu tertentu menurut perjanjian antara mitra dan pihak BMT yang bersangkutan",
   },
 ];
 
