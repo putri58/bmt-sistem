@@ -1,16 +1,52 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Wallet, CreditCard, CheckCircle2, ChevronDown, ChevronUp, ArrowRight, Calculator, FileText, Shield, Users, BadgeCheck } from "lucide-react";
+import {
+  Wallet,
+  CreditCard,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight,
+  Calculator,
+  FileText,
+  Shield,
+  Users,
+} from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────
-   DATA PEMBIAYAAN
+   DATA PEMBIAYAAN & SIMPANAN
 ───────────────────────────────────────────────────────── */
 const jenisPembiayaan = [
-  { nama: "Murabahah",  cocokUntuk: "Pembelian barang konsumtif & produktif", warna: "emerald" },
-  { nama: "Mudharabah", cocokUntuk: "Pengembangan usaha produktif",            warna: "blue"    },
-  { nama: "Musyarakah", cocokUntuk: "Kemitraan usaha bersama",                 warna: "indigo"  },
-  { nama: "Ijarah",     cocokUntuk: "Pendidikan, kesehatan & sewa aset",       warna: "purple"  },
-  { nama: "Istishna",   cocokUntuk: "Konstruksi & pembuatan barang custom",    warna: "orange"  },
+  {
+    nama: "Murabahah",
+    cocokUntuk: "Pembelian barang konsumtif & produktif",
+    warna: "emerald",
+    deskripsi: "Pembiayaan Murabahah adalah pembiayaan berdasarkan prinsip jual beli, di mana koperasi membeli barang yang dibutuhkan anggota lalu menjualnya kembali dengan harga pokok dan margin keuntungan yang disepakati bersama.",
+  },
+  {
+    nama: "Mudharabah",
+    cocokUntuk: "Pengembangan usaha produktif",
+    warna: "blue",
+    deskripsi: "Pembiayaan Mudharabah adalah pembiayaan berdasarkan prinsip kerja sama usaha, di mana koperasi menyediakan modal dan anggota mengelola usaha, dengan keuntungan dibagi sesuai kesepakatan bersama.",
+  },
+  {
+    nama: "Musyarakah",
+    cocokUntuk: "Kemitraan usaha bersama",
+    warna: "indigo",
+    deskripsi: "Pembiayaan Musyarakah adalah pembiayaan berdasarkan prinsip kerja sama usaha antara koperasi dan anggota, di mana kedua pihak menyertakan modal dan membagi keuntungan sesuai kesepakatan bersama.",
+  },
+  {
+    nama: "Ijarah",
+    cocokUntuk: "Pendidikan, kesehatan & sewa aset",
+    warna: "purple",
+    deskripsi: "Pembiayaan Ijarah adalah pembiayaan berdasarkan prinsip sewa-menyewa, di mana koperasi menyediakan barang atau jasa untuk digunakan anggota dengan pembayaran sewa sesuai kesepakatan bersama.",
+  },
+  {
+    nama: "Istishna",
+    cocokUntuk: "Konstruksi & pembuatan barang custom",
+    warna: "orange",
+    deskripsi: "Pembiayaan Istishna adalah pembiayaan berdasarkan prinsip jual beli pesanan, di mana koperasi menyediakan barang yang dibuat atau dibangun sesuai spesifikasi dan kesepakatan dengan anggota.",
+  },
 ];
 
 const persyaratanPendaftaran = [
@@ -42,69 +78,107 @@ const jaminan = [
 ];
 
 const simpanan = [
-  { nama: "Tabungan Mudharabah",          warna: "emerald" },
-  { nama: "Tabungan Pendidikan",           warna: "blue"    },
-  { nama: "Tabungan Wadiah",               warna: "indigo"  },
-  { nama: "Simpanan Berjangka (SIMJAKA)",  warna: "orange"  },
+  {
+    nama: "Tabungan Mudharabah",
+    warna: "emerald",
+    deskripsi: "Tabungan Mudharabah adalah tabungan berdasarkan prinsip syariah dengan sistem bagi hasil antara nasabah sebagai pemilik dana dan koperasi sebagai pengelola dana sesuai kesepakatan bersama.",
+  },
+  {
+    nama: "Tabungan Pendidikan",
+    warna: "blue",
+    deskripsi: "Tabungan Pendidikan adalah tabungan yang diperuntukkan bagi anggota untuk mempersiapkan kebutuhan biaya pendidikan secara terencana sesuai dengan prinsip syariah.",
+  },
+  {
+    nama: "Tabungan Wadiah",
+    warna: "indigo",
+    deskripsi: "Tabungan Wadiah adalah tabungan berdasarkan prinsip titipan, di mana anggota menitipkan dana kepada koperasi yang dapat diambil kembali sesuai ketentuan yang berlaku dan prinsip syariah.",
+  },
+  {
+    nama: "Simpanan Berjangka (SIMJAKA)",
+    warna: "orange",
+    deskripsi: "Simpanan Berjangka (SIMJAKA) adalah simpanan anggota dalam jangka waktu tertentu yang dikelola koperasi berdasarkan prinsip syariah dengan sistem bagi hasil sesuai kesepakatan.",
+  },
 ];
 
+/* ─────────────────────────────────────────────────────────
+   COLOR MAPS & STYLING
+───────────────────────────────────────────────────────── */
 const simpananColorMap = {
   emerald: {
-    card:   "border-emerald-200 bg-gradient-to-br from-emerald-50 to-white",
-    icon:   "bg-emerald-100 text-emerald-600",
-    label:  "text-emerald-600",
-    dot:    "bg-emerald-400",
-    shine:  "from-emerald-400/10",
+    card: "border-emerald-200 bg-gradient-to-br from-emerald-50 to-white",
+    icon: "bg-emerald-100 text-emerald-600",
+    label: "text-emerald-600",
+    dot: "bg-emerald-400",
+    shine: "from-emerald-400/10",
   },
   blue: {
-    card:   "border-blue-200 bg-gradient-to-br from-blue-50 to-white",
-    icon:   "bg-blue-100 text-blue-600",
-    label:  "text-blue-600",
-    dot:    "bg-blue-400",
-    shine:  "from-blue-400/10",
+    card: "border-blue-200 bg-gradient-to-br from-blue-50 to-white",
+    icon: "bg-blue-100 text-blue-600",
+    label: "text-blue-600",
+    dot: "bg-blue-400",
+    shine: "from-blue-400/10",
   },
   indigo: {
-    card:   "border-indigo-200 bg-gradient-to-br from-indigo-50 to-white",
-    icon:   "bg-indigo-100 text-indigo-600",
-    label:  "text-indigo-600",
-    dot:    "bg-indigo-400",
-    shine:  "from-indigo-400/10",
+    card: "border-indigo-200 bg-gradient-to-br from-indigo-50 to-white",
+    icon: "bg-indigo-100 text-indigo-600",
+    label: "text-indigo-600",
+    dot: "bg-indigo-400",
+    shine: "from-indigo-400/10",
   },
   orange: {
-    card:   "border-orange-200 bg-gradient-to-br from-orange-50 to-white",
-    icon:   "bg-orange-100 text-orange-600",
-    label:  "text-orange-600",
-    dot:    "bg-orange-400",
-    shine:  "from-orange-400/10",
+    card: "border-orange-200 bg-gradient-to-br from-orange-50 to-white",
+    icon: "bg-orange-100 text-orange-600",
+    label: "text-orange-600",
+    dot: "bg-orange-400",
+    shine: "from-orange-400/10",
   },
 };
 
-// colorMap & iconColorMap tetap ada untuk komponen lain yang mungkin masih pakai
-const colorMap = {
-  emerald: "bg-emerald-50 border-emerald-200 text-emerald-700",
-  blue:    "bg-blue-50 border-blue-200 text-blue-700",
-  indigo:  "bg-indigo-50 border-indigo-200 text-indigo-700",
-  orange:  "bg-orange-50 border-orange-200 text-orange-700",
-  green:   "bg-green-50 border-green-200 text-green-700",
-  purple:  "bg-purple-50 border-purple-200 text-purple-700",
-  rose:    "bg-rose-50 border-rose-200 text-rose-700",
+const pembiayaanColorMap = {
+  emerald: {
+    card: "border-emerald-200/80 bg-emerald-50/30 hover:border-emerald-300",
+    num: "bg-emerald-100 text-emerald-700",
+    badge: "bg-emerald-100/90 text-emerald-800",
+    arrow: "text-emerald-600",
+  },
+  blue: {
+    card: "border-blue-200/80 bg-blue-50/30 hover:border-blue-300",
+    num: "bg-blue-100 text-blue-700",
+    badge: "bg-blue-100/90 text-blue-800",
+    arrow: "text-blue-600",
+  },
+  indigo: {
+    card: "border-indigo-200/80 bg-indigo-50/30 hover:border-indigo-300",
+    num: "bg-indigo-100 text-indigo-700",
+    badge: "bg-indigo-100/90 text-indigo-800",
+    arrow: "text-indigo-600",
+  },
+  purple: {
+    card: "border-purple-200/80 bg-purple-50/30 hover:border-purple-300",
+    num: "bg-purple-100 text-purple-700",
+    badge: "bg-purple-100/90 text-purple-800",
+    arrow: "text-purple-600",
+  },
+  orange: {
+    card: "border-amber-200/80 bg-amber-50/30 hover:border-amber-300",
+    num: "bg-amber-100 text-amber-700",
+    badge: "bg-amber-100/90 text-amber-800",
+    arrow: "text-amber-600",
+  },
 };
 
-const iconColorMap = {
-  emerald: "bg-emerald-100 text-emerald-600",
-  blue:    "bg-blue-100 text-blue-600",
-  indigo:  "bg-indigo-100 text-indigo-600",
-  orange:  "bg-orange-100 text-orange-600",
-  green:   "bg-green-100 text-green-600",
-  purple:  "bg-purple-100 text-purple-600",
-  rose:    "bg-rose-100 text-rose-600",
-};
-
+/* ─────────────────────────────────────────────────────────
+   KOMPONEN CARD WITH DROPDOWN
+───────────────────────────────────────────────────────── */
 function SimpananCard({ product, index }) {
+  const [isOpen, setIsOpen] = useState(false);
   const c = simpananColorMap[product.warna];
+
   return (
-    <div className={`relative overflow-hidden rounded-2xl border p-6 transition-all hover:shadow-lg hover:-translate-y-0.5 ${c.card}`}>
-      {/* Dekoratif lingkaran pojok */}
+    <div
+      onClick={() => setIsOpen(!isOpen)}
+      className={`relative overflow-hidden cursor-pointer rounded-2xl border p-6 transition-all hover:shadow-lg hover:-translate-y-0.5 ${c.card}`}
+    >
       <div className={`absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gradient-to-br ${c.shine} to-transparent opacity-60`} />
 
       <div className="flex items-center gap-4">
@@ -120,43 +194,71 @@ function SimpananCard({ product, index }) {
             <span className={`text-xs font-semibold ${c.label}`}>Produk Simpanan Syariah</span>
           </div>
         </div>
-        {/* Icon kanan */}
-        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${c.icon} opacity-50`}>
-          <Wallet size={18} />
+        {/* Arrow Dropdown */}
+        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${c.icon} transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
+          <ChevronDown size={18} />
         </div>
       </div>
+
+      {/* DROPDOWN DESKRIPSI */}
+      {isOpen && (
+        <div className="relative z-10 mt-4 border-t border-slate-200/60 pt-3 text-sm leading-relaxed text-slate-600">
+          <p>{product.deskripsi}</p>
+        </div>
+      )}
     </div>
   );
 }
 
-// ProductCard masih dipakai untuk tab pinjaman (jaga-jaga)
-function ProductCard({ product, type }) {
-  const [open, setOpen] = useState(false);
-  const isS = type === "simpanan";
-  const Icon = isS ? Wallet : CreditCard;
+function PembiayaanCard({ product, index }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const c = pembiayaanColorMap[product.warna] || pembiayaanColorMap.emerald;
 
   return (
-    <div className={`overflow-hidden rounded-2xl border ${colorMap[product.warna]} bg-white transition-all`}>
-      <div className="p-6">
-        <div className="flex items-start gap-4">
-          <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${iconColorMap[product.warna]}`}>
-            <Icon size={22} />
-          </div>
-          <div className="flex-1">
-            <h3 className="font-bold text-slate-800">{product.nama}</h3>
+    <div
+      onClick={() => setIsOpen(!isOpen)}
+      className={`cursor-pointer rounded-2xl border p-5 transition-all duration-300 hover:shadow-md ${c.card}`}
+    >
+      <div className="flex items-center gap-4">
+        {/* Nomor Box */}
+        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-bold ${c.num}`}>
+          {index + 1}
+        </div>
+
+        {/* Info Utama */}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-bold text-slate-800 text-base">{product.nama}</h3>
+          <div className="mt-1">
+            <span className={`inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${c.badge}`}>
+              {product.cocokUntuk}
+            </span>
           </div>
         </div>
+
+        {/* Arrow Dropdown */}
+        <div className={`shrink-0 text-slate-400 transition-transform duration-300 ${isOpen ? "rotate-180 " + c.arrow : ""}`}>
+          <ChevronDown size={20} />
+        </div>
       </div>
+
+      {/* DROPDOWN DESKRIPSI */}
+      {isOpen && (
+        <div className="mt-4 border-t border-slate-200/60 pt-3 text-sm leading-relaxed text-slate-600">
+          <p>{product.deskripsi}</p>
+        </div>
+      )}
     </div>
   );
 }
 
+/* ─────────────────────────────────────────────────────────
+   KOMPONEN UTAMA
+───────────────────────────────────────────────────────── */
 export default function Informasi() {
   const [activeTab, setActiveTab] = useState("simpanan");
 
   return (
     <div>
-
       {/* HERO */}
       <section
         className="relative bg-cover bg-center py-16 text-white"
@@ -164,7 +266,6 @@ export default function Informasi() {
           backgroundImage: `url("https://ykpialittihad.or.id/wp-content/uploads/2025/02/bmt-alittihad.png")`,
         }}
       >
-        {/* Gradasi overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a2e1a] via-[#0a2e1a]/60 to-transparent"></div>
 
         <div className="relative mx-auto max-w-4xl px-6 text-center">
@@ -186,9 +287,9 @@ export default function Informasi() {
       <div className="sticky top-[80px] z-20 border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl gap-1 px-6 py-2">
           {[
-            { key: "simpanan",   label: "Simpanan", icon: Wallet },
-            { key: "pembiayaan", label: "Pembiayaan",      icon: CreditCard },
-            { key: "simulasi",   label: "Simulasi",        icon: Calculator },
+            { key: "simpanan", label: "Simpanan", icon: Wallet },
+            { key: "pembiayaan", label: "Pembiayaan", icon: CreditCard },
+            { key: "simulasi", label: "Simulasi", icon: Calculator },
           ].map(({ key, label, icon: Icon }) => (
             <button
               key={key}
@@ -210,38 +311,71 @@ export default function Informasi() {
       <section className="bg-slate-50 py-12">
         <div className="mx-auto max-w-6xl px-6">
 
+          {/* TAB SIMPANAN */}
           {activeTab === "simpanan" && (
-            <div>
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-slate-800">Simpanan</h2>
-                <p className="mt-1 text-slate-500">Kelola keuangan Anda dengan produk simpanan syariah kami yang aman dan menguntungkan.</p>
+            <div className="space-y-12">
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold text-slate-800">Simpanan</h2>
+                  <p className="mt-1 text-slate-500">Kelola keuangan Anda dengan produk simpanan syariah kami yang aman dan menguntungkan.</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {simpanan.map((s, i) => (
+                    <SimpananCard key={s.nama} product={s} index={i} />
+                  ))}
+                </div>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {simpanan.map((s, i) => <SimpananCard key={s.nama} product={s} index={i} />)}
-              </div>
+
+              {/* PERSYARATAN PEMBIAYAAN */}
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-800">Persyaratan Simpanan</h2>
+          <p className="mt-1 text-slate-500">Siapkan dokumen berikut sebelum mengajukan simpanan.</p>
+        </div>
+
+        <div className="flex justify-center">
+  {/* CARD 1: PENDAFTARAN ANGGOTA */}
+  <div className="w-full max-w-md rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm flex flex-col justify-between">
+    <div>
+      <div className="mb-6 flex items-center gap-3.5">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+          <Users size={22} />
+        </div>
+        <div>
+          <h3 className="font-bold text-slate-800 text-base">Pendaftaran Anggota</h3>
+          <p className="text-xs text-slate-400 mt-0.5">Total Rp 80.000</p>
+        </div>
+      </div>
+
+      <ul className="space-y-3">
+        {persyaratanPendaftaran.map((item, idx) => (
+          <li key={idx} className="flex items-center gap-3 text-sm text-slate-600">
+            <CheckCircle2 size={18} className="shrink-0 text-emerald-500" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div className="mt-6 rounded-2xl bg-emerald-50 p-4 text-center">
+      <span className="block text-xs font-semibold text-emerald-600">Jumlah Keseluruhan</span>
+      <span className="mt-0.5 block text-2xl font-bold text-emerald-600">Rp 80.000</span>
+    </div>
+  </div>
+</div>
+      </div>
             </div>
           )}
 
+          {/* TAB PEMBIAYAAN */}
           {activeTab === "pembiayaan" && <PembiayaanSection />}
 
-          {activeTab === "pinjaman" && (
-            <div>
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-slate-800">Produk Pembiayaan</h2>
-                <p className="mt-1 text-slate-500">Wujudkan kebutuhan Anda dengan produk pembiayaan syariah yang sesuai.</p>
-              </div>
-              <div className="space-y-4">
-                {pinjaman.map((p) => <ProductCard key={p.nama} product={p} type="pinjaman" />)}
-              </div>
-            </div>
-          )}
-
         </div>
-        {/* SIMULASI */}
-{activeTab === "simulasi" && (
-  <SimulasiSection />
-)}
+
+        {/* TAB SIMULASI */}
+        {activeTab === "simulasi" && <SimulasiSection />}
       </section>
+
       {/* CTA */}
       <section className="bg-[#1E5E3F] py-14 text-white">
         <div className="mx-auto max-w-3xl px-6 text-center">
@@ -254,56 +388,175 @@ export default function Informasi() {
           </Link>
         </div>
       </section>
-
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────
-   SIMULASI DEPOSITO
+   PEMBIAYAAN SECTION
 ───────────────────────────────────────────────────────── */
+function PembiayaanSection() {
+  return (
+    <div className="space-y-12">
+      {/* JENIS PEMBIAYAAN */}
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-800">Jenis Pembiayaan</h2>
+          <p className="mt-1 text-slate-500">Pilih skema pembiayaan syariah yang paling sesuai dengan kebutuhan Anda.</p>
+        </div>
 
-// Mapping nisbah bagi hasil berdasarkan jangka waktu (sesuai file asli)
+        {/* Layout 3 Kartu Atas */}
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {jenisPembiayaan.slice(0, 3).map((p, i) => (
+            <PembiayaanCard key={p.nama} product={p} index={i} />
+          ))}
+        </div>
+
+        {/* Layout 2 Kartu Bawah (Rata Tengah) */}
+        <div className="mt-4 flex flex-col sm:flex-row justify-center gap-4">
+          {jenisPembiayaan.slice(3, 5).map((p, i) => (
+            <div key={p.nama} className="w-full sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)]">
+              <PembiayaanCard product={p} index={i + 3} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* PERSYARATAN PEMBIAYAAN */}
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-800">Persyaratan Pembiayaan</h2>
+          <p className="mt-1 text-slate-500">Siapkan dokumen berikut sebelum mengajukan pembiayaan.</p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {/* CARD 1: PENDAFTARAN ANGGOTA */}
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm flex flex-col justify-between">
+            <div>
+              <div className="mb-6 flex items-center gap-3.5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+                  <Users size={22} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-800 text-base">Pendaftaran Anggota</h3>
+                  <p className="text-xs text-slate-400 mt-0.5">Total Rp 80.000</p>
+                </div>
+              </div>
+
+              <ul className="space-y-3">
+                {persyaratanPendaftaran.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-sm text-slate-600">
+                    <CheckCircle2 size={18} className="shrink-0 text-emerald-500" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-6 rounded-2xl bg-emerald-50 p-4 text-center">
+              <span className="block text-xs font-semibold text-emerald-600">Jumlah Keseluruhan</span>
+              <span className="mt-0.5 block text-2xl font-bold text-emerald-600">Rp 80.000</span>
+            </div>
+          </div>
+
+          {/* CARD 2: SYARAT PEMBIAYAAN */}
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm">
+            <div className="mb-6 flex items-center gap-3.5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                <FileText size={22} />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-800 text-base">Syarat Pembiayaan</h3>
+                <p className="text-xs text-slate-400 mt-0.5">Dokumen yang diperlukan</p>
+              </div>
+            </div>
+
+            <ul className="space-y-3">
+              {syaratPembiayaan.map((item, idx) => (
+                <li key={idx} className="flex items-center gap-3 text-sm text-slate-600">
+                  <CheckCircle2 size={18} className="shrink-0 text-blue-500" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CARD 3: JAMINAN */}
+          <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm flex flex-col justify-between">
+            <div>
+              <div className="mb-6 flex items-center gap-3.5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
+                  <Shield size={22} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-800 text-base">Jaminan</h3>
+                  <p className="text-xs text-slate-400 mt-0.5">Agunan yang diterima</p>
+                </div>
+              </div>
+
+              <ul className="space-y-3">
+                {jaminan.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-sm text-slate-600">
+                    <CheckCircle2 size={18} className="shrink-0 text-amber-500" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-6 rounded-2xl bg-amber-50/80 p-4 text-center">
+              <p className="text-xs font-medium text-amber-700 leading-relaxed">
+                Jaminan disesuaikan dengan plafon dan jenis pembiayaan yang diajukan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+   SIMULASI DEPOSITO & PEMBIAYAAN
+───────────────────────────────────────────────────────── */
 const NISBAH_DEPOSITO = { 3: 0.32, 6: 0.33, 9: 0.34, 12: 0.35 };
 
 function SimulasiDeposito() {
   const today = new Date();
   const defaultMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
 
-  const [jumlah,      setJumlah]      = useState("");
-  const [jangka,      setJangka]      = useState(3);
-  const [nisbah,      setNisbah]      = useState(NISBAH_DEPOSITO[3]);
-  const [awal,        setAwal]        = useState(defaultMonth);
-  const [hasil,       setHasil]       = useState(null);
+  const [jumlah, setJumlah] = useState("");
+  const [jangka, setJangka] = useState(3);
+  const [nisbah, setNisbah] = useState(NISBAH_DEPOSITO[3]);
+  const [awal, setAwal] = useState(defaultMonth);
+  const [hasil, setHasil] = useState(null);
 
   function hitungDeposito(e) {
     e.preventDefault();
 
-    // Bersihkan format rupiah → angka murni (sama seperti di JS asli)
     const nominal = Math.round(parseFloat(jumlah.replace(/[^\d]/g, "")));
     if (!nominal || isNaN(nominal)) return;
 
-    const sukuBunga   = parseFloat(nisbah) / 100;
-    const [thn, bln]  = awal.split("-").map(Number);
-    const awalDate    = new Date(thn, bln - 1, 1);
+    const sukuBunga = parseFloat(nisbah) / 100;
+    const [thn, bln] = awal.split("-").map(Number);
+    const awalDate = new Date(thn, bln - 1, 1);
 
-    let totalKotor  = 0;
-    let totalPPH    = 0;
+    let totalKotor = 0;
+    let totalPPH = 0;
     let totalBersih = 0;
 
     const rows = [];
     for (let i = 1; i <= jangka; i++) {
-      // Periode bulan ke-i (sama persis dengan JS asli)
       const currentMonth = new Date(awalDate.getFullYear(), awalDate.getMonth() + i, 1);
-      const mm   = String(currentMonth.getMonth() + 1).padStart(2, "0");
+      const mm = String(currentMonth.getMonth() + 1).padStart(2, "0");
       const yyyy = currentMonth.getFullYear();
 
-      const bungaKotor  = Math.round(nominal * sukuBunga);   // sesuai formula asli
-      const pph         = Math.round(bungaKotor * 0.10);      // PPH 10%
+      const bungaKotor = Math.round(nominal * sukuBunga);
+      const pph = Math.round(bungaKotor * 0.1);
       const bungaBersih = Math.round(bungaKotor - pph);
 
-      totalKotor  += bungaKotor;
-      totalPPH    += pph;
+      totalKotor += bungaKotor;
+      totalPPH += pph;
       totalBersih += bungaBersih;
 
       rows.push({ no: i, periode: `${mm}/${yyyy}`, bungaKotor, pph, bungaBersih });
@@ -331,8 +584,6 @@ function SimulasiDeposito() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-
-      {/* FORM */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
@@ -345,14 +596,12 @@ function SimulasiDeposito() {
         </div>
 
         <form onSubmit={hitungDeposito} className="space-y-4">
-          {/* Jumlah Deposito */}
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jumlah Deposito</label>
             <input
               type="text"
               value={jumlah}
               onChange={(e) => {
-                // Format rupiah saat input (sesuai formatJumlah() di JS asli)
                 const raw = e.target.value.replace(/[^\d]/g, "");
                 setJumlah(raw ? "Rp " + new Intl.NumberFormat("id-ID").format(raw) : "");
               }}
@@ -362,7 +611,6 @@ function SimulasiDeposito() {
             />
           </div>
 
-          {/* Jangka Waktu */}
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-slate-700">Jangka Waktu</label>
             <select
@@ -381,7 +629,6 @@ function SimulasiDeposito() {
             </select>
           </div>
 
-          {/* Bagi Hasil — editable, auto-update saat jangka waktu berubah */}
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-slate-700">
               Bagi Hasil Bulanan (%)
@@ -395,12 +642,8 @@ function SimulasiDeposito() {
               min="0"
               className={inputCls}
             />
-            <p className="mt-1 text-xs text-slate-400">
-              Default: 3bln (0.32%) | 6bln (0.33%) | 9bln (0.34%) | 12bln (0.35%)
-            </p>
           </div>
 
-          {/* Waktu Deposito */}
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-slate-700">Waktu Deposito</label>
             <input
@@ -413,19 +656,16 @@ function SimulasiDeposito() {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button type="submit"
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] px-4 py-3 font-semibold text-white transition hover:bg-[#174b32]">
+            <button type="submit" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#1E5E3F] px-4 py-3 font-semibold text-white transition hover:bg-[#174b32]">
               <Calculator size={18} /> Hitung
             </button>
-            <button type="button" onClick={resetDeposito}
-              className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+            <button type="button" onClick={resetDeposito} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
               Ulangi
             </button>
           </div>
-        </form> 
+        </form>
       </div>
 
-      {/* HASIL */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h3 className="mb-5 font-bold text-slate-800">Perkiraan Bagi Hasil / Bulan</h3>
 
@@ -436,8 +676,6 @@ function SimulasiDeposito() {
           </div>
         ) : (
           <div className="space-y-4">
-
-            {/* TABEL BULANAN */}
             <div className="overflow-x-auto rounded-xl border border-slate-200">
               <table className="w-full text-sm">
                 <thead>
@@ -479,31 +717,28 @@ function SimulasiDeposito() {
               </table>
             </div>
 
-            {/* DISCLAIMER — sesuai note di file asli */}
             <div className="rounded-xl border border-red-200 bg-red-50 p-3">
               <p className="text-center text-xs font-semibold text-red-600">
                 ⚠ Note : Perhitungan Bagi Hasil Bersifat Fluktuatif / Tidak Tetap
               </p>
             </div>
-
           </div>
         )}
       </div>
     </div>
   );
 }
+
 function formatRp(v) {
   return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(v);
 }
 
-// Margin otomatis berdasarkan jenis dan tenor
 function getMarginDefault(jenis, tenor) {
   if (jenis === "KPR") {
-    if (tenor <= 60)  return 0.7;
+    if (tenor <= 60) return 0.7;
     if (tenor <= 120) return 0.8;
     return 0.85;
   }
-  // Murabahah, Ijarah, Istishna
   if (tenor <= 12) return 0.9;
   if (tenor <= 24) return 1.0;
   if (tenor <= 36) return 1.1;
@@ -513,20 +748,18 @@ function getMarginDefault(jenis, tenor) {
 function SimulasiSection() {
   const [tab, setTab] = useState("pembiayaan");
 
-  // ── STATE PEMBIAYAAN ──
   const [pForm, setPForm] = useState({
-    jenis:  "Murabahah",
+    jenis: "Murabahah",
     jumlah: "",
-    tenor:  "12",
+    tenor: "12",
     margin: "0.9",
   });
-  const [pHasil,  setPHasil]  = useState(null);
-  const [pTabel,  setPTabel]  = useState([]);
+  const [pHasil, setPHasil] = useState(null);
+  const [pTabel, setPTabel] = useState([]);
   const [pShowTabel, setPShowTabel] = useState(false);
 
   function handlePFormChange(key, val) {
     const updated = { ...pForm, [key]: val };
-    // Auto-update margin saat jenis atau tenor berubah
     if (key === "jenis" || key === "tenor") {
       updated.margin = String(getMarginDefault(updated.jenis, Number(updated.tenor)));
     }
@@ -535,36 +768,35 @@ function SimulasiSection() {
 
   function hitungPembiayaan(e) {
     e.preventDefault();
-    const pokok  = Number(pForm.jumlah.replace(/[^\d]/g, ""));
-    const tenor  = Number(pForm.tenor);
+    const pokok = Number(pForm.jumlah.replace(/[^\d]/g, ""));
+    const tenor = Number(pForm.tenor);
     const margin = Number(pForm.margin);
 
     if (!pokok || !tenor || !margin) return;
 
-    const marginPerBulan     = pokok * (margin / 100);
-    const totalMargin        = marginPerBulan * tenor;
-    const angsuranPokok      = pokok / tenor;
+    const marginPerBulan = pokok * (margin / 100);
+    const totalMargin = marginPerBulan * tenor;
+    const angsuranPokok = pokok / tenor;
     const totalAngsuranBulan = angsuranPokok + marginPerBulan;
- 
+
     setPHasil({
       pokok,
       totalMargin,
       tenor,
-      marginPersen:    margin,
+      marginPersen: margin,
       angsuranPokok,
-      angsuranMargin:  marginPerBulan,
-      totalAngsuran:   totalAngsuranBulan,
+      angsuranMargin: marginPerBulan,
+      totalAngsuran: totalAngsuranBulan,
     });
 
-    // Generate tabel angsuran
     const rows = [];
     for (let i = 1; i <= tenor; i++) {
       rows.push({
-        ke:             i,
+        ke: i,
         angsuranPokok,
         angsuranMargin: marginPerBulan,
-        total:          totalAngsuranBulan,
-        sisaPokok:      pokok - angsuranPokok * i,
+        total: totalAngsuranBulan,
+        sisaPokok: pokok - angsuranPokok * i,
       });
     }
     setPTabel(rows);
@@ -583,17 +815,15 @@ function SimulasiSection() {
     <section className="bg-slate-50">
       <div className="mx-auto max-w-6xl px-6">
 
-        {/* HEADER */}
         <div className="mb-8">
           <h2 className="text-4xl font-bold text-slate-800">Simulasi Keuangan</h2>
           <p className="mt-1 text-slate-500">Hitung estimasi pembiayaan sesuai kebutuhan Anda.</p>
         </div>
 
-        {/* TAB SWITCH */}
         <div className="mb-6 flex gap-2">
           {[
             { key: "pembiayaan", label: "Simulasi Pembiayaan" },
-            { key: "deposito",   label: "Simulasi Deposito" },
+            { key: "deposito", label: "Simulasi Deposito" },
           ].map((t) => (
             <button key={t.key} onClick={() => setTab(t.key)}
               className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
@@ -604,11 +834,9 @@ function SimulasiSection() {
           ))}
         </div>
 
-        {/* ── SIMULASI PEMBIAYAAN ── */}
         {tab === "pembiayaan" && (
           <div className="grid gap-6 lg:grid-cols-2">
 
-            {/* FORM */}
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="mb-6 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
@@ -658,11 +886,6 @@ function SimulasiSection() {
                   </label>
                   <input type="number" value={pForm.margin} onChange={(e) => handlePFormChange("margin", e.target.value)}
                     placeholder="Contoh: 0.9" step="0.1" className={inputCls} />
-                  <p className="mt-1 text-xs text-slate-400">
-                    {pForm.jenis === "KPR"
-                      ? "KPR: 1–5thn (0.7%) | 6–10thn (0.8%) | 11–15thn (0.85%)"
-                      : "Murabahah/Ijarah/Istishna: 1–12bln (0.9%) | 13–24bln (1%) | 25–36bln (1.1%) | 37–60bln (1.2%)"}
-                  </p>
                 </div>
 
                 <div className="flex gap-3 pt-2">
@@ -678,7 +901,6 @@ function SimulasiSection() {
               </form>
             </div>
 
-            {/* HASIL */}
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <h3 className="mb-5 font-bold text-slate-800">Rincian Pembiayaan</h3>
               {!pHasil ? (
@@ -689,12 +911,12 @@ function SimulasiSection() {
               ) : (
                 <div className="space-y-3">
                   {[
-                    ["Jumlah Pokok Pembiayaan",  formatRp(pHasil.pokok)],
+                    ["Jumlah Pokok Pembiayaan", formatRp(pHasil.pokok)],
                     ["Jumlah Margin Pembiayaan", formatRp(pHasil.totalMargin)],
-                    ["Jangka Waktu",             `${pHasil.tenor} bulan`],
-                    ["Margin Per Bulan",         `${pHasil.marginPersen}%`],
-                    ["Angsuran Pokok/Bulan",     formatRp(pHasil.angsuranPokok)],
-                    ["Angsuran Margin/Bulan",    formatRp(pHasil.angsuranMargin)],
+                    ["Jangka Waktu", `${pHasil.tenor} bulan`],
+                    ["Margin Per Bulan", `${pHasil.marginPersen}%`],
+                    ["Angsuran Pokok/Bulan", formatRp(pHasil.angsuranPokok)],
+                    ["Angsuran Margin/Bulan", formatRp(pHasil.angsuranMargin)],
                   ].map(([l, v]) => (
                     <div key={l} className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3">
                       <span className="text-sm text-slate-600">{l}</span>
@@ -702,19 +924,17 @@ function SimulasiSection() {
                     </div>
                   ))}
 
-                  {/* TOTAL */}
                   <div className="flex items-center justify-between rounded-xl bg-[#1E5E3F] px-4 py-4">
                     <span className="font-semibold text-white">Total Angsuran/Bulan</span>
                     <span className="text-xl font-bold text-white">{formatRp(pHasil.totalAngsuran)}</span>
                   </div>
 
-                  {/* TABEL ANGSURAN */}
                   <button onClick={() => setPShowTabel(!pShowTabel)}
                     className="flex w-full items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
                     <span>Lihat Tabel Angsuran per Bulan</span>
                     {pShowTabel ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </button>
- 
+
                   {pShowTabel && (
                     <div className="overflow-x-auto rounded-xl border border-slate-200">
                       <table className="w-full text-sm">
@@ -741,193 +961,14 @@ function SimulasiSection() {
                       </table>
                     </div>
                   )}
-
-                  {/* <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
-                    <p className="text-xs text-amber-700">
-                      <span className="font-semibold">Catatan:</span> Hasil simulasi merupakan estimasi dan dapat berbeda dengan perhitungan sebenarnya sesuai ketentuan koperasi yang berlaku.
-                    </p>
-                  </div> */}
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* ── SIMULASI DEPOSITO ── */}
-        {tab === "deposito" && (
-          <SimulasiDeposito />
-        )}
-
+        {tab === "deposito" && <SimulasiDeposito />}
       </div>
     </section>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────
-   PEMBIAYAAN SECTION
-───────────────────────────────────────────────────────── */
-
-const pembiayaanColorMap = {
-  emerald: { card: "border-emerald-200 bg-emerald-50/40", icon: "bg-emerald-100 text-emerald-600", badge: "bg-emerald-100 text-emerald-700", accent: "text-emerald-600" },
-  blue:    { card: "border-blue-200 bg-blue-50/40",       icon: "bg-blue-100 text-blue-600",       badge: "bg-blue-100 text-blue-700",       accent: "text-blue-600" },
-  indigo:  { card: "border-indigo-200 bg-indigo-50/40",   icon: "bg-indigo-100 text-indigo-600",   badge: "bg-indigo-100 text-indigo-700",   accent: "text-indigo-600" },
-  purple:  { card: "border-purple-200 bg-purple-50/40",   icon: "bg-purple-100 text-purple-600",   badge: "bg-purple-100 text-purple-700",   accent: "text-purple-600" },
-  orange:  { card: "border-orange-200 bg-orange-50/40",   icon: "bg-orange-100 text-orange-600",   badge: "bg-orange-100 text-orange-700",   accent: "text-orange-600" },
-};
-
-function PembiayaanSection() {
-  return (
-    <div className="space-y-12">
-
-      {/* ── JENIS PEMBIAYAAN ── */}
-      <div>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-800">Jenis Pembiayaan</h2>
-          <p className="mt-1 text-slate-500">Pilih skema pembiayaan syariah yang paling sesuai dengan kebutuhan Anda.</p>
-        </div>
-
-        {/* Baris 1: 3 card */}
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
-          {jenisPembiayaan.slice(0, 3).map((item, idx) => {
-            const c = pembiayaanColorMap[item.warna];
-            return (
-              <div key={item.nama} className={`rounded-2xl border p-5 transition-shadow hover:shadow-md ${c.card}`}>
-                <div className="flex items-start gap-3">
-                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-bold text-sm ${c.icon}`}>
-                    {idx + 1}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-800">{item.nama}</h3>
-                    <span className={`mt-1 inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${c.badge}`}>
-                      {item.cocokUntuk}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        {/* Baris 2: 2 card di tengah */}
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 sm:w-2/3 sm:mx-auto mt-4">
-          {jenisPembiayaan.slice(3).map((item, idx) => {
-            const c = pembiayaanColorMap[item.warna];
-            return (
-              <div key={item.nama} className={`rounded-2xl border p-5 transition-shadow hover:shadow-md ${c.card}`}>
-                <div className="flex items-start gap-3">
-                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-bold text-sm ${c.icon}`}>
-                    {idx + 4}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-800">{item.nama}</h3>
-                    <span className={`mt-1 inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${c.badge}`}>
-                      {item.cocokUntuk}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ── PERSYARATAN ── */}
-      <div>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-800">Persyaratan Pembiayaan</h2>
-          <p className="mt-1 text-slate-500">Siapkan dokumen berikut sebelum mengajukan pembiayaan.</p>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-3">
-
-          {/* Pendaftaran Anggota */}
-          <div className="rounded-2xl border border-[#1E5E3F]/20 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100">
-                <Users className="h-5 w-5 text-emerald-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800">Pendaftaran Anggota</h3>
-                <p className="text-xs text-slate-400">Total Rp 80.000</p>
-              </div>
-            </div>
-            <ul className="space-y-2">
-              {persyaratanPendaftaran.map((item, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                  <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-emerald-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 rounded-xl bg-emerald-50 px-4 py-2.5 text-center">
-              <p className="text-xs text-slate-500">Jumlah Keseluruhan</p>
-              <p className="text-lg font-bold text-emerald-700">Rp 80.000</p>
-            </div>
-          </div>
-
-          {/* Syarat Pembiayaan */}
-          <div className="rounded-2xl border border-blue-200/60 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100">
-                <FileText className="h-5 w-5 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800">Syarat Pembiayaan</h3>
-                <p className="text-xs text-slate-400">Dokumen yang diperlukan</p>
-              </div>
-            </div>
-            <ul className="space-y-2">
-              {syaratPembiayaan.map((item, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                  <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-blue-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Jaminan */}
-          <div className="rounded-2xl border border-orange-200/60 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100">
-                <Shield className="h-5 w-5 text-orange-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800">Jaminan</h3>
-                <p className="text-xs text-slate-400">Agunan yang diterima</p>
-              </div>
-            </div>
-            <ul className="space-y-2">
-              {jaminan.map((item, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                  <BadgeCheck size={14} className="mt-0.5 shrink-0 text-orange-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 rounded-xl bg-orange-50 p-3">
-              <p className="text-xs text-orange-700 text-center">
-                Jaminan disesuaikan dengan plafon dan jenis pembiayaan yang diajukan.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* CTA KECIL */}
-      <div className="rounded-2xl border border-[#1E5E3F]/20 bg-gradient-to-r from-[#1E5E3F]/5 to-emerald-50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <p className="font-bold text-slate-800">Siap mengajukan pembiayaan?</p>
-          <p className="text-sm text-slate-500 mt-0.5">Daftarkan diri Anda terlebih dahulu sebagai anggota koperasi.</p>
-        </div>
-        <Link
-          to="/daftar"
-          className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-[#1E5E3F] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#174b32]"
-        >
-          Daftar Sekarang <ArrowRight size={15} />
-        </Link>
-      </div>
-
-    </div>
   );
 }

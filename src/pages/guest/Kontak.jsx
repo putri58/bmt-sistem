@@ -4,8 +4,6 @@ import {
   Phone,
   Mail,
   Clock,
-  Send,
-  CheckCircle2,
   ChevronRight,
   Info,
 } from "lucide-react";
@@ -20,6 +18,13 @@ export default function Kontak() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // State untuk menyimpan index card yang sedang terbuka
+  const [openCardIndex, setOpenCardIndex] = useState(null);
+
+  const toggleCard = (index) => {
+    setOpenCardIndex(openCardIndex === index ? null : index);
+  };
+
   const set = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
 
   async function handleSubmit(e) {
@@ -32,6 +37,45 @@ export default function Kontak() {
 
   const inputCls =
     "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#1E5E3F] focus:bg-white";
+
+  // Data kontak beserta placeholder Alamat dan No HP CS
+  const kontakList = [
+    {
+      icon: Mail,
+      title: "Kantor Pusat",
+      lines: ["bmt@al-ittihad.org"],
+      alamat: "Komplek Damar 610 PT.PHR - Komplek Mesjid Al-Ittihad Rumbai Pekanbaru - Riau Telp. (0761) 943025, 559030",
+      noHp: "08989024000",
+    },
+    {
+      icon: Mail,
+      title: "Kantor Cabang Duri",
+      lines: ["bmtalittihadduri@yahoo.com"],
+      alamat: "Jl. Mawar No.9 Kel. Balik Alam Kec. Mandau Duri - Kab. Bengkalis Telp. (0765) 560673",
+      noHp: "085213751726",
+    },
+    {
+      icon: Mail,
+      title: "Kantor Cabang Rumbai",
+      lines: ["bmtalittihadrbi@gmail.com"],
+      alamat: "Jl. Sembilang Limbungan Rumbai Pesisir - Pekanbaru Telp. (0761) 554602",
+      noHp: "08217762388",
+    },
+    {
+      icon: Mail,
+      title: "Kantor Cabang Cibubur",
+      lines: ["bmtalittihadcibb@gmail.com"],
+      alamat: "Isi alamat Cabang Cibubur di sini",
+      noHp: "08128288220",
+    },
+    {
+      icon: Mail,
+      title: "Kantor Cabang Panam",
+      lines: ["bmtalittihadpanam@yahoo.com"],
+      alamat: "Isi alamat Cabang Panam di sini",
+      noHp: "082379965588",
+    },
+  ];
 
   return (
     <div>
@@ -58,8 +102,9 @@ export default function Kontak() {
           </p>
         </div>
       </section>
+
       <section className="bg-slate-50 py-16">
-        <div className="mx-auto max-x-5xl px-6">
+        <div className="mx-auto max-w-5xl px-6">
           {/* HEADER */}
           <div className="mb-10 text-center animate-[fadeIn_0.6s_ease-out]">
             <span className="mb-2 inline-block text-sm font-bold uppercase tracking-widest text-[#1E5E3F]">
@@ -74,82 +119,99 @@ export default function Kontak() {
               AL-ITTIHAD.
             </p>
           </div>
+
           {/* Content */}
           <div className="flex w-full justify-center">
-            {/* Kontak */}
-            <div className="space-y-4">
-              {[
-                {
-                  icon: Mail,
-                  title: "Kantor Pusat",
-                  lines: ["bmt@al-ittihad.org"],
-                },
-                {
-                  icon: Mail,
-                  title: "Kantor Cabang Duri",
-                  lines: ["bmtalittihadduri@yahoo.com"],
-                },
-                {
-                  icon: Mail,
-                  title: "Kantor Cabang Rumbai",
-                  lines: ["bmtalittihadrbi@yahoo.com"],
-                },
-                {
-                  icon: Mail,
-                  title: "Kantor Cabang Cibubur",
-                  lines: ["bmtalittihadcibb@gmail.com"],
-                },
-                {
-                  icon: Mail,
-                  title: "Kantor Cabang Panam",
-                  lines: ["bmtalittihadpanam@yahoo.com"],
-                },
-              ].map((c, index) => {
+            {/* Kontak List */}
+            <div className="w-full max-w-2xl space-y-4">
+              {kontakList.map((c, index) => {
                 const Icon = c.icon;
+                const isOpen = openCardIndex === index;
 
                 return (
                   <div
                     key={c.title}
-                    className="group flex cursor-pointer gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#1E5E3F]/30 hover:shadow-lg"
+                    onClick={() => toggleCard(index)}
+                    className="group cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:border-[#1E5E3F]/30 hover:shadow-lg"
                     style={{
                       animation: `fadeUp 0.5s ease-out ${index * 0.1}s both`,
                     }}
                   >
-                    {/* ICON */}
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#1E5E3F] group-hover:text-white">
-                      <Icon
-                        size={21}
-                        className="transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
+                    {/* Card Header (Baris Atas) */}
+                    <div className="flex items-start gap-4">
+                      {/* ICON */}
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#1E5E3F]/10 text-[#1E5E3F] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#1E5E3F] group-hover:text-white">
+                        <Icon
+                          size={21}
+                          className="transition-transform duration-300 group-hover:scale-110"
+                        />
+                      </div>
 
-                    {/* TEXT */}
-                    <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-slate-800 transition-colors duration-300 group-hover:text-[#1E5E3F]">
-                        {c.title}
-                      </p>
-
-                      {c.lines.map((l, i) => (
-                        <p key={l} className="mt-1 text-sm text-slate-500">
-                          {l}
-
-                          {/* BADGE WHATSAPP */}
-                          {c.title === "Telepon" && i === 1 && (
-                            <span className="ml-2 inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">
-                              WhatsApp
-                            </span>
-                          )}
+                      {/* TEXT UTAMA */}
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-slate-800 transition-colors duration-300 group-hover:text-[#1E5E3F]">
+                          {c.title}
                         </p>
-                      ))}
+
+                        {c.lines.map((l, i) => (
+                          <p key={l} className="mt-1 text-sm text-slate-500">
+                            {l}
+                            {c.title === "Telepon" && i === 1 && (
+                              <span className="ml-2 inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600">
+                                WhatsApp
+                              </span>
+                            )}
+                          </p>
+                        ))}
+                      </div>
+
+                      {/* ARROW ICON (Rotasi Saat Terbuka) */}
+                      <div className="flex h-12 items-center text-slate-400 transition-all duration-300 group-hover:text-[#1E5E3F]">
+                        <ChevronRight
+                          size={20}
+                          className={`transition-transform duration-300 ${
+                            isOpen ? "rotate-90 text-[#1E5E3F]" : ""
+                          }`}
+                        />
+                      </div>
                     </div>
 
-                    {/* ARROW */}
-                    <div className="flex items-center text-slate-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#1E5E3F]">
-                      <ChevronRight size={20} />
-                    </div>
+                    {/* DROPDOWN CONTENT (Alamat & No HP CS) */}
+                    {isOpen && (
+                      <div className="mt-4 border-t border-slate-100 pt-4 space-y-3 text-sm animate-[fadeIn_0.3s_ease-out]">
+                        {/* Alamat */}
+                        <div className="flex items-start gap-3 text-slate-600">
+                          <MapPin
+                            size={18}
+                            className="mt-0.5 shrink-0 text-[#1E5E3F]"
+                          />
+                          <div>
+                            <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                              Alamat Kantor
+                            </span>
+                            <p className="mt-0.5 text-slate-700">{c.alamat}</p>
+                          </div>
+                        </div>
+
+                        {/* No HP CS */}
+                        <div className="flex items-start gap-3 text-slate-600">
+                          <Phone
+                            size={18}
+                            className="mt-0.5 shrink-0 text-[#1E5E3F]"
+                          />
+                          <div>
+                            <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                              No. HP CS / Whatsapp
+                            </span>
+                            <p className="mt-0.5 text-slate-700">{c.noHp}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
+
               {/* Jam operasional */}
               <div
                 className="relative overflow-hidden rounded-2xl border border-[#1E5E3F]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -181,6 +243,7 @@ export default function Kontak() {
                       Aktif
                     </span>
                   </div>
+
                   {/* Jadwal */}
                   <div className="space-y-3">
                     {[
@@ -189,7 +252,7 @@ export default function Kontak() {
                         jam: "08.00 - 14.00 WIB",
                         aktif: true,
                       },
-                                            {
+                      {
                         hari: "Jum'at",
                         jam: "08.00 - 14.30 WIB",
                         aktif: true,
@@ -207,7 +270,7 @@ export default function Kontak() {
                     ].map((j) => (
                       <div
                         key={j.hari}
-                        className="group flex items-center justify-between rounded-xl border border-slare-100 bg-slate-50 px-4 py-3 transition-all duration-300 hover:border-[#1E5E3F]/20 hover:bg-[#1E5E3F]/5"
+                        className="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 transition-all duration-300 hover:border-[#1E5E3F]/20 hover:bg-[#1E5E3F]/5"
                       >
                         <div className="flex items-center gap-3">
                           <span
@@ -222,23 +285,24 @@ export default function Kontak() {
                         <span
                           className={`text-sm font-semibold ${
                             j.aktif ? "text-[#1E5E3F]" : "text-red-500"
-                          }`} 
-                         >
+                          }`}
+                        >
                           {j.jam}
                         </span>
                       </div>
                     ))}
                   </div>
+
                   {/* INFO BAWAH */}
                   <div className="mt-6 rounded-xl bg-[#1E5E3F]/5 p-4">
                     <div className="flex gap-3">
                       <Info
                         size={18}
-                        className="mt-0.5 shirk-0 text-[#1E5E3F]"
+                        className="mt-0.5 shrink-0 text-[#1E5E3F]"
                       />
                       <p className="text-xs leading-relaxed text-slate-500">
                         Untuk Mendapatkan pelayanan terbaik, disarankan datang
-                        sesuai dengan jam operasional yang telah di tentukan.
+                        sesuai dengan jam operasional yang telah ditentukan.
                       </p>
                     </div>
                   </div>
@@ -246,29 +310,30 @@ export default function Kontak() {
               </div>
             </div>
           </div>
+
           {/* Animasi */}
           <style>
             {`
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(15px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+              @keyframes fadeUp {
+                from {
+                  opacity: 0;
+                  transform: translateY(15px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-    `}
+              @keyframes fadeIn {
+                from {
+                  opacity: 0;
+                }
+                to {
+                  opacity: 1;
+                }
+              }
+            `}
           </style>
         </div>
       </section>

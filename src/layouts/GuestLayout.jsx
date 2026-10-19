@@ -35,13 +35,13 @@ export default function GuestLayout() {
         <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-6 py-4">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src="https://ykpialittihad.or.id/wp-content/uploads/2025/01/logo-web-ykpi-al-ittihad.png"
-              alt="Logo KSPPS BMT Al Ittihad"
-              className="h-12 w-70 rounded-xl object-cover"
-            />
-          </Link>
+          <div className="flex items-center object-center">
+              <img
+                src="/logobmt.png"
+                alt="Logo BMT Al-Ittihad"
+                className="w-[400px] object-contain"
+              />
+            </div>
 
           {/* DESKTOP LINKS */}
           <div className="hidden items-center gap-1 md:flex">
