@@ -65,7 +65,7 @@ export default function Kontak() {
       icon: Mail,
       title: "Kantor Cabang Cibubur",
       lines: ["bmtalittihadcibb@gmail.com"],
-      alamat: "Ruko Concordia / Trafalgar, Jl. Boulevard Kota Wisata No.22 Blok H, Ciangsana, Kec. Gn.Putri, Kabupaten Bogor, Jawa Barat 16968 Telp. 021-22997410",
+      alamat: "Ruko Concordia / Trafalgar, Jl. Boulevard Kota Wisata No.22 Blok H, Ciangsana, Kec. Gn.Putri, Kabupaten Bogor, Jawa Barat 16968  Telp. 021-22997410",
       noHp: "08128288220",
     },
     {

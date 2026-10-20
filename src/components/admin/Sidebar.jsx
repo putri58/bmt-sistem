@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, ClipboardList, Users,
-  UserCog, Settings, Building2,
+  UserCog, Settings, Building2, Newspaper,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -30,11 +30,13 @@ const KANTOR_COLOR = {
 
 function buildMenu(basePath) {
   return [
-    { name: "Dashboard",       path: `${basePath}`,                      icon: LayoutDashboard },
-    { name: "Pendaftar Baru",  path: `${basePath}/pendaftaran-anggota`,   icon: ClipboardList   },
-    { name: "Kelola Anggota",  path: `${basePath}/anggota`,              icon: Users           },
+    { name: "Dashboard",       path: `${basePath}`,                    icon: LayoutDashboard },
+    { name: "Pendaftar Baru",  path: `${basePath}/pendaftaran-anggota`, icon: ClipboardList },
+    { name: "Kelola Anggota",  path: `${basePath}/anggota`,             icon: Users },
+    { name: "Berita & Artikel", path: `${basePath}/berita`,             icon: Newspaper },
   ];
 }
+
 
 const menuSistem = (basePath) => [
   { name: "Manajemen Admin", path: `${basePath}/manajemen-admin`, icon: UserCog  },

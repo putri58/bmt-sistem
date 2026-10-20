@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet, Link, NavLink, useNavigate } from "react-router-dom";
 import { Landmark, Menu, X, Phone, Mail, MapPin, Globe, MessageCircle, Tv2, LogOut } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import FloatingSocialMedia from "../components/FloatingSocialMedia";
 
 const navLinks = [
   { label: "Beranda",   to: "/" },
@@ -220,7 +221,7 @@ export default function GuestLayout() {
           </p>
         </div>
       </footer>
-
+      <FloatingSocialMedia />
     </div>
   );
 }

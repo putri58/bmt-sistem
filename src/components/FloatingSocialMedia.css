@@ -1,0 +1,126 @@
+
+.floating-social-dock {
+  position: fixed;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow: 0 8px 30px rgba(15, 60, 40, 0.12);
+}
+
+.floating-social-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #176b45;
+  margin-bottom: 2px;
+}
+
+.floating-social-link {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+  color: var(--social-color);
+  background: #ffffff;
+
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.floating-social-link:hover {
+  transform: translateX(-5px) scale(1.06);
+  background: var(--social-color);
+  color: #ffffff;
+  box-shadow: 0 6px 16px
+    color-mix(in srgb, var(--social-color) 30%, transparent);
+}
+
+.floating-social-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translate(5px, -50%);
+
+  padding: 8px 12px;
+  border-radius: 10px;
+
+  color: #ffffff;
+  background: #173e2d;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.floating-social-link:hover .floating-social-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%);
+}
+
+@media (max-width: 600px) {
+  .floating-social-dock {
+    right: 10px;
+    gap: 9px;
+    padding: 10px 7px;
+    border-radius: 20px;
+  }
+
+  .floating-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .floating-social-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .floating-social-label {
+    font-size: 8px;
+  }
+  .floating-social-link svg {
+  width: 21px;
+  height: 21px;
+  display: block;
+}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-social-link,
+  .floating-social-tooltip {
+    transition: none;
+  }
+}

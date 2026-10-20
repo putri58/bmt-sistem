@@ -14,7 +14,8 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../../lib/api";
 
 /* ─── DATA ─── */
 const stats = [
@@ -164,6 +165,32 @@ const colorMap = {
 /* ─── COMPONENT ─── */
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(null);
+  const [berita, setBerita] = useState([]);
+  const [loadingBerita, setLoadingBerita] = useState(true);
+
+  useEffect(() => {
+    const ambilBerita = async () => {
+      try {
+        const response = await api.get("/berita");
+
+        const hasil = response.data;
+        const daftarBerita = Array.isArray(hasil)
+          ? hasil
+          : Array.isArray(hasil?.data)
+            ? hasil.data
+            : [];
+
+        setBerita(daftarBerita.slice(0, 3));
+      } catch (error) {
+        console.error("Gagal mengambil berita:", error);
+        setBerita([]);
+      } finally {
+        setLoadingBerita(false);
+      }
+    };
+
+    ambilBerita();
+  }, []);
 
   return (
     <div>
@@ -669,6 +696,165 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      
+{/* ── BERITA & ARTIKEL ── */}
+<section id="berita" className="bg-white py-20 lg:py-24">
+  <div className="mx-auto max-w-7xl px-6">
+    {/* Section Heading */}
+    <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+      <div className="max-w-2xl">
+        <div className="mb-4 flex items-center gap-3">
+          <span className="h-1 w-10 rounded-full bg-emerald-600" />
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">
+            Informasi Terkini
+          </span>
+        </div>
+
+        <h2 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 md:text-4xl">
+          Berita & Artikel
+        </h2>
+
+        <p className="mt-4 max-w-xl text-sm leading-7 text-slate-500 md:text-base">
+          Ikuti informasi terbaru, kegiatan, dan berbagai artikel seputar
+          layanan serta perkembangan KSPPS BMT Al-Ittihad.
+        </p>
+      </div>
+
+      <div className="hidden items-center gap-2 text-sm font-medium text-slate-400 md:flex">
+        <span className="h-2 w-2 rounded-full bg-emerald-500" />
+        Informasi resmi BMT Al-Ittihad
+      </div>
+    </div>
+
+    {/* News Content */}
+    {loadingBerita ? (
+      <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        {[1, 2, 3].map((item) => (
+          <div
+            key={item}
+            className="overflow-hidden rounded-xl border border-slate-100 bg-white"
+          >
+            <div className="h-56 animate-pulse bg-slate-100" />
+            <div className="space-y-4 p-6">
+              <div className="h-3 w-24 animate-pulse rounded bg-slate-100" />
+              <div className="h-5 w-full animate-pulse rounded bg-slate-100" />
+              <div className="h-4 w-4/5 animate-pulse rounded bg-slate-100" />
+              <div className="h-4 w-28 animate-pulse rounded bg-slate-100" />
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : berita.length === 0 ? (
+      <div className="rounded-xl border border-slate-200 bg-slate-50 px-6 py-16 text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+          <Landmark size={26} />
+        </div>
+        <h3 className="mt-5 text-lg font-bold text-slate-800">
+          Belum Ada Berita Terbaru
+        </h3>
+        <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+          Nantikan informasi dan artikel terbaru dari KSPPS BMT Al-Ittihad.
+        </p>
+      </div>
+    ) : (
+      <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        {berita.map((item) => {
+          const baseUrl = (
+            import.meta.env.VITE_API_URL || "http://localhost:8000/api"
+          ).replace(/\/api\/?$/, "");
+
+          const gambar = item.gambar
+            ? item.gambar.startsWith("http")
+              ? item.gambar
+              : `${baseUrl}/storage/${item.gambar.replace(/^\/?storage\//, "")}`
+            : null;
+
+          const tanggal = item.created_at
+            ? new Date(item.created_at).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
+            : null;
+
+          const ringkasan =
+            item.ringkasan ||
+            (item.konten
+              ? `${item.konten.replace(/<[^>]*>/g, "").slice(0, 150).trim()}...`
+              : "Baca informasi selengkapnya mengenai kegiatan dan informasi BMT Al-Ittihad.");
+
+          const detailUrl = `/berita/${item.slug || item.id}`;
+
+          return (
+            <article
+              key={item.id}
+              className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200/80 bg-white transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl hover:shadow-slate-200/60"
+            >
+              {/* Image */}
+              <Link
+                to={detailUrl}
+                className="relative block h-56 overflow-hidden bg-slate-100"
+              >
+                {gambar ? (
+                  <img
+                    src={gambar}
+                    alt={item.judul}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center bg-gradient-to-br from-emerald-50 to-slate-100 text-emerald-700">
+                    <Landmark size={44} strokeWidth={1.3} />
+                  </div>
+                )}
+
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent opacity-60" />
+              </Link>
+
+              {/* Article Information */}
+              <div className="flex flex-1 flex-col p-6">
+                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <span className="rounded-md bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-emerald-800">
+                    {item.kategori || "Artikel"}
+                  </span>
+
+                  {tanggal && (
+                    <span className="text-xs text-slate-400">
+                      {tanggal}
+                    </span>
+                  )}
+                </div>
+
+                <Link to={detailUrl}>
+                  <h3 className="line-clamp-2 text-xl font-bold leading-snug text-slate-800 transition-colors duration-200 group-hover:text-emerald-700">
+                    {item.judul}
+                  </h3>
+                </Link>
+
+                <p className="mt-3 line-clamp-3 text-sm leading-7 text-slate-500">
+                  {ringkasan}
+                </p>
+
+                <div className="mt-auto pt-6">
+                  <div className="mb-5 border-t border-slate-100" />
+
+                  <Link
+                    to={detailUrl}
+                    className="inline-flex items-center gap-2 text-sm font-bold text-emerald-700 transition-all duration-200 hover:gap-3"
+                  >
+                    Baca selengkapnya
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</section>
 
       {/* ── FAQ ── */}
       <section id="informasi" className="bg-white py-20">

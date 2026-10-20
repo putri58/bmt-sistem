@@ -15,7 +15,7 @@ import Informasi  from "./pages/guest/Informasi";
 import Kontak     from "./pages/guest/Kontak";
 import Login      from "./pages/guest/Login";
 import Daftar     from "./pages/guest/Daftar";
-
+import BeritaDetail from "./pages/guest/BeritaDetail";
 /* ── ADMIN PAGES ── */
 import AdminDashboard     from "./pages/admin/Dashboard";
 import PendaftaranAnggota from "./pages/admin/PendaftaranAnggota";
@@ -29,6 +29,8 @@ import AdminPengumuman    from "./pages/admin/Pengumuman";
 import AdminLaporan       from "./pages/admin/Laporan";
 import ManajemenAdmin     from "./pages/admin/ManajemenAdmin";
 import AdminPengaturan    from "./pages/admin/Pengaturan";
+import AdminBerita from "./pages/admin/Berita";
+
 
 /* ── MEMBER PAGES ── */
 import MemberDashboard from "./pages/member/Dashboard";
@@ -89,6 +91,8 @@ function makeAdminRoutes(kantor) {
       <Route path="laporan"             element={<AdminLaporan />} />
       <Route path="manajemen-admin"     element={<ManajemenAdmin />} />
       <Route path="pengaturan"          element={<AdminPengaturan />} />
+      <Route path="pengaturan"          element={<AdminPengaturan />} />
+      <Route path="berita" element={<AdminBerita />} />
     </Route>
   );
 }
@@ -116,6 +120,8 @@ export default function App() {
           <Route path="/kontak"    element={<Kontak />} />
           <Route path="/login"     element={<Login />} />
           <Route path="/daftar"    element={<Daftar />} />
+          <Route path="/berita/:slug" element={<BeritaDetail />} />
+          
         </Route>
 
         {/* ── ADMIN: redirect lama ── */}
