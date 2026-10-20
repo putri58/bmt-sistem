@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import api from "../../lib/api";
 
 const LOGO_URL =
-  "https://ykpialittihad.or.id/wp-content/uploads/2025/01/logo-web-ykpi-al-ittihad.png";
+  "/logobmt.png";
 
 const KANTOR_LABEL = {
   pusat:      "Kantor Pusat",
