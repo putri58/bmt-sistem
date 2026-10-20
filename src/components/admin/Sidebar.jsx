@@ -40,7 +40,7 @@ function buildMenu(basePath) {
 
 const menuSistem = (basePath) => [
   { name: "Manajemen Admin", path: `${basePath}/manajemen-admin`, icon: UserCog  },
-  { name: "Pengaturan",      path: `${basePath}/pengaturan`,      icon: Settings },
+  // { name: "Pengaturan",      path: `${basePath}/pengaturan`,      icon: Settings },
 ];
 
 function SidebarItem({ item }) {
