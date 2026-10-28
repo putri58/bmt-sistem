@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   Users, Wallet, CreditCard, ArrowLeftRight,
-  Clock3, Calendar, Activity,
+  Clock3, Calendar, Activity, AlertTriangle, Building2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import StatCard from "../../components/admin/StatCard";
@@ -33,29 +33,66 @@ function StatusBadge({ status }) {
 }
 
 export default function Dashboard() {
-  const [data, setData]       = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData]             = useState(null);
+  const [loading, setLoading]       = useState(true);
+  const [pendaftarList, setPendaftarList] = useState([]);
 
-  // Ambil info kantor dari user yang login
   const { currentUser } = useAuth ? useAuth() : { currentUser: null };
+  const isSuperAdmin = currentUser?.role === "superadmin";
   const kantorLabel = {
     pusat: "Kantor Pusat", rumbai: "Cabang Rumbai", panam: "Cabang Panam",
     duri: "Cabang Duri", cibubur: "Cabang Cibubur", superadmin: "Semua Cabang",
-  }[currentUser?.role === "superadmin" ? "superadmin" : currentUser?.kantor] || "Admin";
+  }[isSuperAdmin ? "superadmin" : currentUser?.kantor] || "Admin";
+
+  const KANTOR_LABEL = {
+    pusat: "Kantor Pusat", rumbai: "Cabang Rumbai",
+    panam: "Cabang Panam", duri: "Cabang Duri", cibubur: "Cabang Cibubur",
+  };
 
   useEffect(() => {
-    async function fetchDashboard() {
+    async function fetchAll() {
       try {
-        const res = await api.get('/admin/dashboard');
-        setData(res.data);
+        const [dashRes, pendaftarRes] = await Promise.all([
+          api.get('/admin/dashboard'),
+          api.get('/pendaftar'),
+        ]);
+        setData(dashRes.data);
+        setPendaftarList(pendaftarRes.data);
       } catch (err) {
         console.error('Gagal ambil data dashboard', err);
       } finally {
         setLoading(false);
       }
     }
-    fetchDashboard();
+    fetchAll();
   }, []);
+
+  // Hitung pendaftar "Menunggu" yang sudah >1 hari
+  const sekarang = new Date();
+  const pendaftarTerlambat = pendaftarList.filter(p => {
+    if (p.status_pendaftaran !== "Menunggu") return false;
+    const tglDaftar = new Date(p.tgl_daftar || p.created_at);
+    const selisihHari = Math.floor((sekarang - tglDaftar) / (1000 * 60 * 60 * 24));
+    return selisihHari >= 1;
+  });
+
+  // Kelompokkan per kantor (untuk superadmin)
+  const warningPerKantor = Object.entries(
+    pendaftarTerlambat.reduce((acc, p) => {
+      const k = p.kantor_tujuan || "unknown";
+      if (!acc[k]) acc[k] = [];
+      acc[k].push(p);
+      return acc;
+    }, {})
+  ).map(([kantor, list]) => ({
+    kantor,
+    label: KANTOR_LABEL[kantor] || kantor,
+    jumlah: list.length,
+    terlama: Math.max(...list.map(p => {
+      const tgl = new Date(p.tgl_daftar || p.created_at);
+      return Math.floor((sekarang - tgl) / (1000 * 60 * 60 * 24));
+    })),
+  })).sort((a, b) => b.terlama - a.terlama);
 
   const stat              = data?.statistik;
   const pendaftarTerbaru  = data?.pendaftar_terbaru  ?? [];
@@ -78,6 +115,60 @@ export default function Dashboard() {
           {new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
         </div>
       </div>
+
+      {/* WARNING SUPERADMIN — pendaftar belum diproses >1 hari */}
+      {isSuperAdmin && pendaftarTerlambat.length > 0 && (
+        <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-5">
+          <div className="mb-3 flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100">
+              <AlertTriangle size={16} className="text-red-600" />
+            </div>
+            <div>
+              <p className="font-bold text-red-700">Peringatan — Pendaftar Belum Diproses</p>
+              <p className="text-xs text-red-500">
+                {pendaftarTerlambat.length} pendaftar sudah menunggu lebih dari 1 hari tanpa tindakan dari admin cabang
+              </p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            {warningPerKantor.map(({ kantor, label, jumlah, terlama }) => (
+              <div key={kantor} className="flex items-center justify-between rounded-xl bg-white px-4 py-3 border border-red-100">
+                <div className="flex items-center gap-2">
+                  <Building2 size={15} className="text-red-400" />
+                  <span className="text-sm font-semibold text-slate-700">{label}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-700">
+                    {jumlah} pendaftar
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    Terlama <strong className="text-red-600">{terlama} hari</strong>
+                  </span>
+                  <Link to={`/admin/superadmin/pendaftaran-anggota`}
+                    className="rounded-lg bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700 transition-colors">
+                    Tinjau →
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* WARNING ADMIN BIASA — kalau ada pending >1 hari di kantornya */}
+      {!isSuperAdmin && pendaftarTerlambat.length > 0 && (
+        <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+          <AlertTriangle size={18} className="mt-0.5 shrink-0 text-amber-600" />
+          <div className="flex-1">
+            <p className="font-semibold text-amber-700">Ada {pendaftarTerlambat.length} pendaftar yang belum diproses lebih dari 1 hari</p>
+            <p className="mt-0.5 text-xs text-amber-600">Segera tinjau dan proses pendaftaran yang tertunda.</p>
+          </div>
+          <Link to={`/admin/${currentUser?.kantor}/pendaftaran-anggota`}
+            className="shrink-0 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 transition-colors">
+            Tinjau →
+          </Link>
+        </div>
+      )}
 
       {/* STATISTICS */}
       {loading ? (
