@@ -178,7 +178,7 @@ export default function MemberLayout() {
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-500 text-[11px] font-bold text-white">
                 {initials}
               </div>
-              <span className="hidden max-w-[120px] truncate text-sm font-medium text-slate-700 md:block">
+              <span className=" hidden max-w-[120px] truncate text-sm font-medium text-slate-700 md:block">
                 {nama}
               </span>
               <ChevronDown size={14} className="text-slate-400" />

@@ -19,7 +19,7 @@ import {
 const jenisPembiayaan = [
   {
     nama: "Murabahah",
-    cocokUntuk: "Pembelian barang konsumtif & produktif",
+    cocokUntuk: "Pembelian barang konsumtif & produktif", 
     warna: "emerald",
     deskripsi: "Pembiayaan Murabahah adalah pembiayaan berdasarkan prinsip jual beli, di mana koperasi membeli barang yang dibutuhkan anggota lalu menjualnya kembali dengan harga pokok dan margin keuntungan yang disepakati bersama.",
   },

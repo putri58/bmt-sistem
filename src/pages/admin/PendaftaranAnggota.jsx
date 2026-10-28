@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import {
   Search, Eye, CheckCircle, XCircle, X, Clock,
-  UserCheck, UserX, Calendar, Filter, FileText, ZoomIn, Trash2,
+  UserCheck, UserX, Calendar, Filter, FileText, ZoomIn, Trash2, Download,
 } from "lucide-react";
 import api from "../../lib/api";
 import toast from "react-hot-toast";
+import { exportPendaftarPDF } from "../../utils/exportPendaftarPDF";
 
 const statusColors = {
   Menunggu:  "bg-orange-50 text-orange-600 border-orange-200",
@@ -130,6 +131,7 @@ export default function PendaftaranAnggota() {
   const [selected, setSelected]           = useState(null);
   const [alasanTolak, setAlasanTolak]     = useState("");
   const [actionLoading, setActionLoading] = useState(false);
+  const [pdfLoading, setPdfLoading]       = useState(false);
 
   // Ambil data pendaftar dari API
   async function fetchPendaftar() {
@@ -185,6 +187,18 @@ export default function PendaftaranAnggota() {
       toast.error('Gagal menolak pendaftar');
     } finally {
       setActionLoading(false);
+    }
+  }
+
+  async function handleExportPDF() {
+    setPdfLoading(true);
+    try {
+      await exportPendaftarPDF(selected);
+      toast.success('PDF berhasil diunduh');
+    } catch (err) {
+      toast.error('Gagal mengekspor PDF');
+    } finally {
+      setPdfLoading(false);
     }
   }
 
@@ -445,9 +459,23 @@ export default function PendaftaranAnggota() {
               </button>
             </div>
           )}
+
+          {/* Tombol Export PDF — selalu tampil */}
+          <button onClick={handleExportPDF} disabled={pdfLoading}
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 disabled:opacity-60">
+            {pdfLoading ? (
+              <><svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+              </svg>Memproses PDF...</>
+            ) : (
+              <><Download size={16} /> Export PDF</>
+            )}
+          </button>
+
           {selected.status_pendaftaran !== "Menunggu" && (
             <button onClick={closeModal}
-              className="w-full rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">
+              className="mt-3 w-full rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">
               Tutup
             </button>
           )}
