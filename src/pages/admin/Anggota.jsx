@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Search, Eye, Pencil, Trash2, X } from "lucide-react";
+import { Search, Eye, Pencil, Trash2, X, Download } from "lucide-react";
 import api from "../../lib/api";
 import toast from "react-hot-toast";
+import { exportAnggotaPDF } from "../../utils/exportAnggotaPDF";
 
 function formatRupiah(value) {
   return new Intl.NumberFormat("id-ID").format(value);
@@ -47,6 +48,7 @@ export default function Anggota() {
   const [selected, setSelected]       = useState(null);
   const [form, setForm]               = useState(emptyForm);
   const [saving, setSaving]           = useState(false);
+  const [pdfLoading, setPdfLoading]   = useState(null); // id anggota yang sedang diproses
 
   async function fetchAnggota() {
     try {
@@ -109,6 +111,18 @@ export default function Anggota() {
 
   const set = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
+  async function handleExportPDF(anggota) {
+    setPdfLoading(anggota.id);
+    try {
+      await exportAnggotaPDF(anggota);
+      toast.success('PDF berhasil diunduh');
+    } catch {
+      toast.error('Gagal mengekspor PDF');
+    } finally {
+      setPdfLoading(null);
+    }
+  }
+
   return (
     <div>
       {/* HEADER */}
@@ -155,7 +169,6 @@ export default function Anggota() {
                 <th className="px-5 py-3">Nama Anggota</th>
                 <th className="px-5 py-3">Kontak</th>
                 <th className="px-5 py-3">Kota</th>
-                <th className="px-5 py-3">Total Simpanan</th>
                 <th className="px-5 py-3">Tgl Disetujui</th>
                 <th className="px-5 py-3">Status</th>
                 <th className="px-5 py-3 text-center">Aksi</th>
@@ -186,9 +199,6 @@ export default function Anggota() {
                       <p className="text-xs text-slate-400">{row.no_telp}</p>
                     </td>
                     <td className="px-5 py-4 text-sm text-slate-600">{row.kota}</td>
-                    <td className="px-5 py-4 font-semibold text-slate-700">
-                      Rp {formatRupiah(row.simpanan)}
-                    </td>
                     <td className="px-5 py-4 text-xs text-slate-500">{formatDate(row.tgl_disetujui)}</td>
                     <td className="px-5 py-4">
                       <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
@@ -206,6 +216,14 @@ export default function Anggota() {
                         <button onClick={() => openEdit(row)} title="Edit"
                           className="rounded-lg p-1.5 text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
                           <Pencil size={15} />
+                        </button>
+                        <button onClick={() => handleExportPDF(row)} title="Export PDF"
+                          disabled={pdfLoading === row.id}
+                          className="rounded-lg p-1.5 text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-colors disabled:opacity-40">
+                          {pdfLoading === row.id
+                            ? <svg className="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                            : <Download size={15} />
+                          }
                         </button>
                         <button onClick={() => openDelete(row)} title="Hapus"
                           className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors">
